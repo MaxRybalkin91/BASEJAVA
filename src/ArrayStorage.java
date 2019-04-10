@@ -4,8 +4,9 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    Resume[] storage = new Resume[10000];
+    private final Resume[] storage = new Resume[10000];
     private int size = 0;
+    private boolean isNeedSave = true;
 
     void clear() {
         Arrays.fill(storage, 0, size, null);
@@ -13,11 +14,26 @@ public class ArrayStorage {
     }
 
     void save(Resume r) {
-        storage[size] = r;
-        size++;
+        if(size == storage.length) {
+            isNeedSave = false;
+            System.out.println("Storage is full!");
+        }
+
+        for(int i = 0; i < size; i++) {
+            if (storage[i].uuid.equals(r.uuid)) {
+                isNeedSave = false;
+                System.out.println("Resume " + r.uuid + " is already written");
+            }
+        }
+
+        if(isNeedSave) {
+            storage[size] = r;
+            size++;
+        }
     }
 
     Resume get(String uuid) {
+        System.out.println("Resume " + uuid + ":");
         for(int i = 0; i < size; i++) {
             if(storage[i].uuid.equals(uuid)) {
                 return storage[i];
@@ -29,9 +45,12 @@ public class ArrayStorage {
     void delete(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].uuid.equals(uuid)) {
+                System.out.println("Resume " + storage[i].uuid + " is successfully deleted");
                 storage[i] = storage[size - 1];
                 storage[size - 1] = null;
                 size--;
+            } else {
+                System.out.println("Resume " + uuid + " is not in this storage");
             }
         }
     }
