@@ -7,6 +7,7 @@ public class ArrayStorage {
     private final Resume[] storage = new Resume[10000];
     private int size = 0;
     private boolean isNeedSave = true;
+    private boolean isNeedDelete = true;
 
     void clear() {
         Arrays.fill(storage, 0, size, null);
@@ -51,6 +52,7 @@ public class ArrayStorage {
                 size--;
             } else {
                 System.out.println("Resume " + uuid + " is not in this storage");
+                break;
             }
         }
     }
