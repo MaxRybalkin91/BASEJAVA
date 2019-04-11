@@ -6,6 +6,7 @@ import java.util.Arrays;
 public class ArrayStorage {
     private final Resume[] storage = new Resume[10000];
     private int size = 0;
+    private int index;
 
     void clear() {
         Arrays.fill(storage, 0, size, null);
@@ -14,8 +15,9 @@ public class ArrayStorage {
 
     void save(Resume resume) {
         if(size != storage.length) {
-            if(isResumePresent(resume.uuid)) {
-                System.out.println("Resume " + resume.uuid + " is already written");
+            index = checkUuid(resume.getUuid());
+            if(index != -1) {
+                System.out.println("Resume " + resume.getUuid() + " is already written");
             } else {
                 storage[size] = resume;
                 size++;
@@ -26,44 +28,43 @@ public class ArrayStorage {
     }
 
     void update(Resume resume) {
-        if(isResumePresent(resume.uuid)) {
-            storage[size] = resume;
+        index = checkUuid(resume.getUuid());
+        if(index != -1) {
+            storage[index] = resume;
         } else {
             System.out.println("This UUID is empty! You need to set it!");
         }
     }
 
     Resume get(String uuid) {
-        if(isResumePresent(uuid)) {
-            for(int i = 0; i < size; i++) {
-                return storage[i];
+        index = checkUuid(uuid);
+        if (index != -1) {
+            for (int i = 0; i < size; i++) {
+                return storage[index];
             }
-        } else {
-            System.out.println("Resume not founded");
         }
+        System.out.println("Resume not founded");
         return null;
     }
 
     void delete(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (isResumePresent(uuid)) {
-                storage[i] = storage[size - 1];
-                storage[size - 1] = null;
-                size--;
-            } else {
-                System.out.println("You loose");
-                break;
-            }
+        index = checkUuid(uuid);
+        if (index != -1) {
+            storage[index] = storage[size - 1];
+            storage[size - 1] = null;
+            size--;
+        } else {
+            System.out.println("Can't find this UUID");
         }
     }
 
-    boolean isResumePresent(String uuid) {
+    private int checkUuid(String uuid) {
         for(int i = 0; i < size; i++) {
-            if(storage[i].uuid.equals(uuid)) {
-                return true;
+            if(storage[i].getUuid().equals(uuid)) {
+                return i;
             }
         }
-        return false;
+        return -1;
     }
 
     /**
