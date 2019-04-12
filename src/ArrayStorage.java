@@ -9,7 +9,7 @@ public class ArrayStorage {
     private int index;
 
     void clear() {
-        Arrays.fill(storage, 0, size, null);
+        Arrays.fill(storage, 0, getSize(), null);
         size = 0;
     }
 
@@ -71,10 +71,10 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
+        return Arrays.copyOf(storage, getSize());
     }
 
-    int size() {
+    int getSize() {
         return size;
     }
 }
