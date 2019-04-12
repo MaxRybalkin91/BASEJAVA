@@ -6,16 +6,15 @@ import java.util.Arrays;
 public class ArrayStorage {
     private final Resume[] storage = new Resume[10000];
     private int size = 0;
-    private int index;
 
-    void clear() {
-        Arrays.fill(storage, 0, getSize(), null);
+    public void clear() {
+        Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
-    void save(Resume resume) {
+    public void save(Resume resume) {
         if (size != storage.length) {
-            if (checkUuid(resume.getUuid()) != -1) {
+            if (getIndex(resume.getUuid()) != -1) {
                 System.out.println("Resume " + resume.getUuid() + " is already written");
             } else {
                 storage[size] = resume;
@@ -26,8 +25,8 @@ public class ArrayStorage {
         }
     }
 
-    void update(Resume resume) {
-        index = checkUuid(resume.getUuid());
+    public void update(Resume resume) {
+        int index = getIndex(resume.getUuid());
         if (index != -1) {
             storage[index] = resume;
         } else {
@@ -35,19 +34,17 @@ public class ArrayStorage {
         }
     }
 
-    Resume get(String uuid) {
-        index = checkUuid(uuid);
+    public Resume get(String uuid) {
+        int index = getIndex(uuid);
         if (index != -1) {
-            for (int i = 0; i < size; i++) {
-                return storage[index];
-            }
+            return storage[index];
         }
         System.out.println("Resume not founded");
         return null;
     }
 
-    void delete(String uuid) {
-        index = checkUuid(uuid);
+    public void delete(String uuid) {
+        int index = getIndex(uuid);
         if (index != -1) {
             storage[index] = storage[size - 1];
             storage[size - 1] = null;
@@ -57,7 +54,7 @@ public class ArrayStorage {
         }
     }
 
-    private int checkUuid(String uuid) {
+    private int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
@@ -69,11 +66,11 @@ public class ArrayStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    Resume[] getAll() {
+    public Resume[] getAll() {
         return Arrays.copyOf(storage, getSize());
     }
 
-    int getSize() {
+    public int getSize() {
         return size;
     }
 }
