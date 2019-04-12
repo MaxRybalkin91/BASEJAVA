@@ -14,9 +14,9 @@ public class ArrayStorage {
     }
 
     void save(Resume resume) {
-        if(size != storage.length) {
+        if (size != storage.length) {
             index = checkUuid(resume.getUuid());
-            if(index != -1) {
+            if (index != -1) {
                 System.out.println("Resume " + resume.getUuid() + " is already written");
             } else {
                 storage[size] = resume;
@@ -29,7 +29,7 @@ public class ArrayStorage {
 
     void update(Resume resume) {
         index = checkUuid(resume.getUuid());
-        if(index != -1) {
+        if (index != -1) {
             storage[index] = resume;
         } else {
             System.out.println("This UUID is empty! You need to set it!");
@@ -59,8 +59,8 @@ public class ArrayStorage {
     }
 
     private int checkUuid(String uuid) {
-        for(int i = 0; i < size; i++) {
-            if(storage[i].getUuid().equals(uuid)) {
+        for (int i = 0; i < size; i++) {
+            if (storage[i].getUuid().equals(uuid)) {
                 return i;
             }
         }
