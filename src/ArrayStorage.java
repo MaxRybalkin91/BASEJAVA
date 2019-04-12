@@ -15,8 +15,7 @@ public class ArrayStorage {
 
     void save(Resume resume) {
         if (size != storage.length) {
-            index = checkUuid(resume.getUuid());
-            if (index != -1) {
+            if (checkUuid(resume.getUuid()) != -1) {
                 System.out.println("Resume " + resume.getUuid() + " is already written");
             } else {
                 storage[size] = resume;
