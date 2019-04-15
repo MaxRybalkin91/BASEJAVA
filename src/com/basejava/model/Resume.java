@@ -1,3 +1,5 @@
+package com.basejava.model;
+
 /**
  * Initial resume class
  */

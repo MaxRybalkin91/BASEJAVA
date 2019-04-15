@@ -1,3 +1,7 @@
+package com.basejava.storage;
+
+import com.basejava.model.Resume;
+
 import java.util.Arrays;
 
 /**
@@ -15,7 +19,7 @@ public class ArrayStorage {
     public void save(Resume resume) {
         if (size != storage.length) {
             if (getIndex(resume.getUuid()) != -1) {
-                System.out.println("Resume " + resume.getUuid() + " is already written");
+                System.out.println("com.basejava.model.Resume " + resume.getUuid() + " is already written");
             } else {
                 storage[size] = resume;
                 size++;
@@ -39,7 +43,7 @@ public class ArrayStorage {
         if (index != -1) {
             return storage[index];
         }
-        System.out.println("Resume not founded");
+        System.out.println("com.basejava.model.Resume not founded");
         return null;
     }
 
