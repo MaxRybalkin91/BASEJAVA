@@ -4,36 +4,29 @@ import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Arrays;
 
-public class SortedArrayStorage extends AbstractArrayStorage{
-    @Override
-    public void clear() {
+public class SortedArrayStorage extends AbstractArrayStorage {
 
+    @Override
+    protected void deleteSortedElement(int index) {
+        int length = size - index - 1;
+        System.arraycopy(storage, index + 1, storage, index, length);
     }
 
     @Override
-    public void update(Resume r) {
-
+    protected void saveSortedElement(Resume resume, int index) {
+        int destPos = -index - 1;
+        System.arraycopy(storage, destPos, storage, destPos + 1, size - destPos);
+        storage[destPos] = resume;
     }
 
-    @Override
-    public void save(Resume r) {
-
-    }
-
-    @Override
-    public void delete(String uuid) {
-
-    }
-
-    @Override
-    public Resume[] getAll() {
-        return new Resume[0];
+    protected void updateSortedElement(Resume resume, int index) {
+        storage[index] = resume;
     }
 
     @Override
     protected int getIndex(String uuid) {
-        Resume searchKey = new Resume();
-        searchKey.setUuid(uuid);
-        return Arrays.binarySearch(storage, 0, size, searchKey);
+        Resume key = new Resume();
+        key.setUuid(uuid);
+        return Arrays.binarySearch(storage, 0, size, key);
     }
 }
