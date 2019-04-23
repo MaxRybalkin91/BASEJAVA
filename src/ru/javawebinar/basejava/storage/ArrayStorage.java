@@ -10,11 +10,6 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void updateSortedElement(Resume resume, int index) {
-        storage[index] = resume;
-    }
-
-    @Override
     protected void deleteSortedElement(int index) {
         storage[index] = storage[size - 1];
     }
