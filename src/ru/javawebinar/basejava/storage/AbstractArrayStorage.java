@@ -64,11 +64,11 @@ public abstract class AbstractArrayStorage implements Storage {
         return storage[index];
     }
 
-    protected abstract void deleteSortedElement(int index);
-
     protected abstract void saveSortedElement(Resume resume, int index);
 
     protected abstract void updateSortedElement(Resume resume, int index);
+
+    protected abstract void deleteSortedElement(int index);
 
     protected abstract int getIndex(String uuid);
 }
