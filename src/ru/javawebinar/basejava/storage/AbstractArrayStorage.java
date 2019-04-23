@@ -24,7 +24,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index < 0) {
             System.out.println("Resume " + resume.getUuid() + " is not in this storage");
         } else {
-            updateSortedElement(resume, index);
+            storage[index] = resume;
         }
     }
 
@@ -62,10 +62,6 @@ public abstract class AbstractArrayStorage implements Storage {
             return null;
         }
         return storage[index];
-    }
-
-    protected void updateSortedElement(Resume resume, int index) {
-        storage[index] = resume;
     }
 
     protected abstract void saveSortedElement(Resume resume, int index);
