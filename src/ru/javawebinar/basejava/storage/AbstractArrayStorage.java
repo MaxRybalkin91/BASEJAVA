@@ -39,7 +39,7 @@ public abstract class AbstractArrayStorage implements Storage {
         } else if (size == STORAGE_LIMIT) {
             System.out.println("Storage is full!");
         } else {
-            saveSortedElement(resume, index);
+            saveElement(resume, index);
             size++;
         }
     }
@@ -49,7 +49,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index < 0) {
             System.out.println("Resume " + uuid + " is not in this storage");
         } else {
-            deleteSortedElement(index);
+            deleteElement(index);
             storage[size - 1] = null;
             size--;
         }
@@ -64,9 +64,9 @@ public abstract class AbstractArrayStorage implements Storage {
         return storage[index];
     }
 
-    protected abstract void saveSortedElement(Resume resume, int index);
+    protected abstract void saveElement(Resume resume, int index);
 
-    protected abstract void deleteSortedElement(int index);
+    protected abstract void deleteElement(int index);
 
     protected abstract int getIndex(String uuid);
 }
