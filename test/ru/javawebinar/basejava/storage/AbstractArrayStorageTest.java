@@ -1,15 +1,14 @@
 package ru.javawebinar.basejava.storage;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import ru.javawebinar.basejava.exception.ExistStorageException;
-import ru.javawebinar.basejava.exception.NotExistStorageException;
-import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
+import org.junit.*;
 
-public abstract class AbstractArrayStorageTest {
+public abstract class AbstractArrayStorageTest extends Assert {
     private Storage storage;
+
+    public AbstractArrayStorageTest(Storage storage) {
+        this.storage = storage;
+    }
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
@@ -24,43 +23,43 @@ public abstract class AbstractArrayStorageTest {
     }
 
     @Test
-    public void size() throws Exception {
-        Assert.assertEquals(3, storage.size());
+    public void size() {
+        assertEquals(3, storage.size());
     }
 
     @Test
-    public void clear() throws Exception {
+    public void clear() {
         storage.clear();
-        Assert.assertEquals(0, storage.size());
+        assertEquals(0, storage.size());
     }
 
     @Test
-    public void update() throws Exception {
-
+    public void update() {
+        Resume resume = new Resume("uuid");
+        storage.update(resume);
     }
 
     @Test
-    public void getAll() throws Exception {
-
+    public void getAll() {
+        Resume[] testStorage = storage.getAll();
+        assertEquals(3, testStorage.length);
     }
 
     @Test
-    public void save() throws Exception {
-
+    public void save() {
+        String UUID_4 = "uuid4";
+        storage.save(new Resume(UUID_4));
+        assertEquals(4, storage.size());
     }
 
     @Test
-    public void delete() throws Exception {
-
+    public void delete() {
+        storage.delete(UUID_3);
+        assertEquals(2, storage.size());
     }
 
     @Test
-    public void get() throws Exception {
-
-    }
-
-    @Test(expected = NotExistStorageException.class)
-    public void getNotExist() throws Exception {
-        storage.get("dummy");
+    public void get() {
+        storage.get(UUID_3);
     }
 }
