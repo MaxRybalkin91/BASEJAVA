@@ -1,6 +1,10 @@
 package ru.javawebinar.basejava.storage;
 
+import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
+
+import static ru.javawebinar.basejava.storage.AbstractArrayStorage.STORAGE_LIMIT;
+
 import org.junit.*;
 
 public abstract class AbstractArrayStorageTest extends Assert {
@@ -35,7 +39,7 @@ public abstract class AbstractArrayStorageTest extends Assert {
 
     @Test
     public void update() {
-        Resume resume = new Resume("uuid");
+        Resume resume = new Resume("test_uuid");
         storage.update(resume);
     }
 
@@ -60,6 +64,19 @@ public abstract class AbstractArrayStorageTest extends Assert {
 
     @Test
     public void get() {
-        storage.get(UUID_3);
+        storage.get("test_uuid");
+    }
+
+    @Test(expected = StorageException.class)
+    public void arrayOverflow() {
+        storage.clear();
+        try {
+            for (int i = 0; i != STORAGE_LIMIT; i++) {
+                storage.save(new Resume());
+            }
+        } catch (StorageException e) {
+            Assert.fail();
+        }
+        storage.save(new Resume());
     }
 }

@@ -1,4 +1,3 @@
-
 package ru.javawebinar.basejava;
 
 import ru.javawebinar.basejava.model.Resume;
@@ -14,7 +13,7 @@ public class MainReflection {
         System.out.println(field.get(r));
         field.set(r, "new_uuid");
         System.out.println(r);
-        String strValue = (String)field.get(r);
-        System.out.println(strValue);
+        String task = (String)field.get(r);
+        System.out.println(task);
     }
 }
