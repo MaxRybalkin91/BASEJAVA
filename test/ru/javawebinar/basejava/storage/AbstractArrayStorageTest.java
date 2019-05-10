@@ -1,8 +1,6 @@
 package ru.javawebinar.basejava.storage;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.exception.StorageException;
@@ -47,7 +45,7 @@ public abstract class AbstractArrayStorageTest {
     public void update() {
         Resume resume3 = new Resume("uuid3");
         storage.update(resume3);
-        assertSame(resume3, RESUME_3);
+        assertEquals(resume3, RESUME_3);
     }
 
     @Test(expected = NotExistStorageException.class)

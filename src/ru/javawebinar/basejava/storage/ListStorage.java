@@ -5,7 +5,6 @@ import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ListStorage extends AbstractStorage {
@@ -17,7 +16,6 @@ public class ListStorage extends AbstractStorage {
             throw new ExistStorageException(resume.getUuid());
         else {
             storage.add(resume);
-            Collections.sort(storage);
         }
     }
 
@@ -64,6 +62,6 @@ public class ListStorage extends AbstractStorage {
 
     private int getIndex(String uuid) {
         Resume key = new Resume(uuid);
-        return Collections.binarySearch(storage, key);
+        return storage.indexOf(key);
     }
 }
