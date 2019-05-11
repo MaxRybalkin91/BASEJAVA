@@ -1,8 +1,5 @@
 package ru.javawebinar.basejava.storage;
 
-import ru.javawebinar.basejava.exception.ExistStorageException;
-import ru.javawebinar.basejava.exception.NotExistStorageException;
-import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Arrays;
@@ -22,48 +19,37 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size = 0;
     }
 
-    public void update(Resume resume) {
+    @Override
+    public void updateInStorage(Resume resume) {
         int index = getIndex(resume.getUuid());
-        if (index < 0) {
-            throw new NotExistStorageException(resume.getUuid());
-        } else {
-            storage[index] = resume;
-        }
+        storage[index] = resume;
     }
 
     public Resume[] getAll() {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
-    public void save(Resume resume) {
+    @Override
+    public void saveToStorage(Resume resume) {
         int index = getIndex(resume.getUuid());
-        if (index >= 0) {
-            throw new ExistStorageException(resume.getUuid());
-        } else if (size == STORAGE_LIMIT) {
-            throw new StorageException("Storage overflow!", resume.getUuid());
-        } else {
-            saveElement(resume, index);
-            size++;
-        }
+        saveElement(resume, index);
+        size++;
     }
 
-    public void delete(String uuid) {
+    @Override
+    public void deleteFromStorage(String uuid) {
         int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        } else {
-            deleteElement(index);
-            storage[size - 1] = null;
-            size--;
-        }
+        deleteElement(index);
+        storage[size - 1] = null;
+        size--;
     }
 
-    public Resume get(String uuid) {
+    @Override
+    public Resume getFromStorage(String uuid) {
         int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-        return storage[index];
+        if (index >= 0)
+            return storage[index];
+        return null;
     }
 
     protected abstract void saveElement(Resume resume, int index);

@@ -1,7 +1,5 @@
 package ru.javawebinar.basejava.storage;
 
-import ru.javawebinar.basejava.exception.ExistStorageException;
-import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.ArrayList;
@@ -11,12 +9,8 @@ public class ListStorage extends AbstractStorage {
     protected List<Resume> storage = new ArrayList<>();
 
     @Override
-    public void save(Resume resume) {
-        if (getIndex(resume.getUuid()) >= 0)
-            throw new ExistStorageException(resume.getUuid());
-        else {
-            storage.add(resume);
-        }
+    protected void saveToStorage(Resume resume) {
+        storage.add(resume);
     }
 
     @Override
@@ -25,29 +19,23 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public void update(Resume resume) {
+    protected void updateInStorage(Resume resume) {
         int index = getIndex(resume.getUuid());
-        if (index >= 0)
-            storage.set(index, resume);
-        else
-            throw new NotExistStorageException(resume.getUuid());
+        storage.set(index, resume);
     }
 
     @Override
-    public Resume get(String uuid) {
+    protected Resume getFromStorage(String uuid) {
         int index = getIndex(uuid);
-        if (index == -1)
-            throw new NotExistStorageException(uuid);
-        return storage.get(index);
+        if (index >= 0)
+            return storage.get(index);
+        return null;
     }
 
     @Override
-    public void delete(String uuid) {
+    protected void deleteFromStorage(String uuid) {
         int index = getIndex(uuid);
-        if (index >= 0)
-            storage.remove(index);
-        else
-            throw new NotExistStorageException(uuid);
+        storage.remove(index);
     }
 
     @Override
@@ -61,7 +49,10 @@ public class ListStorage extends AbstractStorage {
     }
 
     private int getIndex(String uuid) {
-        Resume key = new Resume(uuid);
-        return storage.indexOf(key);
+        for (int i = 0; i < storage.size(); i++) {
+            if (storage.get(i).getUuid().equals(uuid))
+                return i;
+        }
+        return -1;
     }
 }

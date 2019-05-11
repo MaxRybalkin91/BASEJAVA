@@ -1,20 +1,40 @@
 package ru.javawebinar.basejava.storage;
 
+import ru.javawebinar.basejava.exception.ExistStorageException;
+import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
-    public abstract void save(Resume r);
+    protected abstract void saveToStorage(Resume r);
 
-    public abstract void clear();
+    protected abstract void updateInStorage(Resume r);
 
-    public abstract void update(Resume r);
+    protected abstract Resume getFromStorage(String uuid);
 
-    public abstract Resume get(String uuid);
+    protected abstract void deleteFromStorage(String uuid);
 
-    public abstract void delete(String uuid);
+    public void save(Resume r) {
+        if(get(r.getUuid()) != null)
+            throw new ExistStorageException(r.getUuid());
+        saveToStorage(r);
+    }
 
-    public abstract Resume[] getAll();
+    public void update(Resume r) {
+        if(get(r.getUuid()) == null)
+            throw new NotExistStorageException(r.getUuid());
+        updateInStorage(r);
+    }
 
-    public abstract int size();
+    public void delete(String uuid) {
+        if(get(uuid) == null)
+            throw new NotExistStorageException(uuid);
+        deleteFromStorage(uuid);
+    }
+
+    public Resume get(String uuid) {
+        if(getFromStorage(uuid) == null)
+            throw new NotExistStorageException(uuid);
+        return getFromStorage(uuid);
+    }
 }
