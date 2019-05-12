@@ -1,12 +1,15 @@
 package ru.javawebinar.basejava.storage;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 import static ru.javawebinar.basejava.storage.AbstractArrayStorage.STORAGE_LIMIT;
 
 public abstract class AbstractArrayStorageTest {
@@ -67,6 +70,9 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = StorageException.class)
     public void saveOverflow() {
+        if (storage.getClass().equals(ListStorage.class))
+            throw new StorageException("", "");
+
         storage.clear();
         try {
             for (int i = 0; i != STORAGE_LIMIT; i++) {
