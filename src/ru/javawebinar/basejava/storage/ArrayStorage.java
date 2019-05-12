@@ -23,4 +23,9 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
         return -1;
     }
+
+    @Override
+    public Resume get(String uuid) {
+        return storage[getIndex(uuid)];
+    }
 }
