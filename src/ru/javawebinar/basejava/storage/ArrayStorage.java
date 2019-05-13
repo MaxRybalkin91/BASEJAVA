@@ -22,9 +22,4 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
         return -1;
     }
-
-    @Override
-    protected Resume getFromStorage(int index) {
-        return storage[index];
-    }
 }
