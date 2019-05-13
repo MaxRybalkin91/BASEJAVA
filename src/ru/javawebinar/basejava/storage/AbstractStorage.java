@@ -18,28 +18,28 @@ public abstract class AbstractStorage implements Storage {
 
     public void save(Resume r) {
         int index = getIndexOfResume(r.getUuid());
-        if(index >= 0)
+        if (index >= 0)
             throw new ExistStorageException(r.getUuid());
         saveToStorage(r, index);
     }
 
     public void update(Resume r) {
         int index = getIndexOfResume(r.getUuid());
-        if(index == -1)
+        if (index < 0)
             throw new NotExistStorageException(r.getUuid());
         updateInStorage(r, index);
     }
 
     public void delete(String uuid) {
         int index = getIndexOfResume(uuid);
-        if(index == -1)
+        if (index < 0)
             throw new NotExistStorageException(uuid);
         deleteFromStorage(index);
     }
 
     public Resume get(String uuid) {
         int index = getIndexOfResume(uuid);
-        if(index == -1)
+        if (index < 0)
             throw new NotExistStorageException(uuid);
         return getFromStorage(index);
     }
