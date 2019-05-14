@@ -70,7 +70,7 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = StorageException.class)
     public void saveOverflow() {
-        if (storage.getClass().equals(ListStorage.class))
+        if (storage.getClass().equals(ListStorage.class) || storage.getClass().equals(MapStorage.class))
             throw new StorageException("", "");
 
         storage.clear();

@@ -6,41 +6,41 @@ import ru.javawebinar.basejava.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
-    protected abstract void saveToStorage(Resume r, int index);
+    protected abstract void saveToStorage(Resume r, Object key);
 
-    protected abstract void updateInStorage(Resume r, int index);
+    protected abstract void updateInStorage(Resume r, Object key);
 
-    protected abstract void deleteFromStorage(int index);
+    protected abstract void deleteFromStorage(Object key);
 
-    protected abstract Resume getFromStorage(int index);
+    protected abstract Resume getFromStorage(Object key);
 
-    protected abstract int getIndex(String uuid);
+    protected abstract Object getSearchKey(String uuid);
 
     public void save(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index >= 0)
+        Object key = getSearchKey(r.getUuid());
+        if(key != null)
             throw new ExistStorageException(r.getUuid());
-        saveToStorage(r, index);
+        saveToStorage(r, key);
     }
 
     public void update(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index < 0)
+        Object key = getSearchKey(r.getUuid());
+        if(key == null)
             throw new NotExistStorageException(r.getUuid());
-        updateInStorage(r, index);
+        updateInStorage(r, key);
     }
 
     public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0)
+        Object key = getSearchKey(uuid);
+        if(key == null)
             throw new NotExistStorageException(uuid);
-        deleteFromStorage(index);
+        deleteFromStorage(key);
     }
 
     public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0)
+        Object key = getSearchKey(uuid);
+        if(key == null)
             throw new NotExistStorageException(uuid);
-        return getFromStorage(index);
+        return getFromStorage(key);
     }
 }
