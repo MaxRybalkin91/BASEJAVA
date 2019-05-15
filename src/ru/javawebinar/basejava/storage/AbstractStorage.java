@@ -16,30 +16,32 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Object getSearchKey(String uuid);
 
+    protected abstract boolean isExist(String uuid);
+
     public void save(Resume r) {
         Object key = getSearchKey(r.getUuid());
-        if(key != null)
+        if(isExist(r.getUuid()))
             throw new ExistStorageException(r.getUuid());
         saveToStorage(r, key);
     }
 
     public void update(Resume r) {
         Object key = getSearchKey(r.getUuid());
-        if(key == null)
+        if(!isExist(r.getUuid()))
             throw new NotExistStorageException(r.getUuid());
         updateInStorage(r, key);
     }
 
     public void delete(String uuid) {
         Object key = getSearchKey(uuid);
-        if(key == null)
+        if(!isExist(uuid))
             throw new NotExistStorageException(uuid);
         deleteFromStorage(key);
     }
 
     public Resume get(String uuid) {
         Object key = getSearchKey(uuid);
-        if(key == null)
+        if(!isExist(uuid))
             throw new NotExistStorageException(uuid);
         return getFromStorage(key);
     }

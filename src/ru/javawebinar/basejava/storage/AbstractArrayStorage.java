@@ -20,6 +20,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size = 0;
     }
 
+    public boolean isExist(String uuid) {
+        if (getSearchKey(uuid) >= 0)
+            return true;
+        return false;
+    }
+
     @Override
     public void updateInStorage(Resume resume, Object index) {
         storage[(Integer) index] = resume;
@@ -53,5 +59,5 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected abstract void deleteElement(int index);
 
-    protected abstract Object getSearchKey(String uuid);
+    protected abstract Integer getSearchKey(String uuid);
 }

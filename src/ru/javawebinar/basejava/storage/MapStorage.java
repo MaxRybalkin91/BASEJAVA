@@ -53,4 +53,9 @@ public class MapStorage extends AbstractStorage {
         }
         return key;
     }
+
+    @Override
+    protected boolean isExist(String uuid) {
+        return getSearchKey(uuid) != null;
+    }
 }
