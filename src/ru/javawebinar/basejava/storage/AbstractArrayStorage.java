@@ -6,7 +6,7 @@ import ru.javawebinar.basejava.model.Resume;
 import java.util.Arrays;
 
 public abstract class AbstractArrayStorage extends AbstractStorage {
-    protected static final int STORAGE_LIMIT = 10000;
+    static final int STORAGE_LIMIT = 10000;
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
@@ -21,7 +21,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     public boolean isExist(String uuid) {
-        return getSearchKey(uuid) >= 0;
+        return (Integer) getSearchKey(uuid) >= 0;
     }
 
     @Override
@@ -57,5 +57,5 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected abstract void deleteElement(int index);
 
-    protected abstract Integer getSearchKey(String uuid);
+    protected abstract Object getSearchKey(String uuid);
 }
