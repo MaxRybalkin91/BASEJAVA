@@ -21,9 +21,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     public boolean isExist(String uuid) {
-        if (getSearchKey(uuid) >= 0)
-            return true;
-        return false;
+        return getSearchKey(uuid) >= 0;
     }
 
     @Override

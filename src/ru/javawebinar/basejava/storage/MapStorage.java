@@ -6,11 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MapStorage extends AbstractStorage {
-    HashMap<Object, Resume> storage = new HashMap<>();
+    HashMap<String, Resume> storage = new HashMap<>();
 
     @Override
     protected void saveToStorage(Resume resume, Object key) {
-        storage.put(key, resume);
+        storage.put(key.toString(), resume);
     }
 
     @Override
@@ -20,12 +20,12 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected void updateInStorage(Resume resume, Object key) {
-        storage.replace(key, resume);
+        storage.replace(key.toString(), resume);
     }
 
     @Override
     protected void deleteFromStorage(Object key) {
-        storage.remove(key);
+        storage.remove(key.toString());
     }
 
     @Override
@@ -40,22 +40,22 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected Resume getFromStorage(Object key) {
-        return storage.get(key);
+        return storage.get(key.toString());
     }
 
     @Override
-    protected Object getSearchKey(String uuid) {
-        Resume key = null;
+    protected String getSearchKey(String uuid) {
+        String key = "";
         Resume resume = new Resume(uuid);
-        for (Map.Entry<Object, Resume> pair : storage.entrySet()) {
+        for (Map.Entry<String, Resume> pair : storage.entrySet()) {
             if (pair.getValue().equals(resume))
-                key = pair.getValue();
+                key = pair.getValue().toString();
         }
         return key;
     }
 
     @Override
     protected boolean isExist(String uuid) {
-        return getSearchKey(uuid) != null;
+        return !getSearchKey(uuid).equals("");
     }
 }
