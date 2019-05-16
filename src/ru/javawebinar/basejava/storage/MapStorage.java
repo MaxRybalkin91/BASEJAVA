@@ -10,7 +10,7 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected void saveToStorage(Resume resume, Object key) {
-        storage.put((String) key, resume);
+        storage.put(resume.getUuid(), resume);
     }
 
     @Override
@@ -20,7 +20,7 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected void updateInStorage(Resume resume, Object key) {
-        storage.replace((String) key, resume);
+        storage.replace(resume.getUuid(), resume);
     }
 
     @Override
