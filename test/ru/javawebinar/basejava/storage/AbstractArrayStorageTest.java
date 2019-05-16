@@ -19,8 +19,6 @@ public abstract class AbstractArrayStorageTest {
     private static final Resume RESUME_3 = new Resume("uuid3");
     private static final Resume RESUME_4 = new Resume("uuid4");
 
-    private Resume[] resumes = new Resume[] {RESUME_1, RESUME_2, RESUME_3};
-
     protected AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
     }
@@ -70,9 +68,6 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = StorageException.class)
     public void saveOverflow() {
-        if (storage.getClass().equals(ListStorage.class) || storage.getClass().equals(MapStorage.class))
-            throw new StorageException("", "");
-
         storage.clear();
         try {
             for (int i = 0; i != STORAGE_LIMIT; i++) {
@@ -109,7 +104,7 @@ public abstract class AbstractArrayStorageTest {
     public void getAll() {
         Resume[] array = new Resume[]{RESUME_1, RESUME_2, RESUME_3,};
         assertEquals(3, array.length);
-        assertArrayEquals(array, resumes);
+        assertArrayEquals(array, storage.getAll());
     }
 
     private void assertSize(int size) {
