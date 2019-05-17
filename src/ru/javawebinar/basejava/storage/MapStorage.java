@@ -31,7 +31,7 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     public Resume[] getAll() {
-        Resume[] sortedStorage = storage.values().toArray(new Resume[0]);
+        Resume[] sortedStorage = storage.values().toArray(new Resume[size()]);
         Arrays.sort(sortedStorage);
         return sortedStorage;
     }
@@ -53,10 +53,6 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected boolean isExist(String uuid) {
-        for (Map.Entry<String, Resume> pair : storage.entrySet()) {
-            if (pair.getKey().equals(uuid))
-                return true;
-        }
-        return false;
+        return storage.containsKey(uuid);
     }
 }
