@@ -1,19 +1,16 @@
 package ru.javawebinar.basejava.storage;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
-import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static ru.javawebinar.basejava.storage.AbstractArrayStorage.STORAGE_LIMIT;
 
 public abstract class AbstractArrayStorageTest {
-    private Storage storage;
+    protected Storage storage;
     private static final Resume RESUME_1 = new Resume("uuid1");
     private static final Resume RESUME_2 = new Resume("uuid2");
     private static final Resume RESUME_3 = new Resume("uuid3");
@@ -66,19 +63,6 @@ public abstract class AbstractArrayStorageTest {
         storage.save(RESUME_3);
     }
 
-    @Test(expected = StorageException.class)
-    public void saveOverflow() {
-        storage.clear();
-        try {
-            for (int i = 0; i != STORAGE_LIMIT; i++) {
-                storage.save(new Resume());
-            }
-        } catch (StorageException e) {
-            Assert.fail("Storage overflow!");
-        }
-        storage.save(new Resume());
-    }
-
     @Test(expected = NotExistStorageException.class)
     public void delete() {
         storage.delete(RESUME_3.getUuid());
@@ -103,8 +87,8 @@ public abstract class AbstractArrayStorageTest {
     @Test
     public void getAll() {
         Resume[] array = new Resume[]{RESUME_1, RESUME_2, RESUME_3};
-        assertEquals(array.length, (storage.getAll()).length);
-        assertArrayEquals(array, storage.getAll());
+        assertEquals(array.length, (storage.getAllSorted()).size());
+        assertArrayEquals(array, storage.getAllSorted().toArray());
     }
 
     private void assertSize(int size) {

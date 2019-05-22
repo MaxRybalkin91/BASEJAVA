@@ -2,16 +2,19 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.model.Resume;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class MapStorage extends AbstractStorage {
-    Map<String, Resume> storage = new HashMap<>();
+import static ru.javawebinar.basejava.storage.SortedArrayStorage.RESUME_COMPARATOR;
+
+public class MapResumeStorage extends AbstractStorage {
+    Map<Resume, Resume> storage = new HashMap<>();
 
     @Override
     protected void saveToStorage(Resume resume, Object key) {
-        storage.put(resume.getUuid(), resume);
+        storage.put(resume, resume);
     }
 
     @Override
@@ -21,18 +24,18 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected void updateInStorage(Resume resume, Object key) {
-        storage.replace(resume.getUuid(), resume);
+        storage.replace(resume, resume);
     }
 
     @Override
     protected void deleteFromStorage(Object key) {
-        storage.remove(key.toString());
+        storage.remove(key);
     }
 
     @Override
-    public Resume[] getAll() {
-        Resume[] sortedStorage = storage.values().toArray(new Resume[size()]);
-        Arrays.sort(sortedStorage);
+    public List<Resume> getAllSorted() {
+        List<Resume> sortedStorage = new ArrayList<>(storage.values());
+        sortedStorage.sort(RESUME_COMPARATOR);
         return sortedStorage;
     }
 
@@ -43,16 +46,16 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected Resume getFromStorage(Object key) {
-        return storage.get(key.toString());
+        return storage.get(key);
     }
 
     @Override
-    protected String getSearchKey(String uuid) {
-        return uuid;
+    protected Resume getSearchKey(String uuid) {
+        return new Resume(uuid);
     }
 
     @Override
     protected boolean isExist(String uuid) {
-        return storage.containsKey(uuid);
+        return storage.containsKey(new Resume(uuid));
     }
 }
