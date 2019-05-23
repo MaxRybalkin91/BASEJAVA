@@ -6,10 +6,10 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         ArrayStorageTest.class,
-        SortedArrayStorageTest.class,
         ListStorageTest.class,
+        MapResumeStorageTest.class,
         MapUuidStorageTest.class,
-        MapResumeStorageTest.class
+        SortedArrayStorageTest.class
 })
 
 public class AllStorageTest {

@@ -4,45 +4,61 @@ import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
+import java.util.Comparator;
+import java.util.List;
+
 public abstract class AbstractStorage implements Storage {
 
-    protected abstract void saveToStorage(Resume r, Object key);
+    protected abstract void saveToStorage(Resume resume, Object searchKey);
 
-    protected abstract void updateInStorage(Resume r, Object key);
+    protected abstract void updateInStorage(Resume resume, Object searchKey);
 
-    protected abstract void deleteFromStorage(Object key);
+    protected abstract void deleteFromStorage(Object searchKey);
 
-    protected abstract Resume getFromStorage(Object key);
+    protected abstract Resume getFromStorage(Object searchKey);
 
     protected abstract Object getSearchKey(String uuid);
 
     protected abstract boolean isExist(String uuid);
 
-    public void save(Resume r) {
-        Object key = getSearchKey(r.getUuid());
-        if(isExist(r.getUuid()))
-            throw new ExistStorageException(r.getUuid());
-        saveToStorage(r, key);
+    protected abstract List<Resume> getAllStorage();
+
+    static final Comparator<Resume> RESUME_COMPARATOR = Comparator.comparing(Resume::getFullName)
+            .thenComparing(Resume::getUuid);
+
+    public void save(Resume resume) {
+        saveToStorage(resume, getNotExistedSearchKey(resume.getUuid()));
     }
 
-    public void update(Resume r) {
-        Object key = getSearchKey(r.getUuid());
-        if(!isExist(r.getUuid()))
-            throw new NotExistStorageException(r.getUuid());
-        updateInStorage(r, key);
+    public void update(Resume resume) {
+        updateInStorage(resume, getExistedSearchKey(resume.getUuid()));
     }
 
     public void delete(String uuid) {
-        Object key = getSearchKey(uuid);
-        if(!isExist(uuid))
-            throw new NotExistStorageException(uuid);
-        deleteFromStorage(key);
+        deleteFromStorage(getExistedSearchKey(uuid));
     }
 
     public Resume get(String uuid) {
-        Object key = getSearchKey(uuid);
-        if(!isExist(uuid))
+        return getFromStorage(getExistedSearchKey(uuid));
+    }
+
+    public List<Resume> getAllSorted() {
+        List<Resume> sortedStorage = getAllStorage();
+        sortedStorage.sort(RESUME_COMPARATOR);
+        return sortedStorage;
+    }
+
+    private Object getExistedSearchKey(String uuid) {
+        if (!isExist(uuid)) {
             throw new NotExistStorageException(uuid);
-        return getFromStorage(key);
+        }
+        return getSearchKey(uuid);
+    }
+
+    private Object getNotExistedSearchKey(String uuid) {
+        if (isExist(uuid)) {
+            throw new ExistStorageException(uuid);
+        }
+        return getSearchKey(uuid);
     }
 }

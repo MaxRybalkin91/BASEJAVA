@@ -7,13 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static ru.javawebinar.basejava.storage.SortedArrayStorage.RESUME_COMPARATOR;
-
 public class MapUuidStorage extends AbstractStorage {
     Map<String, Resume> storage = new HashMap<>();
 
     @Override
-    protected void saveToStorage(Resume resume, Object key) {
+    protected void saveToStorage(Resume resume, Object searchKey) {
         storage.put(resume.getUuid(), resume);
     }
 
@@ -23,20 +21,18 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    protected void updateInStorage(Resume resume, Object key) {
+    protected void updateInStorage(Resume resume, Object searchKey) {
         storage.replace(resume.getUuid(), resume);
     }
 
     @Override
-    protected void deleteFromStorage(Object key) {
-        storage.remove(key.toString());
+    protected void deleteFromStorage(Object searchKey) {
+        storage.remove(searchKey.toString());
     }
 
     @Override
-    public List<Resume> getAllSorted() {
-        List<Resume> sortedStorage = new ArrayList<>(storage.values());
-        sortedStorage.sort(RESUME_COMPARATOR);
-        return sortedStorage;
+    public List<Resume> getAllStorage() {
+        return new ArrayList<>(storage.values());
     }
 
     @Override
@@ -45,8 +41,8 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume getFromStorage(Object key) {
-        return storage.get(key.toString());
+    protected Resume getFromStorage(Object searchKey) {
+        return storage.get(searchKey.toString());
     }
 
     @Override

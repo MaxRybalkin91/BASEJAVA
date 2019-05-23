@@ -18,11 +18,11 @@ public class SortedArrayStorageTest extends AbstractArrayStorageTest {
         storage.clear();
         try {
             for (int i = 0; i != STORAGE_LIMIT; i++) {
-                storage.save(new Resume());
+                storage.save(new Resume("new_uuid"));
             }
         } catch (StorageException e) {
             Assert.fail("Storage overflow!");
         }
-        storage.save(new Resume());
+        storage.save(new Resume("new_uuid"));
     }
 }

@@ -5,13 +5,11 @@ import ru.javawebinar.basejava.model.Resume;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ru.javawebinar.basejava.storage.SortedArrayStorage.RESUME_COMPARATOR;
-
 public class ListStorage extends AbstractStorage {
     protected List<Resume> storage = new ArrayList<>();
 
     @Override
-    protected void saveToStorage(Resume resume, Object key) {
+    protected void saveToStorage(Resume resume, Object index) {
         storage.add(resume);
     }
 
@@ -31,8 +29,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> getAllSorted() {
-        storage.sort(RESUME_COMPARATOR);
+    public List<Resume> getAllStorage() {
         return storage;
     }
 
@@ -49,8 +46,9 @@ public class ListStorage extends AbstractStorage {
     @Override
     protected Integer getSearchKey(String uuid) {
         for (int i = 0; i < storage.size(); i++) {
-            if (storage.get(i).getUuid().equals(uuid))
+            if (storage.get(i).getUuid().equals(uuid)) {
                 return i;
+            }
         }
         return null;
     }
