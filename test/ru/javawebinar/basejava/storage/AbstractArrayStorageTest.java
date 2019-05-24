@@ -10,13 +10,13 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractArrayStorageTest {
-    protected Storage storage;
+    Storage storage;
     private static final Resume RESUME_1 = new Resume("uuid1", "name1");
     private static final Resume RESUME_2 = new Resume("uuid2", "name2");
     private static final Resume RESUME_3 = new Resume("uuid3", "name3");
     private static final Resume RESUME_4 = new Resume("uuid4", "name4");
 
-    protected AbstractArrayStorageTest(Storage storage) {
+    AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
     }
 
@@ -41,7 +41,7 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void update() {
-        Resume resume3 = new Resume("uuid3", "name3");;
+        Resume resume3 = new Resume("uuid3", "name3");
         storage.update(resume3);
         assertEquals(resume3, RESUME_3);
     }
