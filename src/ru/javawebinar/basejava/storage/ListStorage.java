@@ -54,7 +54,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(String uuid) {
-        return getSearchKey(uuid) != null;
+    protected boolean isExist(Object searchKey) {
+        return searchKey != null;
     }
 }

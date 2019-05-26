@@ -21,8 +21,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size = 0;
     }
 
-    public boolean isExist(String uuid) {
-        return (Integer) getSearchKey(uuid) >= 0;
+    @Override
+    public boolean isExist(Object searchKey) {
+        return (Integer) searchKey >= 0;
     }
 
     @Override
@@ -39,20 +40,20 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     public void saveToStorage(Resume resume, Object index) {
         if(size == STORAGE_LIMIT)
             throw new StorageException("Storage overflow!", resume.getUuid());
-        saveElement(resume, (Integer)index);
+        saveElement(resume, (Integer) index);
         size++;
     }
 
     @Override
     public void deleteFromStorage(Object index) {
-        deleteElement((Integer)index);
+        deleteElement((Integer) index);
         storage[size - 1] = null;
         size--;
     }
 
     @Override
     protected Resume getFromStorage(Object index) {
-        return storage[(Integer)index];
+        return storage[(Integer) index];
     }
 
     protected abstract void saveElement(Resume resume, int index);
