@@ -61,7 +61,4 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected abstract void saveElement(Resume resume, int index);
 
     protected abstract void deleteElement(int index);
-
-    @Override
-    protected abstract Object getSearchKey(String uuid);
 }
