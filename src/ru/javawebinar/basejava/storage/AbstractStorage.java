@@ -6,8 +6,10 @@ import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Logger;
 
 public abstract class AbstractStorage<SearchKey> implements Storage {
+    private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
 
     protected abstract void saveToStorage(Resume resume, SearchKey searchKey);
 
@@ -28,26 +30,31 @@ public abstract class AbstractStorage<SearchKey> implements Storage {
 
     @Override
     public void save(Resume resume) {
+        LOG.info("Save " + resume);
         saveToStorage(resume, getNotExistedSearchKey(resume.getUuid()));
     }
 
     @Override
     public void update(Resume resume) {
+        LOG.info("Update " + resume);
         updateInStorage(resume, getExistedSearchKey(resume.getUuid()));
     }
 
     @Override
     public void delete(String uuid) {
+        LOG.info("Delete " + uuid);
         deleteFromStorage(getExistedSearchKey(uuid));
     }
 
     @Override
     public Resume get(String uuid) {
+        LOG.info("Get " + uuid);
         return getFromStorage(getExistedSearchKey(uuid));
     }
 
     @Override
     public List<Resume> getAllSorted() {
+        LOG.info("Get all sorted ");
         List<Resume> sortedStorage = getAllStorage();
         sortedStorage.sort(RESUME_COMPARATOR);
         return sortedStorage;
@@ -56,6 +63,7 @@ public abstract class AbstractStorage<SearchKey> implements Storage {
     private SearchKey getExistedSearchKey(String uuid) {
         SearchKey searchKey = getSearchKey(uuid);
         if (!isExist(searchKey)) {
+            LOG.warning("It's not such key " + uuid + " in the storage!");
             throw new NotExistStorageException(uuid);
         }
         return searchKey;
@@ -64,6 +72,7 @@ public abstract class AbstractStorage<SearchKey> implements Storage {
     private SearchKey getNotExistedSearchKey(String uuid) {
         SearchKey searchKey = getSearchKey(uuid);
         if (isExist(searchKey)) {
+            LOG.warning("Object with key " + uuid + "already saved in the storage!");
             throw new ExistStorageException(uuid);
         }
         return searchKey;
