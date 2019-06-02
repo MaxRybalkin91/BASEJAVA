@@ -143,8 +143,7 @@ public class ResumeTestData {
                 "университет информационных технологий, механики и оптики", YearMonth.of(1993, 9),
                 YearMonth.of(1996, 7), "Аспирантура (программист С, С++)",
                 ""));
-        educationOrganizations.add(new Organization("Санкт-Петербургский национальный исследовательский " +
-                "университет информационных технологий, механики и оптики", YearMonth.of(1987, 9),
+        educationOrganizations.add(new Organization("", YearMonth.of(1987, 9),
                 YearMonth.of(1993, 7), "Инженер (программист Fortran, C)",
                 ""));
         educationOrganizations.add(new Organization("Заочная физико-техническая школа при МФТИ",
