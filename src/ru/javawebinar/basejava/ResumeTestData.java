@@ -1,20 +1,27 @@
-package ru.javawebinar.basejava.storage;
+package ru.javawebinar.basejava;
 
 import ru.javawebinar.basejava.model.*;
 
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ResumeTestData {
 
     public static void main(String[] args) {
         Resume resume = new Resume("uuid", "Григорий Кислин");
+
         initializeResumeContactTypeSection(resume);
-        initializeResumeListTypeSection(resume);
         initializeResumeTextTypeSection(resume);
+        initializeResumeListTypeSection(resume);
         initializeResumeExperience(resume);
         initializeResumeEducation(resume);
+
+        System.out.println(resume.getFullName());
+        System.out.println();
+
+        printResume(resume);
     }
 
     private static void initializeResumeContactTypeSection(Resume resume) {
@@ -25,6 +32,13 @@ public class ResumeTestData {
         resume.setContacts(ContactType.GITHUB, "GITHUB_URL");
         resume.setContacts(ContactType.STACKOVERFLOW, "STACKOVERFLOW_URL");
         resume.setContacts(ContactType.HOMEPAGE, "HOMEPAGE_URL");
+    }
+
+    private static void initializeResumeTextTypeSection(Resume resume) {
+        resume.setSections(SectionType.OBJECTIVE, new TextType("Ведущий стажировок и корпоративного обучения " +
+                "по Java Web и Enterprise технологиям"));
+        resume.setSections(SectionType.PERSONAL, new TextType("Аналитический склад ума, сильная логика, " +
+                "креативность, инициативность. Пурист кода и архитектуры"));
     }
 
     private static void initializeResumeListTypeSection(Resume resume) {
@@ -39,7 +53,7 @@ public class ResumeTestData {
         achievments.add("Налаживание процесса разработки и непрерывной интеграции ERP системы River BPM. " +
                 "Интеграция с 1С, Bonita BPM, CMIS, LDAP. Разработка приложения управления окружением на стеке: " +
                 "Scala/Play/Anorm/JQuery. Разработка SSO аутентификации и авторизации различных ERP модулей, интеграция " +
-                "CIFS/SMB java сервера.\n");
+                "CIFS/SMB java сервера.");
         achievments.add("Реализация c нуля Rich Internet Application приложения на стеке технологий JPA, Spring, Spring-MVC, " +
                 "GWT, ExtGWT (GXT), Commet, HTML5, Highstock для алгоритмического трейдинга.");
         achievments.add("Создание JavaEE фреймворка для отказоустойчивого взаимодействия слабо-связанных сервисов " +
@@ -72,13 +86,6 @@ public class ResumeTestData {
 
         resume.setSections(SectionType.ACHIEVEMENT, new ListType(achievments));
         resume.setSections(SectionType.QUALIFICATIONS, new ListType(qualifications));
-    }
-
-    private static void initializeResumeTextTypeSection(Resume resume) {
-        resume.setSections(SectionType.OBJECTIVE, new TextType("Ведущий стажировок и корпоративного обучения " +
-                "по Java Web и Enterprise технологиям"));
-        resume.setSections(SectionType.PERSONAL, new TextType("Аналитический склад ума, сильная логика, " +
-                "креативность, инициативность. Пурист кода и архитектуры"));
     }
 
     private static void initializeResumeExperience(Resume resume) {
@@ -151,5 +158,18 @@ public class ResumeTestData {
                 "Закончил с отличием", ""));
 
         resume.setSections(SectionType.EDUCATION, new OrganizationType(educationOrganizations));
+    }
+
+    private static void printResume(Resume resume) {
+        for (Map.Entry<ContactType, String> entry : resume.getContacts().entrySet()) {
+            System.out.println(entry.getKey().getTitle() + entry.getValue());
+        }
+
+        System.out.println();
+
+        for (Map.Entry<SectionType, AbstractSection> entry : resume.getSections().entrySet()) {
+            System.out.println(entry.getKey().getTitle());
+            System.out.println(entry.getValue().toString());
+        }
     }
 }

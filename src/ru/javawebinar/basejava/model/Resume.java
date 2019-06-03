@@ -1,17 +1,14 @@
 package ru.javawebinar.basejava.model;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class Resume {
 
     private final String uuid;
     private final String fullName;
 
-    private final Map<ContactType, String> contacts = new HashMap<>();
-    private final Map<SectionType, Section> sections = new HashMap<>();
+    private final Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
+    private final Map<SectionType, AbstractSection> sections = new EnumMap<>(SectionType.class);
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -26,7 +23,7 @@ public class Resume {
         contacts.put(contactType, value);
     }
 
-    public void setSections(SectionType sectionType, Section section) {
+    public void setSections(SectionType sectionType, AbstractSection section) {
         sections.put(sectionType, section);
     }
 
@@ -38,12 +35,12 @@ public class Resume {
         return fullName;
     }
 
-    public HashMap<ContactType, String> getContacts() {
-        return new HashMap<>(contacts);
+    public EnumMap<ContactType, String> getContacts() {
+        return new EnumMap<>(contacts);
     }
 
-    public HashMap<SectionType, Section> getSections() {
-        return new HashMap<>(sections);
+    public EnumMap<SectionType, AbstractSection> getSections() {
+        return new EnumMap<>(sections);
     }
 
     @Override

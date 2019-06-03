@@ -2,16 +2,12 @@ package ru.javawebinar.basejava.model;
 
 import java.util.Objects;
 
-public class TextType extends Section {
+public class TextType extends AbstractSection {
 
     private final String value;
 
     public TextType(String value) {
         this.value = value;
-    }
-
-    public String getValue() {
-        return value;
     }
 
     @Override
@@ -29,6 +25,6 @@ public class TextType extends Section {
 
     @Override
     public String toString() {
-        return value;
+        return value + "\n";
     }
 }

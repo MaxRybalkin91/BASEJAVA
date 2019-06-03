@@ -34,4 +34,9 @@ public class Organization {
     public int hashCode() {
         return Objects.hash(companyName, start, end, position, duties);
     }
+
+    @Override
+    public String toString() {
+        return "\n" + companyName + "\n" + start + " - " + end + "\n" + position + "\n" + duties+ "\n";
+    }
 }

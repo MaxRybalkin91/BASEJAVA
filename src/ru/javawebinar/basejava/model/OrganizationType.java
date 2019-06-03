@@ -3,7 +3,7 @@ package ru.javawebinar.basejava.model;
 import java.util.List;
 import java.util.Objects;
 
-public class OrganizationType extends Section {
+public class OrganizationType extends AbstractSection {
     private final List<Organization> organizations;
 
     public OrganizationType(List<Organization> organizations) {
@@ -25,5 +25,10 @@ public class OrganizationType extends Section {
     @Override
     public int hashCode() {
         return Objects.hash(organizations);
+    }
+
+    @Override
+    public String toString() {
+        return organizations.toString();
     }
 }

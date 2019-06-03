@@ -3,15 +3,11 @@ package ru.javawebinar.basejava.model;
 import java.util.List;
 import java.util.Objects;
 
-public class ListType extends Section {
+public class ListType extends AbstractSection {
     private final List<String> values;
 
     public ListType(List<String> values) {
         this.values = values;
-    }
-
-    public List<String> getValues() {
-        return values;
     }
 
     @Override
@@ -29,6 +25,6 @@ public class ListType extends Section {
 
     @Override
     public String toString() {
-        return values.toString();
+        return values.toString() + "\n";
     }
 }
