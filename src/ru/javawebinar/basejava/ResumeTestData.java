@@ -18,8 +18,7 @@ public class ResumeTestData {
         initializeResumeExperience(resume);
         initializeResumeEducation(resume);
 
-        System.out.println(resume.getFullName());
-        System.out.println();
+        System.out.println(resume.getFullName() + "\n");
 
         printResume(resume);
     }
@@ -169,7 +168,7 @@ public class ResumeTestData {
 
         for (Map.Entry<SectionType, AbstractSection> entry : resume.getSections().entrySet()) {
             System.out.println(entry.getKey().getTitle());
-            System.out.println(entry.getValue().toString());
+            System.out.println(entry.getValue());
         }
     }
 }
