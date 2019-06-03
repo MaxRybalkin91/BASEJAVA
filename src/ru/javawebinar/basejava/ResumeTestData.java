@@ -60,7 +60,7 @@ public class ResumeTestData {
                 "через систему мониторинга Nagios. Реализация онлайн клиента для администрирования и мониторинга системы " +
                 "по JMX (Jython/ Django).");
         achievments.add("Реализация протоколов по приему платежей всех основных платежных системы " +
-                "России (Cyberplat, Eport, Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа.");
+                "России (Cyberplat, Eport, Chronopay, Сбербанк), Беларуcи(Erip, Osmp) и Никарагуа.");
 
         qualifications.add("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2");
         qualifications.add("Version control: Subversion, Git, Mercury, ClearCase, Perforce");
@@ -77,7 +77,7 @@ public class ResumeTestData {
         qualifications.add("Технологии: Servlet, JSP/JSTL, JAX-WS, REST, EJB, RMI, JMS, JavaMail, JAXB, StAX, SAX, DOM, " +
                 "XSLT, MDB, JMX, JDBC, JPA, JNDI, JAAS, SOAP, AJAX, Commet, HTML5, ESB, CMIS, BPMN2, LDAP, OAuth1, OAuth2, JWT.");
         qualifications.add("Инструменты: Maven + plugin development, Gradle, настройка Ngnix");
-        qualifications.add("администрирование Hudson/Jenkins, Ant + custom task, SoapUI, JPublisher, Flyway, Nagios, iReport, " +
+        qualifications.add("Администрирование Hudson/Jenkins, Ant + custom task, SoapUI, JPublisher, Flyway, Nagios, iReport, " +
                 "OpenCmis, Bonita, pgBouncer.");
         qualifications.add("Отличное знание и опыт применения концепций ООП, SOA, шаблонов проектрирования, архитектурных шаблонов, " +
                 "UML, функционального программирования");
