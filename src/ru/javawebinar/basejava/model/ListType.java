@@ -25,6 +25,9 @@ public class ListType extends AbstractSection {
 
     @Override
     public String toString() {
-        return values.toString() + "\n";
+        for (String a : values) {
+            System.out.println(a);
+        }
+        return "";
     }
 }
