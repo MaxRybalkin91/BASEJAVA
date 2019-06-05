@@ -1,16 +1,16 @@
 package ru.javawebinar.basejava.model;
 
-import java.time.YearMonth;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Organization {
     private final String companyName;
-    private final YearMonth start;
-    private final YearMonth end;
+    private final LocalDate start;
+    private final LocalDate end;
     private final String position;
     private final String duties;
 
-    public Organization(String companyName, YearMonth start, YearMonth end, String position, String duties) {
+    public Organization(String companyName, LocalDate start, LocalDate end, String position, String duties) {
         this.companyName = companyName;
         this.start = start;
         this.end = end;
@@ -37,6 +37,7 @@ public class Organization {
 
     @Override
     public String toString() {
-        return "\n" + companyName + "\n" + start + " - " + end + "\n" + position + "\n" + duties+ "\n";
+        return "\n" + companyName + "\n" + start.getMonthValue() + "/" + start.getYear() + " - " + end.getMonthValue() + "/" +
+                end.getYear() + "\n" + position + "\n" + duties+ "\n";
     }
 }
