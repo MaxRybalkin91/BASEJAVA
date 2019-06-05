@@ -5,7 +5,7 @@ import java.io.File;
 public class MainFile {
     public static void main(String[] args) {
         File dir = new File("./src/ru/javawebinar/basejava");
-        printDirectoryContent(dir.getAbsolutePath());
+        printDirectoryContent(dir.getPath());
     }
 
     private static void printDirectoryContent(String dir) {
