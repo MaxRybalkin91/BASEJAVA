@@ -8,15 +8,15 @@ public class MainFile {
         printDirectoryContent(dir.getPath());
     }
 
-    private static void printDirectoryContent(String dir) {
-        File[] files = new File(dir).listFiles();
+    private static void printDirectoryContent(String directory) {
+        File[] files = new File(directory).listFiles();
         for (File file : files) {
             if (file.isFile()) {
                 System.out.println(file.getName());
             }
             if (file.isDirectory()) {
-                dir = file.getAbsolutePath();
-                printDirectoryContent(dir);
+                directory = file.getAbsolutePath();
+                printDirectoryContent(directory);
             }
         }
     }
