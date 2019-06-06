@@ -12,12 +12,11 @@ import java.util.Map;
 public class ResumeTestData {
 
     public static void main(String[] args) {
-        Resume resume = new Resume("uuid", "Григорий Кислин");
-
-        setResume(resume);
+        setResume("uuid", "Григорий Кислин");
     }
 
-    public static void setResume(Resume resume) {
+    public static void setResume(String uuid, String fullName) {
+        Resume resume = new Resume(uuid, fullName);
         initializeResumeContactTypeSection(resume);
         initializeResumeTextTypeSection(resume);
         initializeResumeListTypeSection(resume);

@@ -19,14 +19,12 @@ public abstract class AbstractStorageTest {
     private static final Resume RESUME_3 = new Resume("uuid3", "name3");
     private static final Resume RESUME_4 = new Resume("uuid4", "name4");
 
-    private static final Resume RESUME_5 = new Resume("uuid", "Григорий Кислин");
-
     AbstractStorageTest(Storage storage) {
         this.storage = storage;
     }
 
     static {
-        ResumeTestData.setResume(RESUME_5);
+        ResumeTestData.setResume("uuid", "Григорий Кислин");
     }
 
     @Before
