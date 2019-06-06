@@ -9,7 +9,6 @@ import static ru.javawebinar.basejava.storage.AbstractArrayStorage.STORAGE_LIMIT
 
 public class AbstractArrayStorageTest extends AbstractStorageTest {
 
-
     AbstractArrayStorageTest(Storage storage) {
         super(storage);
     }

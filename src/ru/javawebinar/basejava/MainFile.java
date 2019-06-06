@@ -10,13 +10,14 @@ public class MainFile {
 
     private static void printDirectoryContent(String directory) {
         File[] files = new File(directory).listFiles();
-        for (File file : files) {
-            if (file.isFile()) {
-                System.out.println(file.getName());
-            }
-            if (file.isDirectory()) {
-                directory = file.getAbsolutePath();
-                printDirectoryContent(directory);
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile()) {
+                    System.out.println(file.getName());
+                }
+                if (file.isDirectory()) {
+                    printDirectoryContent(file.getPath());
+                }
             }
         }
     }
