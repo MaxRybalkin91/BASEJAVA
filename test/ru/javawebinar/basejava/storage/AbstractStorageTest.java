@@ -19,12 +19,15 @@ public abstract class AbstractStorageTest {
     private static final Resume RESUME_3 = new Resume("uuid3", "name3");
     private static final Resume RESUME_4 = new Resume("uuid4", "name4");
 
-    AbstractStorageTest(Storage storage) {
-        this.storage = storage;
+    static {
+        ResumeTestData.setResume(RESUME_1.getUuid(), RESUME_1.getFullName());
+        ResumeTestData.setResume(RESUME_2.getUuid(), RESUME_2.getFullName());
+        ResumeTestData.setResume(RESUME_3.getUuid(), RESUME_3.getFullName());
+        ResumeTestData.setResume(RESUME_4.getUuid(), RESUME_4.getFullName());
     }
 
-    static {
-        ResumeTestData.setResume("uuid", "Григорий Кислин");
+    AbstractStorageTest(Storage storage) {
+        this.storage = storage;
     }
 
     @Before
