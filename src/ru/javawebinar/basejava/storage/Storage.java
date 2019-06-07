@@ -4,6 +4,8 @@ import ru.javawebinar.basejava.model.Resume;
 
 import java.util.List;
 
+import java.util.List;
+
 public interface Storage {
 
     void clear();
