@@ -4,8 +4,6 @@ import ru.javawebinar.basejava.model.Resume;
 
 import java.util.List;
 
-import java.util.List;
-
 public interface Storage {
 
     void clear();
@@ -18,7 +16,7 @@ public interface Storage {
 
     void delete(String uuid);
 
-    List<Resume> getAllSorted();
+    List<Resume> getSortedStorage();
 
     int size();
 }
