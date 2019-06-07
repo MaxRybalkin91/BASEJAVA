@@ -14,16 +14,27 @@ import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractStorageTest {
     Storage storage;
-    private static final Resume RESUME_1 = new Resume("uuid1", "name1");
-    private static final Resume RESUME_2 = new Resume("uuid2", "name2");
-    private static final Resume RESUME_3 = new Resume("uuid3", "name3");
-    private static final Resume RESUME_4 = new Resume("uuid4", "name4");
+
+    private static final String UUID_1 = "uuid1";
+    private static final String UUID_2 = "uuid2";
+    private static final String UUID_3 = "uuid3";
+    private static final String UUID_4 = "uuid4";
+
+    private static final String NAME_1 = "name1";
+    private static final String NAME_2 = "name2";
+    private static final String NAME_3 = "name3";
+    private static final String NAME_4 = "name4";
+
+    private static final Resume RESUME_1 = new Resume(UUID_1, NAME_1);
+    private static final Resume RESUME_2 = new Resume(UUID_2, NAME_2);
+    private static final Resume RESUME_3 = new Resume(UUID_3, NAME_3);
+    private static final Resume RESUME_4 = new Resume(UUID_4, NAME_4);
 
     static {
-        ResumeTestData.setResume(RESUME_1.getUuid(), RESUME_1.getFullName());
-        ResumeTestData.setResume(RESUME_2.getUuid(), RESUME_2.getFullName());
-        ResumeTestData.setResume(RESUME_3.getUuid(), RESUME_3.getFullName());
-        ResumeTestData.setResume(RESUME_4.getUuid(), RESUME_4.getFullName());
+        ResumeTestData.setResume(UUID_1, NAME_1);
+        ResumeTestData.setResume(UUID_2, NAME_2);
+        ResumeTestData.setResume(UUID_3, NAME_3);
+        ResumeTestData.setResume(UUID_4, NAME_4);
     }
 
     AbstractStorageTest(Storage storage) {
@@ -97,7 +108,7 @@ public abstract class AbstractStorageTest {
     @Test
     public void getAllSorted() {
         List<Resume> list = new ArrayList<>();
-        List<Resume> sortedStorage = storage.getAllSorted();
+        List<Resume> sortedStorage = storage.getSortedStorage();
         list.add(RESUME_1);
         list.add(RESUME_2);
         list.add(RESUME_3);
