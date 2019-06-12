@@ -1,8 +1,10 @@
 package ru.javawebinar.basejava.model;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Resume {
+public class Resume implements Comparable<Resume>, Serializable {
+    private static final long serialVersionUuid = 1L;
 
     private final String uuid;
     private final String fullName;
@@ -60,5 +62,11 @@ public class Resume {
     @Override
     public String toString() {
         return uuid;
+    }
+
+    @Override
+    public int compareTo(Resume o) {
+        int cmp = fullName.compareTo(o.fullName);
+        return cmp != 0 ? cmp : uuid.compareTo(o.uuid);
     }
 }

@@ -1,8 +1,10 @@
 package ru.javawebinar.basejava.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 public class TextType extends AbstractSection {
+    private static final long serialVersionUuid = 1L;
 
     private final String value;
 

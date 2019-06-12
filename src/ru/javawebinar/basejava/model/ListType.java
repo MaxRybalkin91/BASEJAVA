@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class ListType extends AbstractSection {
+    private static final long serialVersionUuid = 1L;
+
     private final List<String> values;
 
     public ListType(List<String> values) {

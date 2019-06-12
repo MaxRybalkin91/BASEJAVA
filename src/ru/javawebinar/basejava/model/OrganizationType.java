@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class OrganizationType extends AbstractSection {
+    private static final long serialVersionUuid = 1L;
     private final List<Organization> organizations;
 
     public OrganizationType(List<Organization> organizations) {

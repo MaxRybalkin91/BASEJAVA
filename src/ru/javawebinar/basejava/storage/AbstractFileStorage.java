@@ -3,8 +3,7 @@ package ru.javawebinar.basejava.storage;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -24,16 +23,27 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    protected void saveToStorage(Resume resume, File searchFile) {
+    protected void saveToStorage(Resume resume, File file) {
         try {
-            searchFile.createNewFile();
-            writeToStorage(resume, searchFile);
+            file.createNewFile();
         } catch (IOException e) {
-            throw new StorageException("IO error", searchFile.getName(), e);
+            throw new StorageException("Couldn't create file", file.getName(), e);
+        }
+        if (file.isFile()) {
+            updateInStorage(resume, file);
         }
     }
 
-    protected abstract void writeToStorage(Resume resume, File searchFile) throws IOException;
+    @Override
+    protected void updateInStorage(Resume resume, File file) {
+        try {
+            writeToStorage(resume, new BufferedOutputStream(new FileOutputStream(file)));
+        } catch (IOException e) {
+            throw new StorageException("IO error", file.getName(), e);
+        }
+    }
+
+    protected abstract void writeToStorage(Resume resume, OutputStream file) throws IOException;
 
     @Override
     public void clear() {
@@ -41,57 +51,50 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         if (files != null) {
             for (File file : files) {
                 if (file.isFile()) {
-                    file.delete();
+                    deleteFromStorage(file);
                 }
             }
         }
     }
 
     @Override
-    protected void updateInStorage(Resume resume, File searchFile) {
-        try {
-            writeToStorage(resume, searchFile);
-        } catch (IOException e) {
-            throw new StorageException("IO error", searchFile.getName(), e);
+    protected void deleteFromStorage(File file) {
+        if (!file.delete()) {
+            throw new StorageException("File delete error", file.getName());
         }
-    }
-
-    @Override
-    protected void deleteFromStorage(File searchFile) {
-        searchFile.delete();
     }
 
     @Override
     protected List<Resume> getAllStorage() {
-        List<Resume> resumes = new ArrayList<>();
         File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                resumes.add(getFromStorage(file));
-            }
+        if (files == null) {
+            throw new StorageException("Directory read error", null);
         }
-        return resumes;
+        List<Resume> list = new ArrayList<>();
+        for (File file : files) {
+            list.add(getFromStorage(file));
+        }
+        return list;
     }
 
     @Override
-    protected Resume getFromStorage(File searchFile) {
+    protected Resume getFromStorage(File file) {
         try {
-            return readFromStorage(searchFile);
-        } catch (IOException e) {
-            throw new StorageException("can not read the resume", searchFile.getName(), e);
+            return readFromStorage(new BufferedInputStream(new FileInputStream(file)));
+        } catch (IOException | ClassNotFoundException e) {
+            throw new StorageException("Can not read the resume", file.getName(), e);
         }
     }
 
-    protected abstract Resume readFromStorage(File searchFile) throws IOException;
+    protected abstract Resume readFromStorage(InputStream file) throws IOException, ClassNotFoundException;
 
     @Override
     public int size() {
-        File[] files = directory.listFiles();
-        int length = files.length;
-        if (files != null) {
-            return length;
+        File[] list = directory.listFiles();
+        if (list == null) {
+            throw new StorageException("Directory read error", null);
         }
-        return 0;
+        return list.length;
     }
 
     @Override
@@ -100,7 +103,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    protected boolean isExist(File searchFile) {
-        return searchFile.exists();
+    protected boolean isExist(File file) {
+        return file.exists();
     }
 }
