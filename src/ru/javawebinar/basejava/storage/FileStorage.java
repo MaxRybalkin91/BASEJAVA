@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractFileStorage extends AbstractStorage<File> {
+public class FileStorage extends AbstractStorage<File> {
     private File directory;
 
-    protected AbstractFileStorage(File directory) {
+    protected FileStorage(File directory) {
         Objects.requireNonNull(directory, "directory must not be null");
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not directory");
@@ -37,13 +37,11 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected void updateInStorage(Resume resume, File file) {
         try {
-            writeToStorage(resume, new BufferedOutputStream(new FileOutputStream(file)));
+            new ObjectStorage().writeToStorage(resume, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
     }
-
-    protected abstract void writeToStorage(Resume resume, OutputStream file) throws IOException;
 
     @Override
     public void clear() {
@@ -80,13 +78,11 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected Resume getFromStorage(File file) {
         try {
-            return readFromStorage(new BufferedInputStream(new FileInputStream(file)));
-        } catch (IOException | ClassNotFoundException e) {
+            return new ObjectStorage().readFromStorage(new BufferedInputStream(new FileInputStream(file)));
+        } catch (IOException e) {
             throw new StorageException("Can not read the resume", file.getName(), e);
         }
     }
-
-    protected abstract Resume readFromStorage(InputStream file) throws IOException, ClassNotFoundException;
 
     @Override
     public int size() {

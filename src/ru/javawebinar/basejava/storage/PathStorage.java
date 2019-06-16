@@ -3,7 +3,9 @@ package ru.javawebinar.basejava.storage;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -11,10 +13,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public abstract class AbstractPathStorage extends AbstractStorage<Path> {
+public class PathStorage extends AbstractStorage<Path> {
     private Path directory;
 
-    protected AbstractPathStorage(String dir) {
+    protected PathStorage(String dir) {
         directory = Paths.get(dir);
         Objects.requireNonNull(directory, "directory must not be null");
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
@@ -35,13 +37,11 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected void updateInStorage(Resume resume, Path path) {
         try {
-            writeToStorage(resume, new BufferedOutputStream(Files.newOutputStream(path)));
+            new ObjectStorage().writeToStorage(resume, new BufferedOutputStream(Files.newOutputStream(path)));
         } catch (IOException e) {
             throw new StorageException("IO error", null);
         }
     }
-
-    abstract void writeToStorage(Resume resume, OutputStream path) throws IOException;
 
     @Override
     public void clear() {
@@ -73,13 +73,11 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected Resume getFromStorage(Path path) {
         try {
-            return readFromStorage(new BufferedInputStream(Files.newInputStream(path)));
-        } catch (IOException | ClassNotFoundException e) {
+            return new ObjectStorage().readFromStorage(new BufferedInputStream(Files.newInputStream(path)));
+        } catch (IOException e) {
             throw new StorageException("Can not read the resume", path.toString(), e);
         }
     }
-
-    abstract Resume readFromStorage(InputStream path) throws IOException, ClassNotFoundException;
 
     @Override
     public int size() {
