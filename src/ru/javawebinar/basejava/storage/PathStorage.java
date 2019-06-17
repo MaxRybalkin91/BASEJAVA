@@ -15,9 +15,11 @@ import java.util.stream.Collectors;
 
 public class PathStorage extends AbstractStorage<Path> {
     private Path directory;
+    private ObjectSerializer serializer;
 
-    protected PathStorage(String dir) {
+    protected PathStorage(String dir, ObjectSerializer serializer) {
         directory = Paths.get(dir);
+        this.serializer = serializer;
         Objects.requireNonNull(directory, "directory must not be null");
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(dir + " is not directory or is not writable");
@@ -37,7 +39,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected void updateInStorage(Resume resume, Path path) {
         try {
-            new ObjectStorage().writeToStorage(resume, new BufferedOutputStream(Files.newOutputStream(path)));
+            serializer.writeToStorage(resume, new BufferedOutputStream(Files.newOutputStream(path)));
         } catch (IOException e) {
             throw new StorageException("IO error", null);
         }
@@ -73,7 +75,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected Resume getFromStorage(Path path) {
         try {
-            return new ObjectStorage().readFromStorage(new BufferedInputStream(Files.newInputStream(path)));
+            return serializer.readFromStorage(new BufferedInputStream(Files.newInputStream(path)));
         } catch (IOException e) {
             throw new StorageException("Can not read the resume", path.toString(), e);
         }

@@ -10,8 +10,9 @@ import java.util.Objects;
 
 public class FileStorage extends AbstractStorage<File> {
     private File directory;
+    private ObjectSerializer serializer;
 
-    protected FileStorage(File directory) {
+    protected FileStorage(File directory, ObjectSerializer serializer) {
         Objects.requireNonNull(directory, "directory must not be null");
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not directory");
@@ -20,6 +21,7 @@ public class FileStorage extends AbstractStorage<File> {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not readable/writable");
         }
         this.directory = directory;
+        this.serializer = serializer;
     }
 
     @Override
@@ -37,7 +39,7 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     protected void updateInStorage(Resume resume, File file) {
         try {
-            new ObjectStorage().writeToStorage(resume, new BufferedOutputStream(new FileOutputStream(file)));
+            serializer.writeToStorage(resume, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
@@ -78,7 +80,7 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     protected Resume getFromStorage(File file) {
         try {
-            return new ObjectStorage().readFromStorage(new BufferedInputStream(new FileInputStream(file)));
+            return serializer.readFromStorage(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
             throw new StorageException("Can not read the resume", file.getName(), e);
         }

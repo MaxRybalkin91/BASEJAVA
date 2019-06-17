@@ -3,6 +3,6 @@ package ru.javawebinar.basejava.storage;
 public class PathStorageTest extends AbstractStorageTest {
 
     public PathStorageTest() {
-        super(new PathStorage(STORAGE_DIR.toString()));
+        super(new PathStorage(STORAGE_DIR.toString(), new ObjectStorage()));
     }
 }
