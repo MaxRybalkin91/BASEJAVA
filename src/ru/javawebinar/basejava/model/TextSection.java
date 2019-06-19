@@ -1,14 +1,16 @@
 package ru.javawebinar.basejava.model;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class TextType extends AbstractSection {
+public class TextSection extends AbstractSection {
     private static final long serialVersionUuid = 1L;
 
-    private final String value;
+    private String value;
 
-    public TextType(String value) {
+    public TextSection() {
+    }
+
+    public TextSection(String value) {
         this.value = value;
     }
 
@@ -16,7 +18,7 @@ public class TextType extends AbstractSection {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TextType textType = (TextType) o;
+        TextSection textType = (TextSection) o;
         return value.equals(textType.value);
     }
 

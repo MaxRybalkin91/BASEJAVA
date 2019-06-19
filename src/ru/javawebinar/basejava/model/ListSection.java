@@ -1,14 +1,21 @@
 package ru.javawebinar.basejava.model;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class ListType extends AbstractSection {
+public class ListSection extends AbstractSection {
     private static final long serialVersionUuid = 1L;
 
-    private final List<String> values;
+    private List<String> values;
 
-    public ListType(List<String> values) {
+    public ListSection() {
+    }
+    public ListSection(String... values) {
+        this(Arrays.asList(values));
+    }
+
+    public ListSection(List<String> values) {
         this.values = values;
     }
 
@@ -16,7 +23,7 @@ public class ListType extends AbstractSection {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ListType listType = (ListType) o;
+        ListSection listType = (ListSection) o;
         return Objects.equals(values, listType.values);
     }
 

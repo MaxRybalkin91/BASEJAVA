@@ -1,15 +1,38 @@
 package ru.javawebinar.basejava.model;
 
+import ru.javawebinar.basejava.util.LocalDateAdapter;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Month;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import static ru.javawebinar.basejava.util.DateUtil.of;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
     private static final long serialVersionUuid = 1L;
 
-    private final String companyName;
+    private String companyName;
+    private Link link;
     private List<Period> periods;
+
+    public Organization(){
+    }
+
+    public Organization(String name, String url, Period... positions) {
+        this(new Link(name, url), Arrays.asList(positions));
+    }
+
+    public Organization(Link link, List<Period> periods) {
+        this.link = link;
+        this.periods = periods;
+    }
 
     public Organization(String companyName, List<Period> periods) {
         this.companyName = companyName;
@@ -25,24 +48,39 @@ public class Organization implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Organization that = (Organization) o;
-        return Objects.equals(companyName, that.companyName);
+        return Objects.equals(link, that.link);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(companyName);
+        return Objects.hash(link);
     }
 
     @Override
     public String toString() {
-        return "\n" + companyName + "\n" + periods;
+        return "\n" + link + "\n" + periods;
     }
 
+    @XmlAccessorType(XmlAccessType.FIELD)
     public static class Period implements Serializable {
-        private final LocalDate start;
-        private final LocalDate end;
-        private final String position;
-        private final String duties;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate start;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate end;
+
+        private String position;
+        private String duties;
+
+        public Period() {
+        }
+
+        public Period(int startYear, Month startMonth, String title, String description) {
+            this(of(startYear, startMonth), LocalDate.now(), title, description);
+        }
+
+        public Period(int startYear, Month startMonth, int endYear, Month endMonth, String title, String description) {
+            this(of(startYear, startMonth), of(endYear, endMonth), title, description);
+        }
 
         public Period(LocalDate start, LocalDate end, String position, String duties) {
             this.start = start;

@@ -29,19 +29,19 @@ public class ResumeTestData {
     }
 
     private static void initializeResumeContactTypeSection(Resume resume) {
-        resume.setContacts(ContactType.PHONE, "+7(921) 855-0482");
-        resume.setContacts(ContactType.SKYPE, "grigory.kislin");
-        resume.setContacts(ContactType.EMAIL, "gkislin@yandex.ru");
-        resume.setContacts(ContactType.LINKEDIN, "LINKEDIN_URL");
-        resume.setContacts(ContactType.GITHUB, "GITHUB_URL");
-        resume.setContacts(ContactType.STACKOVERFLOW, "STACKOVERFLOW_URL");
-        resume.setContacts(ContactType.HOMEPAGE, "HOMEPAGE_URL");
+        resume.setContacts(ContactType.PHONE, new Link("+7(921) 855-0482"));
+        resume.setContacts(ContactType.SKYPE, new Link("grigory.kislin"));
+        resume.setContacts(ContactType.EMAIL, new Link("gkislin@yandex.ru"));
+        resume.setContacts(ContactType.LINKEDIN, new Link("LINKEDIN_URL"));
+        resume.setContacts(ContactType.GITHUB, new Link("GITHUB_URL"));
+        resume.setContacts(ContactType.STACKOVERFLOW, new Link("STACKOVERFLOW_URL"));
+        resume.setContacts(ContactType.HOMEPAGE, new Link("HOMEPAGE_URL"));
     }
 
     private static void initializeResumeTextTypeSection(Resume resume) {
-        resume.setSections(SectionType.OBJECTIVE, new TextType("Ведущий стажировок и корпоративного обучения " +
+        resume.setSections(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения " +
                 "по Java Web и Enterprise технологиям"));
-        resume.setSections(SectionType.PERSONAL, new TextType("Аналитический склад ума, сильная логика, " +
+        resume.setSections(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, " +
                 "креативность, инициативность. Пурист кода и архитектуры"));
     }
 
@@ -88,8 +88,8 @@ public class ResumeTestData {
                 "UML, функционального программирования");
         qualifications.add("Родной русский, английский \"upper intermediate\"");
 
-        resume.setSections(SectionType.ACHIEVEMENT, new ListType(achievments));
-        resume.setSections(SectionType.QUALIFICATIONS, new ListType(qualifications));
+        resume.setSections(SectionType.ACHIEVEMENT, new ListSection(achievments));
+        resume.setSections(SectionType.QUALIFICATIONS, new ListSection(qualifications));
     }
 
     private static void initializeResumeExperience(Resume resume) {
@@ -177,7 +177,7 @@ public class ResumeTestData {
                         "(CHILL, ASM)."));
         jobOrganizations.add(organization8);
 
-        resume.setSections(SectionType.EXPERIENCE, new OrganizationType(jobOrganizations));
+        resume.setSections(SectionType.EXPERIENCE, new OrganizationSection(jobOrganizations));
     }
 
     private static void initializeResumeEducation(Resume resume) {
@@ -237,11 +237,11 @@ public class ResumeTestData {
                 ""));
         educationOrganizations.add(organization6);
 
-        resume.setSections(SectionType.EDUCATION, new OrganizationType(educationOrganizations));
+        resume.setSections(SectionType.EDUCATION, new OrganizationSection(educationOrganizations));
     }
 
     private static void printResume(Resume resume) {
-        for (Map.Entry<ContactType, String> entry : resume.getContacts().entrySet()) {
+        for (Map.Entry<ContactType, Link> entry : resume.getContacts().entrySet()) {
             System.out.println(entry.getKey().getTitle() + entry.getValue());
         }
 

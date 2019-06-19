@@ -1,16 +1,27 @@
 package ru.javawebinar.basejava.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
-import java.util.*;
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Resume implements Comparable<Resume>, Serializable {
     private static final long serialVersionUuid = 1L;
 
-    private final String uuid;
-    private final String fullName;
+    private String uuid;
+    private String fullName;
 
-    private final Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
+    private final Map<ContactType, Link> contacts = new EnumMap<>(ContactType.class);
     private final Map<SectionType, AbstractSection> sections = new EnumMap<>(SectionType.class);
+
+    public Resume() {
+    }
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -21,7 +32,7 @@ public class Resume implements Comparable<Resume>, Serializable {
         this.fullName = fullName;
     }
 
-    public void setContacts(ContactType contactType, String value) {
+    public void setContacts(ContactType contactType, Link value) {
         contacts.put(contactType, value);
     }
 
@@ -37,7 +48,7 @@ public class Resume implements Comparable<Resume>, Serializable {
         return fullName;
     }
 
-    public EnumMap<ContactType, String> getContacts() {
+    public EnumMap<ContactType, Link> getContacts() {
         return new EnumMap<>(contacts);
     }
 

@@ -1,11 +1,11 @@
-package ru.javawebinar.basejava.storage;
+package ru.javawebinar.basejava.storage.serializer;
 
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.io.*;
 
-public class ObjectStorage implements ObjectSerializer {
+public class ObjectStreamSerializer implements StreamSerializer {
 
     @Override
     public void writeToStorage(Resume resume, OutputStream outputFile) throws IOException {
