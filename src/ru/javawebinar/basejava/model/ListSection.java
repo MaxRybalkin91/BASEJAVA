@@ -1,18 +1,17 @@
 package ru.javawebinar.basejava.model;
 
-import java.util.Arrays;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.List;
 import java.util.Objects;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ListSection extends AbstractSection {
     private static final long serialVersionUuid = 1L;
 
     private List<String> values;
 
     public ListSection() {
-    }
-    public ListSection(String... values) {
-        this(Arrays.asList(values));
     }
 
     public ListSection(List<String> values) {

@@ -16,20 +16,12 @@ public class Link implements Serializable {
     }
 
     public Link(String name) {
-        this.name = name;
+        this("", name);
     }
 
     public Link(String link, String name) {
         this.link = link;
         this.name = name;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public String getName() {
-        return name;
     }
 
     @Override
@@ -48,6 +40,6 @@ public class Link implements Serializable {
 
     @Override
     public String toString() {
-        return Objects.isNull(link) ? name : link + "||" + name;
+        return link.equals("") ? name : link + "||" + name;
     }
 }

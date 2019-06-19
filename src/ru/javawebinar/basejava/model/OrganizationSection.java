@@ -8,6 +8,7 @@ import java.util.Objects;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class OrganizationSection extends AbstractSection {
     private static final long serialVersionUuid = 1L;
+
     private List<Organization> organizations;
 
     public OrganizationSection() {

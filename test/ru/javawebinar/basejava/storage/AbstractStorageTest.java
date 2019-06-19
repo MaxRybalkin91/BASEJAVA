@@ -2,12 +2,12 @@ package ru.javawebinar.basejava.storage;
 
 import org.junit.Before;
 import org.junit.Test;
-import ru.javawebinar.basejava.ResumeTestData;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
-import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.model.*;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,21 +23,56 @@ public abstract class AbstractStorageTest {
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
 
-    private static final String NAME_1 = "name1";
-    private static final String NAME_2 = "name2";
-    private static final String NAME_3 = "name3";
-    private static final String NAME_4 = "name4";
-
-    private static final Resume RESUME_1 = new Resume(UUID_1, NAME_1);
-    private static final Resume RESUME_2 = new Resume(UUID_2, NAME_2);
-    private static final Resume RESUME_3 = new Resume(UUID_3, NAME_3);
-    private static final Resume RESUME_4 = new Resume(UUID_4, NAME_4);
+    private static final Resume RESUME_1;
+    private static final Resume RESUME_2;
+    private static final Resume RESUME_3;
+    private static final Resume RESUME_4;
 
     static {
-        ResumeTestData.setResume(UUID_1, NAME_1);
-        ResumeTestData.setResume(UUID_2, NAME_2);
-        ResumeTestData.setResume(UUID_3, NAME_3);
-        ResumeTestData.setResume(UUID_4, NAME_4);
+        RESUME_1 = new Resume(UUID_1, "Name1");
+        RESUME_2 = new Resume(UUID_2, "Name2");
+        RESUME_3 = new Resume(UUID_3, "Name3");
+        RESUME_4 = new Resume(UUID_4, "Name4");
+
+        RESUME_1.setContacts(ContactType.PHONE, new Link("12345"));
+        RESUME_2.setContacts(ContactType.SKYPE, new Link("54321"));
+        RESUME_3.setContacts(ContactType.EMAIL, new Link("abcd@yandex.ru"));
+        RESUME_4.setContacts(ContactType.LINKEDIN, new Link("LINKEDIN_URL"));
+
+        List<String> achievments = new ArrayList<>();
+        List<String> qualifications = new ArrayList<>();
+
+        achievments.add("Achievment1");
+        qualifications.add("Qualification1");
+
+        RESUME_1.setSections(SectionType.ACHIEVEMENT, new ListSection(achievments));
+        RESUME_2.setSections(SectionType.QUALIFICATIONS, new ListSection(qualifications));
+        RESUME_3.setSections(SectionType.ACHIEVEMENT, new ListSection(achievments));
+        RESUME_4.setSections(SectionType.QUALIFICATIONS, new ListSection(qualifications));
+
+        List<Organization> jobOrganizations = new ArrayList<>();
+        List<Organization> eduOrganizations = new ArrayList<>();
+
+        Organization organization1 = new Organization(new Link("NAME_1"), new ArrayList<>());
+        organization1.addPeriod(new Organization.Period(
+                LocalDate.now(),
+                LocalDate.now(),
+                "POSITION",
+                "DUTIES"));
+        jobOrganizations.add(organization1);
+
+        Organization organization2 = new Organization(new Link("NAME_2"), new ArrayList<>());
+        organization1.addPeriod(new Organization.Period(
+                LocalDate.now(),
+                LocalDate.now(),
+                "POSITION",
+                "DUTIES"));
+        eduOrganizations.add(organization2);
+
+        RESUME_1.setSections(SectionType.EXPERIENCE, new OrganizationSection(jobOrganizations));
+        RESUME_2.setSections(SectionType.EDUCATION, new OrganizationSection(eduOrganizations));
+        RESUME_3.setSections(SectionType.EXPERIENCE, new OrganizationSection(jobOrganizations));
+        RESUME_4.setSections(SectionType.EDUCATION, new OrganizationSection(eduOrganizations));
     }
 
     AbstractStorageTest(Storage storage) {
