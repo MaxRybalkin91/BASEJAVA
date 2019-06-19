@@ -18,7 +18,6 @@ import static ru.javawebinar.basejava.util.DateUtil.of;
 public class Organization implements Serializable {
     private static final long serialVersionUuid = 1L;
 
-    private String companyName;
     private Link link;
     private List<Period> periods;
 
@@ -31,11 +30,6 @@ public class Organization implements Serializable {
 
     public Organization(Link link, List<Period> periods) {
         this.link = link;
-        this.periods = periods;
-    }
-
-    public Organization(String companyName, List<Period> periods) {
-        this.companyName = companyName;
         this.periods = periods;
     }
 
@@ -53,12 +47,7 @@ public class Organization implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(link);
-    }
-
-    @Override
-    public String toString() {
-        return "\n" + link + "\n" + periods;
+        return Objects.hash(link, periods);
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)

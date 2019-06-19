@@ -95,7 +95,7 @@ public class ResumeTestData {
     private static void initializeResumeExperience(Resume resume) {
         List<Organization> jobOrganizations = new ArrayList<>();
 
-        Organization organization1 = new Organization("Java Online Projects", new ArrayList<>());
+        Organization organization1 = new Organization(new Link("Java Online Projects"), new ArrayList<>());
         organization1.addPeriod(new Organization.Period(
                 DateUtil.of(2013, Month.of(10)),
                 LocalDate.now(),
@@ -103,7 +103,7 @@ public class ResumeTestData {
                 "Создание, организация и проведение Java онлайн проектов и стажировок."));
         jobOrganizations.add(organization1);
 
-        Organization organization2 = new Organization("Wrike", new ArrayList<>());
+        Organization organization2 = new Organization(new Link("Wrike"), new ArrayList<>());
         organization2.addPeriod(new Organization.Period(
                 DateUtil.of(2014, Month.of(10)),
                 DateUtil.of(2016, Month.of(1)),
@@ -113,7 +113,7 @@ public class ResumeTestData {
                         "по OAuth1, OAuth2, JWT SSO."));
         jobOrganizations.add(organization2);
 
-        Organization organization3 = new Organization("RIT Center", new ArrayList<>());
+        Organization organization3 = new Organization(new Link("RIT Center"), new ArrayList<>());
         organization3.addPeriod(new Organization.Period(
                 DateUtil.of(2012, Month.of(4)),
                 DateUtil.of(2014, Month.of(10)),
@@ -128,7 +128,7 @@ public class ResumeTestData {
                         "ssh tunnels, PL/Python"));
         jobOrganizations.add(organization3);
 
-        Organization organization4 = new Organization("Luxoft", new ArrayList<>());
+        Organization organization4 = new Organization(new Link("Luxoft"), new ArrayList<>());
         organization4.addPeriod(new Organization.Period(
                 DateUtil.of(2010, Month.of(12)),
                 DateUtil.of(2012, Month.of(4)),
@@ -139,7 +139,7 @@ public class ResumeTestData {
                         "JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Highstock, Commet, HTML5."));
         jobOrganizations.add(organization4);
 
-        Organization organization5 = new Organization("Yota", new ArrayList<>());
+        Organization organization5 = new Organization(new Link("Yota"), new ArrayList<>());
         organization5.addPeriod(new Organization.Period(
                 DateUtil.of(2008, Month.of(6)),
                 DateUtil.of(2010, Month.of(12)),
@@ -150,7 +150,7 @@ public class ResumeTestData {
                         "ExtJS)\n"));
         jobOrganizations.add(organization5);
 
-        Organization organization6 = new Organization("Enkata", new ArrayList<>());
+        Organization organization6 = new Organization(new Link("Enkata"), new ArrayList<>());
         organization6.addPeriod(new Organization.Period(
                 DateUtil.of(2007, Month.of(3)),
                 DateUtil.of(2008, Month.of(6)),
@@ -159,7 +159,7 @@ public class ResumeTestData {
                         "JMS) частей кластерного J2EE приложения (OLAP, Data mining)."));
         jobOrganizations.add(organization6);
 
-        Organization organization7 = new Organization("Siemens AG", new ArrayList<>());
+        Organization organization7 = new Organization(new Link("Siemens AG"), new ArrayList<>());
         organization7.addPeriod(new Organization.Period(
                 DateUtil.of(2005, Month.of(1)),
                 DateUtil.of(2007, Month.of(2)),
@@ -168,7 +168,7 @@ public class ResumeTestData {
                         "на мобильной IN платформе Siemens @vantage (Java, Unix)."));
         jobOrganizations.add(organization7);
 
-        Organization organization8 = new Organization("Alcatel", new ArrayList<>());
+        Organization organization8 = new Organization(new Link("Alcatel"), new ArrayList<>());
         organization8.addPeriod(new Organization.Period(
                 DateUtil.of(1997, Month.of(9)),
                 DateUtil.of(2005, Month.of(1)),
@@ -183,7 +183,7 @@ public class ResumeTestData {
     private static void initializeResumeEducation(Resume resume) {
         List<Organization> educationOrganizations = new ArrayList<>();
 
-        Organization organization1 = new Organization("Coursera", new ArrayList<>());
+        Organization organization1 = new Organization(new Link("Coursera"), new ArrayList<>());
         organization1.addPeriod(new Organization.Period(
                 DateUtil.of(2013, Month.of(3)),
                 DateUtil.of(2013, Month.of(5)),
@@ -191,7 +191,7 @@ public class ResumeTestData {
                 ""));
         educationOrganizations.add(organization1);
 
-        Organization organization2 = new Organization("Luxoft", new ArrayList<>());
+        Organization organization2 = new Organization(new Link("Luxoft"), new ArrayList<>());
         organization2.addPeriod(new Organization.Period(
                 DateUtil.of(2011, Month.of(3)),
                 DateUtil.of(2011, Month.of(4)),
@@ -199,7 +199,7 @@ public class ResumeTestData {
                 ""));
         educationOrganizations.add(organization2);
 
-        Organization organization3 = new Organization("Siemens AG", new ArrayList<>());
+        Organization organization3 = new Organization(new Link("Siemens AG"), new ArrayList<>());
         organization3.addPeriod(new Organization.Period(
                 DateUtil.of(2005, Month.of(1)),
                 DateUtil.of(2005, Month.of(4)),
@@ -207,7 +207,7 @@ public class ResumeTestData {
                 ""));
         educationOrganizations.add(organization3);
 
-        Organization organization4 = new Organization("Alcatel", new ArrayList<>());
+        Organization organization4 = new Organization(new Link("Alcatel"), new ArrayList<>());
         organization4.addPeriod(new Organization.Period(
                 DateUtil.of(1997, Month.of(9)),
                 DateUtil.of(1998, Month.of(3)),
@@ -215,8 +215,8 @@ public class ResumeTestData {
                 ""));
         educationOrganizations.add(organization4);
 
-        Organization organization5 = new Organization("Санкт-Петербургский национальный исследовательский " +
-                "университет информационных технологий, механики и оптики", new ArrayList<>());
+        Organization organization5 = new Organization(new Link("Санкт-Петербургский национальный исследовательский " +
+                "университет информационных технологий, механики и оптики"), new ArrayList<>());
         organization5.addPeriod(new Organization.Period(
                 DateUtil.of(1993, Month.of(9)),
                 DateUtil.of(1996, Month.of(7)),
@@ -229,7 +229,7 @@ public class ResumeTestData {
                 ""));
         educationOrganizations.add(organization5);
 
-        Organization organization6 = new Organization("Заочная физико-техническая школа при МФТИ", new ArrayList<>());
+        Organization organization6 = new Organization(new Link("Заочная физико-техническая школа при МФТИ"), new ArrayList<>());
         organization6.addPeriod(new Organization.Period(
                 DateUtil.of(1984, Month.of(9)),
                 DateUtil.of(1987, Month.of(6)),

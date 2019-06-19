@@ -15,13 +15,13 @@ public class Link implements Serializable {
     public Link() {
     }
 
-    public Link(String link) {
-        this.link = link;
+    public Link(String name) {
+        this.name = name;
     }
 
-    public Link(String name, String link) {
-        this.name = name;
+    public Link(String link, String name) {
         this.link = link;
+        this.name = name;
     }
 
     public String getLink() {
@@ -44,5 +44,10 @@ public class Link implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(name, link);
+    }
+
+    @Override
+    public String toString() {
+        return Objects.isNull(link) ? name : link + "||" + name;
     }
 }
