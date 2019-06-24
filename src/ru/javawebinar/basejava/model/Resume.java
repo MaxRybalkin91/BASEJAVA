@@ -32,8 +32,12 @@ public class Resume implements Comparable<Resume>, Serializable {
         this.fullName = fullName;
     }
 
-    public void setContacts(ContactType contactType, Link value) {
-        contacts.put(contactType, value);
+    public void setContacts(ContactType contactType, String value) {
+        contacts.put(contactType, new Link(value));
+    }
+
+    public void setContacts(ContactType contactType, String name, String link) {
+        contacts.put(contactType, new Link(name, link));
     }
 
     public void setSections(SectionType sectionType, AbstractSection section) {
@@ -54,6 +58,10 @@ public class Resume implements Comparable<Resume>, Serializable {
 
     public EnumMap<SectionType, AbstractSection> getSections() {
         return new EnumMap<>(sections);
+    }
+
+    public AbstractSection getSection(SectionType type) {
+        return sections.get(type);
     }
 
     @Override

@@ -21,4 +21,13 @@ public enum SectionType {
     public String getTitle() {
         return title;
     }
+
+    public static SectionType getSectionType(String title) {
+        for (SectionType type : SectionType.values()) {
+            if (type.getTitle().equals(title)) {
+                return type;
+            }
+        }
+        return null;
+    }
 }

@@ -7,11 +7,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import static ru.javawebinar.basejava.util.DateUtil.of;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
@@ -26,6 +24,14 @@ public class Organization implements Serializable {
     public Organization(Link link, List<Period> periods) {
         this.link = link;
         this.periods = periods;
+    }
+
+    public Link getLink() {
+        return link;
+    }
+
+    public List<Period> getPeriods() {
+        return new ArrayList<>(periods);
     }
 
     public void addPeriod(Period period) {
@@ -56,14 +62,6 @@ public class Organization implements Serializable {
         private String duties;
 
         public Period() {
-        }
-
-        public Period(int startYear, Month startMonth, String title, String description) {
-            this(of(startYear, startMonth), LocalDate.now(), title, description);
-        }
-
-        public Period(int startYear, Month startMonth, int endYear, Month endMonth, String title, String description) {
-            this(of(startYear, startMonth), of(endYear, endMonth), title, description);
         }
 
         public Period(LocalDate start, LocalDate end, String position, String duties) {

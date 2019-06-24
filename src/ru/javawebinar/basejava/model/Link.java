@@ -10,17 +10,17 @@ public class Link implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String name;
-    private String link;
+    private String url;
 
     public Link() {
     }
 
     public Link(String name) {
-        this("", name);
+        this.name = name;
     }
 
-    public Link(String link, String name) {
-        this.link = link;
+    public Link(String url, String name) {
+        this.url = url;
         this.name = name;
     }
 
@@ -30,16 +30,16 @@ public class Link implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Link link1 = (Link) o;
         return Objects.equals(name, link1.name) &&
-                Objects.equals(link, link1.link);
+                Objects.equals(url, link1.url);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, link);
+        return Objects.hash(name, url);
     }
 
     @Override
     public String toString() {
-        return link.equals("") ? name : link + "||" + name;
+        return Objects.isNull(url) ? name : url + "||" + name;
     }
 }

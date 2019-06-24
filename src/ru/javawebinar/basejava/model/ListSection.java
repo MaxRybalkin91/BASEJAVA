@@ -2,6 +2,7 @@ package ru.javawebinar.basejava.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,6 +17,10 @@ public class ListSection extends AbstractSection {
 
     public ListSection(List<String> values) {
         this.values = values;
+    }
+
+    public List<String> getValues() {
+        return new ArrayList<>(values);
     }
 
     @Override

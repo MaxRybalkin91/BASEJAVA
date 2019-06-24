@@ -23,21 +23,31 @@ public abstract class AbstractStorageTest {
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
 
+    private static final String NAME_1 = "name1";
+    private static final String NAME_2 = "name2";
+    private static final String NAME_3 = "name3";
+    private static final String NAME_4 = "name4";
+
     private static final Resume RESUME_1;
     private static final Resume RESUME_2;
     private static final Resume RESUME_3;
     private static final Resume RESUME_4;
 
     static {
-        RESUME_1 = new Resume(UUID_1, "Name1");
-        RESUME_2 = new Resume(UUID_2, "Name2");
-        RESUME_3 = new Resume(UUID_3, "Name3");
-        RESUME_4 = new Resume(UUID_4, "Name4");
+        RESUME_1 = new Resume(UUID_1, NAME_1);
+        RESUME_2 = new Resume(UUID_2, NAME_2);
+        RESUME_3 = new Resume(UUID_3, NAME_3);
+        RESUME_4 = new Resume(UUID_4, NAME_4);
 
-        RESUME_1.setContacts(ContactType.PHONE, new Link("12345"));
-        RESUME_2.setContacts(ContactType.SKYPE, new Link("54321"));
-        RESUME_3.setContacts(ContactType.EMAIL, new Link("abcd@yandex.ru"));
-        RESUME_4.setContacts(ContactType.LINKEDIN, new Link("LINKEDIN_URL"));
+        RESUME_1.setContacts(ContactType.PHONE, "12345");
+        RESUME_2.setContacts(ContactType.SKYPE, "54321");
+        RESUME_3.setContacts(ContactType.EMAIL, "abcd@yandex.ru");
+        RESUME_4.setContacts(ContactType.LINKEDIN, "LINKEDIN_URL");
+
+        RESUME_1.setSections(SectionType.OBJECTIVE, new TextSection("Objectives1"));
+        RESUME_2.setSections(SectionType.PERSONAL, new TextSection("Personal1"));
+        RESUME_3.setSections(SectionType.OBJECTIVE, new TextSection("Objectives2"));
+        RESUME_4.setSections(SectionType.PERSONAL, new TextSection("Personal2"));
 
         List<String> achievments = new ArrayList<>();
         List<String> qualifications = new ArrayList<>();

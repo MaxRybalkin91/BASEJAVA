@@ -29,13 +29,13 @@ public class ResumeTestData {
     }
 
     private static void initializeResumeContactTypeSection(Resume resume) {
-        resume.setContacts(ContactType.PHONE, new Link("+7(921) 855-0482"));
-        resume.setContacts(ContactType.SKYPE, new Link("grigory.kislin"));
-        resume.setContacts(ContactType.EMAIL, new Link("gkislin@yandex.ru"));
-        resume.setContacts(ContactType.LINKEDIN, new Link("LINKEDIN_URL"));
-        resume.setContacts(ContactType.GITHUB, new Link("GITHUB_URL"));
-        resume.setContacts(ContactType.STACKOVERFLOW, new Link("STACKOVERFLOW_URL"));
-        resume.setContacts(ContactType.HOMEPAGE, new Link("HOMEPAGE_URL"));
+        resume.setContacts(ContactType.PHONE, "+7(921) 855-0482");
+        resume.setContacts(ContactType.SKYPE, "grigory.kislin");
+        resume.setContacts(ContactType.EMAIL, "gkislin@yandex.ru");
+        resume.setContacts(ContactType.LINKEDIN, "LINKEDIN_URL");
+        resume.setContacts(ContactType.GITHUB, "GITHUB_URL");
+        resume.setContacts(ContactType.STACKOVERFLOW, "STACKOVERFLOW_URL");
+        resume.setContacts(ContactType.HOMEPAGE, "HOMEPAGE_URL");
     }
 
     private static void initializeResumeTextTypeSection(Resume resume) {
