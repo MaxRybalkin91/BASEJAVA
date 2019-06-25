@@ -71,6 +71,22 @@ public class Organization implements Serializable {
             this.duties = duties;
         }
 
+        public LocalDate getStart() {
+            return start;
+        }
+
+        public LocalDate getEnd() {
+            return end;
+        }
+
+        public String getPosition() {
+            return position;
+        }
+
+        public String getDuties() {
+            return duties;
+        }
+
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
@@ -89,8 +105,7 @@ public class Organization implements Serializable {
 
         @Override
         public String toString() {
-            String period = "\n" + start.getMonthValue() + "/" + start.getYear() + " - " + end.getMonthValue() + "/" +
-                    end.getYear() + "\n" + position + "\n";
+            String period = "\n" + start.getMonthValue() + "/" + start.getYear() + " - " + end.getMonthValue() + "/" + end.getYear() + "\n" + position + "\n";
             if (!duties.isEmpty()) {
                 period += duties + "\n";
             }

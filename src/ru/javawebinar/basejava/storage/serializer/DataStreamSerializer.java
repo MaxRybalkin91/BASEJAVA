@@ -94,7 +94,10 @@ public class DataStreamSerializer implements StreamSerializer {
                 List<Organization.Period> periods = organization.getPeriods();
                 dos.writeInt(periods.size());
                 for (Organization.Period period : periods) {
-                    dos.writeUTF(period.toString());
+                    dos.writeUTF(period.getStart().toString());
+                    dos.writeUTF(period.getEnd().toString());
+                    dos.writeUTF(period.getPosition());
+                    dos.writeUTF(period.getDuties());
                 }
             }
         } else {
@@ -103,42 +106,48 @@ public class DataStreamSerializer implements StreamSerializer {
     }
 
     private void readTextSection(DataInputStream dis, Resume resume) throws IOException {
-        String title = dis.readUTF();
-        int size = dis.readInt();
-
-        for (int i = 0; i < size; i++) {
+        int check = dis.readInt();
+        if (check != 0) {
+            String title = dis.readUTF();
             String value = dis.readUTF();
             resume.setSections(getSectionType(title), new TextSection(value));
         }
     }
 
     private void readListSection(DataInputStream dis, Resume resume) throws IOException {
-        String title = dis.readUTF();
-        int size = dis.readInt();
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            list.add(dis.readUTF());
-        }
-        if (list.size() != 0) {
-            resume.setSections(getSectionType(title), new ListSection(list));
+        int check = dis.readInt();
+        if (check > 0) {
+            String title = dis.readUTF();
+            int size = dis.readInt();
+            List<String> list = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                list.add(dis.readUTF());
+            }
+            if (list.size() != 0) {
+                resume.setSections(getSectionType(title), new ListSection(list));
+            }
         }
     }
 
     private void readOrganizationSection(DataInputStream dis, Resume resume) throws IOException {
-        String title = dis.readUTF();
-        int organizationSize = dis.readInt();
-        List<Organization> orgList = new ArrayList<>();
-        for (int i = 0; i < organizationSize; i++) {
-            Organization org = new Organization(new Link(dis.readUTF(), dis.readUTF()), new ArrayList<>());
-            int periodSize = dis.readInt();
-            for (int j = 0; j < periodSize; j++) {
-                org.addPeriod(new Organization.Period(LocalDate.parse(dis.readUTF()),
-                        LocalDate.parse(dis.readUTF()),
-                        dis.readUTF(),
-                        dis.readUTF()));
+        int сheck = dis.readInt();
+        if (сheck != 0) {
+            String title = dis.readUTF();
+            List<Organization> orgList = new ArrayList<>();
+            int organizationSize = dis.readInt();
+            for (int i = 0; i < organizationSize; i++) {
+                Organization org = new Organization(new Link(dis.readUTF()), new ArrayList<>());
+                int periodSize = dis.readInt();
+                for (int j = 0; j < periodSize; j++) {
+                    org.addPeriod(new Organization.Period(
+                            LocalDate.parse(dis.readUTF()),
+                            LocalDate.parse(dis.readUTF()),
+                            dis.readUTF(),
+                            dis.readUTF()));
+                }
+                orgList.add(org);
             }
-            orgList.add(org);
+            resume.setSections(getSectionType(title), new OrganizationSection(orgList));
         }
-        resume.setSections(getSectionType(title), new OrganizationSection(orgList));
     }
 }
