@@ -10,6 +10,9 @@ public class TextSection extends AbstractSection {
 
     private String value;
 
+    private TextSection() {
+    }
+
     public TextSection(String value) {
         this.value = value;
     }

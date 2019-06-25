@@ -58,28 +58,34 @@ public class DataStreamSerializer implements StreamSerializer {
     private void writeTextSection(DataOutputStream dos, Resume resume, SectionType sectionType) throws IOException {
         TextSection textSection = (TextSection) resume.getSection(sectionType);
         if (textSection != null) {
+            dos.writeInt(1);
             dos.writeUTF(sectionType.getTitle());
             String value = textSection.getValue();
-            dos.writeInt(1);
             dos.writeUTF(value);
+        } else {
+            dos.writeInt(0);
         }
     }
 
     private void writeListSection(DataOutputStream dos, Resume resume, SectionType sectionType) throws IOException {
         ListSection listSection = (ListSection) resume.getSection(sectionType);
         if (listSection != null) {
+            dos.writeInt(1);
             dos.writeUTF(sectionType.getTitle());
             List<String> skills = listSection.getValues();
             dos.writeInt(skills.size());
             for (String skill : skills) {
                 dos.writeUTF(skill);
             }
+        } else {
+            dos.writeInt(0);
         }
     }
 
     private void writeOrganizationSection(DataOutputStream dos, Resume resume, SectionType sectionType) throws IOException {
         OrganizationSection organizationSection = (OrganizationSection) resume.getSection(sectionType);
         if (organizationSection != null) {
+            dos.writeInt(1);
             dos.writeUTF(sectionType.getTitle());
             List<Organization> organizations = organizationSection.getOrganizations();
             dos.writeInt(organizations.size());
@@ -91,6 +97,8 @@ public class DataStreamSerializer implements StreamSerializer {
                     dos.writeUTF(period.toString());
                 }
             }
+        } else {
+            dos.writeInt(0);
         }
     }
 
@@ -98,7 +106,7 @@ public class DataStreamSerializer implements StreamSerializer {
         String title = dis.readUTF();
         int size = dis.readInt();
 
-        if (size > 0) {
+        for (int i = 0; i < size; i++) {
             String value = dis.readUTF();
             resume.setSections(getSectionType(title), new TextSection(value));
         }
@@ -111,14 +119,16 @@ public class DataStreamSerializer implements StreamSerializer {
         for (int i = 0; i < size; i++) {
             list.add(dis.readUTF());
         }
-        resume.setSections(getSectionType(title), new ListSection(list));
+        if (list.size() != 0) {
+            resume.setSections(getSectionType(title), new ListSection(list));
+        }
     }
 
     private void readOrganizationSection(DataInputStream dis, Resume resume) throws IOException {
         String title = dis.readUTF();
-        int OrganizationSize = dis.readInt();
+        int organizationSize = dis.readInt();
         List<Organization> orgList = new ArrayList<>();
-        for (int i = 0; i < OrganizationSize; i++) {
+        for (int i = 0; i < organizationSize; i++) {
             Organization org = new Organization(new Link(dis.readUTF(), dis.readUTF()), new ArrayList<>());
             int periodSize = dis.readInt();
             for (int j = 0; j < periodSize; j++) {
