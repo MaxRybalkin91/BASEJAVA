@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static ru.javawebinar.basejava.model.SectionType.*;
+import static ru.javawebinar.basejava.model.SectionType.getSectionType;
 
 public class DataStreamSerializer implements StreamSerializer {
     @Override
@@ -23,12 +23,25 @@ public class DataStreamSerializer implements StreamSerializer {
                 dos.writeUTF(entry.getValue().toString());
             }
 
-            writeTextSection(dos, resume, OBJECTIVE);
-            writeTextSection(dos, resume, PERSONAL);
-            writeListSection(dos, resume, ACHIEVEMENT);
-            writeListSection(dos, resume, QUALIFICATIONS);
-            writeOrganizationSection(dos, resume, EXPERIENCE);
-            writeOrganizationSection(dos, resume, EDUCATION);
+            for (Map.Entry<SectionType, AbstractSection> entry : resume.getSections().entrySet()) {
+                SectionType sectionType = entry.getKey();
+                if (sectionType != null) {
+                    switch (sectionType) {
+                        case OBJECTIVE:
+                        case PERSONAL:
+                            writeTextSection(dos, resume, sectionType);
+                            break;
+                        case ACHIEVEMENT:
+                        case QUALIFICATIONS:
+                            writeListSection(dos, resume, sectionType);
+                            break;
+                        case EXPERIENCE:
+                        case EDUCATION:
+                            writeOrganizationSection(dos, resume, sectionType);
+                            break;
+                    }
+                }
+            }
         }
     }
 
@@ -44,12 +57,23 @@ public class DataStreamSerializer implements StreamSerializer {
                 resume.setContacts(ContactType.valueOf(dis.readUTF()), dis.readUTF());
             }
 
-            readTextSection(dis, resume);
-            readTextSection(dis, resume);
-            readListSection(dis, resume);
-            readListSection(dis, resume);
-            readOrganizationSection(dis, resume);
-            readOrganizationSection(dis, resume);
+            for (Map.Entry<SectionType, AbstractSection> entry : resume.getSections().entrySet()) {
+                SectionType sectionType = entry.getKey();
+                switch (sectionType) {
+                    case OBJECTIVE:
+                    case PERSONAL:
+                        readTextSection(dis, resume);
+                        break;
+                    case ACHIEVEMENT:
+                    case QUALIFICATIONS:
+                        readListSection(dis, resume);
+                        break;
+                    case EXPERIENCE:
+                    case EDUCATION:
+                        readOrganizationSection(dis, resume);
+                        break;
+                }
+            }
 
             return resume;
         }
@@ -57,97 +81,74 @@ public class DataStreamSerializer implements StreamSerializer {
 
     private void writeTextSection(DataOutputStream dos, Resume resume, SectionType sectionType) throws IOException {
         TextSection textSection = (TextSection) resume.getSection(sectionType);
-        if (textSection != null) {
-            dos.writeInt(1);
-            dos.writeUTF(sectionType.getTitle());
-            String value = textSection.getValue();
-            dos.writeUTF(value);
-        } else {
-            dos.writeInt(0);
-        }
+        dos.writeUTF(sectionType.name());
+        dos.writeUTF(textSection.getValue());
     }
 
     private void writeListSection(DataOutputStream dos, Resume resume, SectionType sectionType) throws IOException {
         ListSection listSection = (ListSection) resume.getSection(sectionType);
-        if (listSection != null) {
-            dos.writeInt(1);
-            dos.writeUTF(sectionType.getTitle());
-            List<String> skills = listSection.getValues();
-            dos.writeInt(skills.size());
-            for (String skill : skills) {
-                dos.writeUTF(skill);
-            }
-        } else {
-            dos.writeInt(0);
+
+        dos.writeUTF(sectionType.name());
+        List<String> skills = listSection.getValues();
+        dos.writeInt(skills.size());
+        for (String skill : skills) {
+            dos.writeUTF(skill);
         }
     }
 
     private void writeOrganizationSection(DataOutputStream dos, Resume resume, SectionType sectionType) throws IOException {
         OrganizationSection organizationSection = (OrganizationSection) resume.getSection(sectionType);
-        if (organizationSection != null) {
-            dos.writeInt(1);
-            dos.writeUTF(sectionType.getTitle());
-            List<Organization> organizations = organizationSection.getOrganizations();
-            dos.writeInt(organizations.size());
-            for (Organization organization : organizations) {
-                dos.writeUTF(organization.getLink().toString());
-                List<Organization.Period> periods = organization.getPeriods();
-                dos.writeInt(periods.size());
-                for (Organization.Period period : periods) {
-                    dos.writeUTF(period.getStart().toString());
-                    dos.writeUTF(period.getEnd().toString());
-                    dos.writeUTF(period.getPosition());
-                    dos.writeUTF(period.getDuties());
-                }
+
+        dos.writeUTF(sectionType.name());
+        List<Organization> organizations = organizationSection.getOrganizations();
+        dos.writeInt(organizations.size());
+        for (Organization organization : organizations) {
+            dos.writeUTF(organization.getLink().toString());
+            List<Organization.Period> periods = organization.getPeriods();
+            dos.writeInt(periods.size());
+            for (Organization.Period period : periods) {
+                dos.writeUTF(period.getStart().toString());
+                dos.writeUTF(period.getEnd().toString());
+                dos.writeUTF(period.getPosition());
+                dos.writeUTF(period.getDuties());
             }
-        } else {
-            dos.writeInt(0);
         }
     }
 
     private void readTextSection(DataInputStream dis, Resume resume) throws IOException {
-        int check = dis.readInt();
-        if (check != 0) {
-            String title = dis.readUTF();
-            String value = dis.readUTF();
-            resume.setSections(getSectionType(title), new TextSection(value));
-        }
+        String name = dis.readUTF();
+        String value = dis.readUTF();
+        resume.setSections(getSectionType(name), new TextSection(value));
     }
 
     private void readListSection(DataInputStream dis, Resume resume) throws IOException {
-        int check = dis.readInt();
-        if (check > 0) {
-            String title = dis.readUTF();
-            int size = dis.readInt();
-            List<String> list = new ArrayList<>();
-            for (int i = 0; i < size; i++) {
-                list.add(dis.readUTF());
-            }
-            if (list.size() != 0) {
-                resume.setSections(getSectionType(title), new ListSection(list));
-            }
+        String name = dis.readUTF();
+        int size = dis.readInt();
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            list.add(dis.readUTF());
+        }
+        if (list.size() != 0) {
+            resume.setSections(getSectionType(name), new ListSection(list));
         }
     }
 
     private void readOrganizationSection(DataInputStream dis, Resume resume) throws IOException {
-        int сheck = dis.readInt();
-        if (сheck != 0) {
-            String title = dis.readUTF();
-            List<Organization> orgList = new ArrayList<>();
-            int organizationSize = dis.readInt();
-            for (int i = 0; i < organizationSize; i++) {
-                Organization org = new Organization(new Link(dis.readUTF()), new ArrayList<>());
-                int periodSize = dis.readInt();
-                for (int j = 0; j < periodSize; j++) {
-                    org.addPeriod(new Organization.Period(
-                            LocalDate.parse(dis.readUTF()),
-                            LocalDate.parse(dis.readUTF()),
-                            dis.readUTF(),
-                            dis.readUTF()));
-                }
-                orgList.add(org);
+        String name = dis.readUTF();
+        List<Organization> orgList = new ArrayList<>();
+        int organizationSize = dis.readInt();
+        for (int i = 0; i < organizationSize; i++) {
+            Organization org = new Organization(new Link(dis.readUTF()), new ArrayList<>());
+            int periodSize = dis.readInt();
+            for (int j = 0; j < periodSize; j++) {
+                org.addPeriod(new Organization.Period(
+                        LocalDate.parse(dis.readUTF()),
+                        LocalDate.parse(dis.readUTF()),
+                        dis.readUTF(),
+                        dis.readUTF()));
             }
-            resume.setSections(getSectionType(title), new OrganizationSection(orgList));
+            orgList.add(org);
         }
+        resume.setSections(getSectionType(name), new OrganizationSection(orgList));
     }
 }
