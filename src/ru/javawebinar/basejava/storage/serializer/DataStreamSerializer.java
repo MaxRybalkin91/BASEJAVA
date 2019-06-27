@@ -74,13 +74,13 @@ public class DataStreamSerializer implements StreamSerializer {
                         break;
                 }
             }
-
             return resume;
         }
     }
 
     private void writeTextSection(DataOutputStream dos, Resume resume, SectionType sectionType) throws IOException {
         TextSection textSection = (TextSection) resume.getSection(sectionType);
+
         dos.writeUTF(sectionType.name());
         dos.writeUTF(textSection.getValue());
     }
