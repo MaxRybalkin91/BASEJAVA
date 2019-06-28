@@ -21,8 +21,4 @@ public enum SectionType {
     public String getTitle() {
         return title;
     }
-
-    public static SectionType getSectionType(String title) {
-        return valueOf(title);
-    }
 }

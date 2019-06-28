@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static ru.javawebinar.basejava.model.SectionType.getSectionType;
-
 public class DataStreamSerializer implements StreamSerializer {
     @Override
     public void writeToStorage(Resume resume, OutputStream os) throws IOException {
@@ -36,11 +34,11 @@ public class DataStreamSerializer implements StreamSerializer {
                             break;
                         case ACHIEVEMENT:
                         case QUALIFICATIONS:
-                            writeListSection(dos, resume, (ListSection) entry.getValue());
+                            writeListSection(dos, (ListSection) entry.getValue());
                             break;
                         case EXPERIENCE:
                         case EDUCATION:
-                            writeOrganizationSection(dos, resume, (OrganizationSection) entry.getValue());
+                            writeOrganizationSection(dos, (OrganizationSection) entry.getValue());
                             break;
                     }
                 }
@@ -63,7 +61,6 @@ public class DataStreamSerializer implements StreamSerializer {
             int sectionsSize = dis.readInt();
             for (int i = 0; i < sectionsSize; i++) {
                 String sectionName = dis.readUTF();
-
                 switch (sectionName) {
                     case "OBJECTIVE":
                     case "PERSONAL":
@@ -79,12 +76,11 @@ public class DataStreamSerializer implements StreamSerializer {
                         break;
                 }
             }
-
             return resume;
         }
     }
 
-    private void writeListSection(DataOutputStream dos, Resume resume, ListSection listSection) throws IOException {
+    private void writeListSection(DataOutputStream dos, ListSection listSection) throws IOException {
         List<String> skills = listSection.getValues();
         dos.writeInt(skills.size());
         for (String skill : skills) {
@@ -92,7 +88,7 @@ public class DataStreamSerializer implements StreamSerializer {
         }
     }
 
-    private void writeOrganizationSection(DataOutputStream dos, Resume resume, OrganizationSection organizationSection) throws IOException {
+    private void writeOrganizationSection(DataOutputStream dos, OrganizationSection organizationSection) throws IOException {
         List<Organization> organizations = organizationSection.getOrganizations();
         dos.writeInt(organizations.size());
         for (Organization organization : organizations) {
@@ -110,7 +106,7 @@ public class DataStreamSerializer implements StreamSerializer {
 
     private void readTextSection(DataInputStream dis, Resume resume, String name) throws IOException {
         String value = dis.readUTF();
-        resume.setSections(getSectionType(name), new TextSection(value));
+        resume.setSections(SectionType.valueOf(name), new TextSection(value));
     }
 
     private void readListSection(DataInputStream dis, Resume resume, String name) throws IOException {
@@ -120,7 +116,7 @@ public class DataStreamSerializer implements StreamSerializer {
             list.add(dis.readUTF());
         }
         if (list.size() != 0) {
-            resume.setSections(getSectionType(name), new ListSection(list));
+            resume.setSections(SectionType.valueOf(name), new ListSection(list));
         }
     }
 
@@ -139,6 +135,6 @@ public class DataStreamSerializer implements StreamSerializer {
             }
             orgList.add(org);
         }
-        resume.setSections(getSectionType(name), new OrganizationSection(orgList));
+        resume.setSections(SectionType.valueOf(name), new OrganizationSection(orgList));
     }
 }

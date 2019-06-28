@@ -60,10 +60,6 @@ public class Resume implements Comparable<Resume>, Serializable {
         return new EnumMap<>(sections);
     }
 
-    public AbstractSection getSection(SectionType type) {
-        return sections.get(type);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,7 +78,7 @@ public class Resume implements Comparable<Resume>, Serializable {
 
     @Override
     public String toString() {
-        return uuid + ' ' + fullName;
+        return uuid + "|" + fullName;
     }
 
     @Override
