@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractStorageTest {
-    protected static final File STORAGE_DIR = new File("/home/maksim/basejava/storage");
+    static final File STORAGE_DIR = new File("/home/maksim/JAVA/basejava/storage");
 
     Storage storage;
 
@@ -45,44 +45,45 @@ public abstract class AbstractStorageTest {
         RESUME_4.setContacts(ContactType.LINKEDIN, "LINKEDIN_URL");
 
         RESUME_1.setSections(SectionType.OBJECTIVE, new TextSection("Objectives1"));
-        RESUME_2.setSections(SectionType.PERSONAL, new TextSection("Personal1"));
-        RESUME_3.setSections(SectionType.OBJECTIVE, new TextSection("Objectives2"));
-        RESUME_4.setSections(SectionType.PERSONAL, new TextSection("Personal2"));
+        RESUME_2.setSections(SectionType.PERSONAL, new TextSection("Personal2"));
+        RESUME_3.setSections(SectionType.OBJECTIVE, new TextSection("Objectives3"));
+        RESUME_4.setSections(SectionType.PERSONAL, new TextSection("Personal4"));
 
-        List<String> achievments = new ArrayList<>();
-        List<String> qualifications = new ArrayList<>();
+        RESUME_1.setSections(SectionType.ACHIEVEMENT, new ListSection("Achievment1"));
+        RESUME_2.setSections(SectionType.QUALIFICATIONS, new ListSection("Qualification2"));
+        RESUME_3.setSections(SectionType.ACHIEVEMENT, new ListSection("Achievment3"));
+        RESUME_4.setSections(SectionType.QUALIFICATIONS, new ListSection("Qualification4"));
 
-        achievments.add("Achievment1");
-        qualifications.add("Qualification1");
-
-        RESUME_1.setSections(SectionType.ACHIEVEMENT, new ListSection(achievments));
-        RESUME_2.setSections(SectionType.QUALIFICATIONS, new ListSection(qualifications));
-        RESUME_3.setSections(SectionType.ACHIEVEMENT, new ListSection(achievments));
-        RESUME_4.setSections(SectionType.QUALIFICATIONS, new ListSection(qualifications));
-
-        List<Organization> jobOrganizations = new ArrayList<>();
-        List<Organization> eduOrganizations = new ArrayList<>();
-
-        Organization organization1 = new Organization(new Link("NAME_1"), new ArrayList<>());
-        organization1.addPeriod(new Organization.Period(
-                LocalDate.now(),
-                LocalDate.now(),
-                "POSITION",
-                "DUTIES"));
-        jobOrganizations.add(organization1);
-
-        Organization organization2 = new Organization(new Link("NAME_2"), new ArrayList<>());
-        organization1.addPeriod(new Organization.Period(
-                LocalDate.now(),
-                LocalDate.now(),
-                "POSITION",
-                "DUTIES"));
-        eduOrganizations.add(organization2);
-
-        RESUME_1.setSections(SectionType.EXPERIENCE, new OrganizationSection(jobOrganizations));
-        RESUME_2.setSections(SectionType.EDUCATION, new OrganizationSection(eduOrganizations));
-        RESUME_3.setSections(SectionType.EXPERIENCE, new OrganizationSection(jobOrganizations));
-        RESUME_4.setSections(SectionType.EDUCATION, new OrganizationSection(eduOrganizations));
+        RESUME_1.setSections(SectionType.EXPERIENCE, new OrganizationSection(
+                new Organization(
+                        new Link("COMPANY_1"),
+                        new Organization.Period(
+                                LocalDate.now(),
+                                LocalDate.now(),
+                                "POSITION_1",
+                                "DUTIES_1"))));
+        RESUME_2.setSections(SectionType.EDUCATION, new OrganizationSection(
+                new Organization(
+                        new Link("COMPANY_2"),
+                        new Organization.Period(
+                                LocalDate.now(),
+                                LocalDate.now(),
+                                "POSITION_2"))));
+        RESUME_3.setSections(SectionType.EXPERIENCE, new OrganizationSection(
+                new Organization(
+                        new Link("COMPANY_3"),
+                        new Organization.Period(
+                                LocalDate.now(),
+                                LocalDate.now(),
+                                "POSITION_3",
+                                "DUTIES_3"))));
+        RESUME_4.setSections(SectionType.EDUCATION, new OrganizationSection(
+                new Organization(
+                        new Link("COMPANY_4"),
+                        new Organization.Period(
+                                LocalDate.now(),
+                                LocalDate.now(),
+                                "POSITION_4"))));
     }
 
     AbstractStorageTest(Storage storage) {
@@ -110,7 +111,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume resume3 = new Resume("uuid3", "new_name3");
+        Resume resume3 = new Resume(UUID_3, "NEW_NAME_3");
         storage.update(resume3);
         assertEquals(resume3, storage.get(RESUME_3.getUuid()));
     }
@@ -145,7 +146,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void get() {
-        assertGet(RESUME_3);
+        assertEquals(RESUME_3, storage.get(UUID_3));
     }
 
     @Test(expected = NotExistStorageException.class)

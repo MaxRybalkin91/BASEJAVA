@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,6 +20,10 @@ public class Organization implements Serializable {
     private List<Period> periods;
 
     public Organization() {
+    }
+
+    public Organization(Link link, Period... periods) {
+        this(link, Arrays.asList(periods));
     }
 
     public Organization(Link link, List<Period> periods) {
@@ -62,6 +67,10 @@ public class Organization implements Serializable {
         private String duties;
 
         public Period() {
+        }
+
+        public Period(LocalDate start, LocalDate end, String position) {
+            this(start, end, position, "");
         }
 
         public Period(LocalDate start, LocalDate end, String position, String duties) {

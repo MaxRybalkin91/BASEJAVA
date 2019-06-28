@@ -8,17 +8,17 @@ import java.util.Objects;
 public class TextSection extends AbstractSection {
     private static final long serialVersionUuid = 1L;
 
-    private String value;
+    private String text;
 
     private TextSection() {
     }
 
     public TextSection(String value) {
-        this.value = value;
+        this.text = value;
     }
 
-    public String getValue() {
-        return value;
+    public String getText() {
+        return text;
     }
 
     @Override
@@ -26,16 +26,16 @@ public class TextSection extends AbstractSection {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TextSection textType = (TextSection) o;
-        return value.equals(textType.value);
+        return text.equals(textType.text);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value);
+        return Objects.hash(text);
     }
 
     @Override
     public String toString() {
-        return value + "\n";
+        return text + "\n";
     }
 }

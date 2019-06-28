@@ -23,21 +23,24 @@ public class DataStreamSerializer implements StreamSerializer {
                 dos.writeUTF(entry.getValue().toString());
             }
 
+            dos.writeInt(resume.getSections().size());
             for (Map.Entry<SectionType, AbstractSection> entry : resume.getSections().entrySet()) {
                 SectionType sectionType = entry.getKey();
                 if (sectionType != null) {
+                    dos.writeUTF(sectionType.name());
                     switch (sectionType) {
                         case OBJECTIVE:
                         case PERSONAL:
-                            writeTextSection(dos, resume, sectionType);
+                            TextSection textSection = (TextSection) entry.getValue();
+                            dos.writeUTF(textSection.getText());
                             break;
                         case ACHIEVEMENT:
                         case QUALIFICATIONS:
-                            writeListSection(dos, resume, sectionType);
+                            writeListSection(dos, resume, (ListSection) entry.getValue());
                             break;
                         case EXPERIENCE:
                         case EDUCATION:
-                            writeOrganizationSection(dos, resume, sectionType);
+                            writeOrganizationSection(dos, resume, (OrganizationSection) entry.getValue());
                             break;
                     }
                 }
@@ -52,43 +55,36 @@ public class DataStreamSerializer implements StreamSerializer {
             String fullName = dis.readUTF();
             Resume resume = new Resume(uuid, fullName);
 
-            int size = dis.readInt();
-            for (int i = 0; i < size; i++) {
+            int contactsSize = dis.readInt();
+            for (int i = 0; i < contactsSize; i++) {
                 resume.setContacts(ContactType.valueOf(dis.readUTF()), dis.readUTF());
             }
 
-            for (Map.Entry<SectionType, AbstractSection> entry : resume.getSections().entrySet()) {
-                SectionType sectionType = entry.getKey();
-                switch (sectionType) {
-                    case OBJECTIVE:
-                    case PERSONAL:
-                        readTextSection(dis, resume);
+            int sectionsSize = dis.readInt();
+            for (int i = 0; i < sectionsSize; i++) {
+                String sectionName = dis.readUTF();
+
+                switch (sectionName) {
+                    case "OBJECTIVE":
+                    case "PERSONAL":
+                        readTextSection(dis, resume, sectionName);
                         break;
-                    case ACHIEVEMENT:
-                    case QUALIFICATIONS:
-                        readListSection(dis, resume);
+                    case "ACHIEVEMENT":
+                    case "QUALIFICATIONS":
+                        readListSection(dis, resume, sectionName);
                         break;
-                    case EXPERIENCE:
-                    case EDUCATION:
-                        readOrganizationSection(dis, resume);
+                    case "EXPERIENCE":
+                    case "EDUCATION":
+                        readOrganizationSection(dis, resume, sectionName);
                         break;
                 }
             }
+
             return resume;
         }
     }
 
-    private void writeTextSection(DataOutputStream dos, Resume resume, SectionType sectionType) throws IOException {
-        TextSection textSection = (TextSection) resume.getSection(sectionType);
-
-        dos.writeUTF(sectionType.name());
-        dos.writeUTF(textSection.getValue());
-    }
-
-    private void writeListSection(DataOutputStream dos, Resume resume, SectionType sectionType) throws IOException {
-        ListSection listSection = (ListSection) resume.getSection(sectionType);
-
-        dos.writeUTF(sectionType.name());
+    private void writeListSection(DataOutputStream dos, Resume resume, ListSection listSection) throws IOException {
         List<String> skills = listSection.getValues();
         dos.writeInt(skills.size());
         for (String skill : skills) {
@@ -96,10 +92,7 @@ public class DataStreamSerializer implements StreamSerializer {
         }
     }
 
-    private void writeOrganizationSection(DataOutputStream dos, Resume resume, SectionType sectionType) throws IOException {
-        OrganizationSection organizationSection = (OrganizationSection) resume.getSection(sectionType);
-
-        dos.writeUTF(sectionType.name());
+    private void writeOrganizationSection(DataOutputStream dos, Resume resume, OrganizationSection organizationSection) throws IOException {
         List<Organization> organizations = organizationSection.getOrganizations();
         dos.writeInt(organizations.size());
         for (Organization organization : organizations) {
@@ -115,14 +108,12 @@ public class DataStreamSerializer implements StreamSerializer {
         }
     }
 
-    private void readTextSection(DataInputStream dis, Resume resume) throws IOException {
-        String name = dis.readUTF();
+    private void readTextSection(DataInputStream dis, Resume resume, String name) throws IOException {
         String value = dis.readUTF();
         resume.setSections(getSectionType(name), new TextSection(value));
     }
 
-    private void readListSection(DataInputStream dis, Resume resume) throws IOException {
-        String name = dis.readUTF();
+    private void readListSection(DataInputStream dis, Resume resume, String name) throws IOException {
         int size = dis.readInt();
         List<String> list = new ArrayList<>();
         for (int i = 0; i < size; i++) {
@@ -133,8 +124,7 @@ public class DataStreamSerializer implements StreamSerializer {
         }
     }
 
-    private void readOrganizationSection(DataInputStream dis, Resume resume) throws IOException {
-        String name = dis.readUTF();
+    private void readOrganizationSection(DataInputStream dis, Resume resume, String name) throws IOException {
         List<Organization> orgList = new ArrayList<>();
         int organizationSize = dis.readInt();
         for (int i = 0; i < organizationSize; i++) {
