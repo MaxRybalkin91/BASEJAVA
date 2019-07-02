@@ -32,12 +32,12 @@ public class Resume implements Comparable<Resume>, Serializable {
         this.fullName = fullName;
     }
 
-    public void setContacts(ContactType contactType, String value) {
-        contacts.put(contactType, new Link(value));
+    public void setContacts(ContactType contactType, String name) {
+        contacts.put(contactType, new Link(name));
     }
 
-    public void setContacts(ContactType contactType, String name, String link) {
-        contacts.put(contactType, new Link(name, link));
+    public void setContacts(ContactType contactType, String name, String url) {
+        contacts.put(contactType, new Link(name, url));
     }
 
     public void setSections(SectionType sectionType, AbstractSection section) {
@@ -65,10 +65,10 @@ public class Resume implements Comparable<Resume>, Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Resume resume = (Resume) o;
-        return uuid.equals(resume.uuid) &&
-                fullName.equals(resume.fullName) &&
-                contacts.equals(resume.contacts) &&
-                sections.equals(resume.sections);
+        return Objects.equals(uuid, resume.uuid) &&
+                Objects.equals(fullName, resume.fullName) &&
+                Objects.equals(contacts, resume.contacts) &&
+                Objects.equals(sections, resume.sections);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class Resume implements Comparable<Resume>, Serializable {
 
     @Override
     public String toString() {
-        return uuid + "|" + fullName;
+        return uuid + "|" + fullName + "|" + contacts + "|" + sections;
     }
 
     @Override

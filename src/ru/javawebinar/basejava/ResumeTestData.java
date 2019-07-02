@@ -89,7 +89,7 @@ public class ResumeTestData {
         qualifications.add("Родной русский, английский \"upper intermediate\"");
 
         resume.setSections(SectionType.ACHIEVEMENT, new ListSection(achievments));
-        resume.setSections(SectionType.QUALIFICATIONS, new ListSection(qualifications));
+        resume.setSections(SectionType.QUALIFICATION, new ListSection(qualifications));
     }
 
     private static void initializeResumeExperience(Resume resume) {

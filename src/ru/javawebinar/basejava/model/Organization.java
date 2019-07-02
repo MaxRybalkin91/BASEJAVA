@@ -48,12 +48,18 @@ public class Organization implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Organization that = (Organization) o;
-        return Objects.equals(link, that.link);
+        return Objects.equals(link, that.link) &&
+                Objects.equals(periods, that.periods);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(link, periods);
+    }
+
+    @Override
+    public String toString() {
+        return link.toString();
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
@@ -80,11 +86,11 @@ public class Organization implements Serializable {
             this.duties = duties;
         }
 
-        public LocalDate getStart() {
+        public LocalDate getStartDate() {
             return start;
         }
 
-        public LocalDate getEnd() {
+        public LocalDate getEndDate() {
             return end;
         }
 
@@ -114,9 +120,10 @@ public class Organization implements Serializable {
 
         @Override
         public String toString() {
-            String period = "\n" + start.getMonthValue() + "/" + start.getYear() + " - " + end.getMonthValue() + "/" + end.getYear() + "\n" + position + "\n";
-            if (!duties.isEmpty()) {
-                period += duties + "\n";
+            String period = "\n" + start.getMonthValue() + "/" + start.getYear() + " - " + end.getMonthValue() + "/"
+                    + end.getYear() + "\n" + position;
+            if (!duties.equals("")) {
+                period += "\n" + duties + "\n";
             }
             return period;
         }

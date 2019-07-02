@@ -15,19 +15,14 @@ import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractStorageTest {
     static final File STORAGE_DIR = new File("/home/maksim/JAVA/basejava/storage");
-
-    Storage storage;
-
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
-
     private static final String NAME_1 = "name1";
     private static final String NAME_2 = "name2";
     private static final String NAME_3 = "name3";
     private static final String NAME_4 = "name4";
-
     private static final Resume RESUME_1;
     private static final Resume RESUME_2;
     private static final Resume RESUME_3;
@@ -39,10 +34,10 @@ public abstract class AbstractStorageTest {
         RESUME_3 = new Resume(UUID_3, NAME_3);
         RESUME_4 = new Resume(UUID_4, NAME_4);
 
-        RESUME_1.setContacts(ContactType.PHONE, "12345");
-        RESUME_2.setContacts(ContactType.SKYPE, "54321");
+        RESUME_1.setContacts(ContactType.PHONE, "+1-234-567-89-0");
+        RESUME_2.setContacts(ContactType.SKYPE, "Microsoft");
         RESUME_3.setContacts(ContactType.EMAIL, "abcd@yandex.ru");
-        RESUME_4.setContacts(ContactType.LINKEDIN, "LINKEDIN_URL");
+        RESUME_4.setContacts(ContactType.LINKEDIN, ContactType.LINKEDIN.getTitle(), "http://www.linkedin.com");
 
         RESUME_1.setSections(SectionType.OBJECTIVE, new TextSection("Objectives1"));
         RESUME_2.setSections(SectionType.PERSONAL, new TextSection("Personal2"));
@@ -50,9 +45,9 @@ public abstract class AbstractStorageTest {
         RESUME_4.setSections(SectionType.PERSONAL, new TextSection("Personal4"));
 
         RESUME_1.setSections(SectionType.ACHIEVEMENT, new ListSection("Achievment1"));
-        RESUME_2.setSections(SectionType.QUALIFICATIONS, new ListSection("Qualification2"));
+        RESUME_2.setSections(SectionType.QUALIFICATION, new ListSection("Qualification2"));
         RESUME_3.setSections(SectionType.ACHIEVEMENT, new ListSection("Achievment3"));
-        RESUME_4.setSections(SectionType.QUALIFICATIONS, new ListSection("Qualification4"));
+        RESUME_4.setSections(SectionType.QUALIFICATION, new ListSection("Qualification4"));
 
         RESUME_1.setSections(SectionType.EXPERIENCE, new OrganizationSection(
                 new Organization(
@@ -85,6 +80,8 @@ public abstract class AbstractStorageTest {
                                 LocalDate.now(),
                                 "POSITION_4"))));
     }
+
+    Storage storage;
 
     AbstractStorageTest(Storage storage) {
         this.storage = storage;

@@ -19,18 +19,18 @@ public class Link implements Serializable {
         this.name = name;
     }
 
-    public Link(String url, String name) {
-        this.url = url;
+    public Link(String name, String url) {
         this.name = name;
+        this.url = url;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Link link1 = (Link) o;
-        return Objects.equals(name, link1.name) &&
-                Objects.equals(url, link1.url);
+        Link link = (Link) o;
+        return Objects.equals(name, link.name) &&
+                Objects.equals(url, link.url);
     }
 
     @Override
@@ -40,6 +40,6 @@ public class Link implements Serializable {
 
     @Override
     public String toString() {
-        return Objects.isNull(url) ? name : url + "||" + name;
+        return Objects.isNull(url) ? name : name + "||" + url;
     }
 }

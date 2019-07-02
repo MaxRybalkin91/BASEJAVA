@@ -43,6 +43,9 @@ public class OrganizationSection extends AbstractSection {
 
     @Override
     public String toString() {
-        return organizations.toString();
+        for (Organization org : organizations) {
+            System.out.println(org.toString());
+        }
+        return "";
     }
 }

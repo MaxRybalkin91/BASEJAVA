@@ -8,10 +8,10 @@ public enum ContactType {
     PHONE("Телефон: "),
     SKYPE("Skype: "),
     EMAIL("Почта: "),
-    LINKEDIN("Профиль LinkedIn: "),
-    GITHUB("Профиль GitHub: "),
-    STACKOVERFLOW("Профиль StackOverflow: "),
-    HOMEPAGE("Домашняя страница: ");
+    LINKEDIN("Профиль LinkedIn"),
+    GITHUB("Профиль GitHub"),
+    STACKOVERFLOW("Профиль StackOverflow"),
+    HOMEPAGE("Домашняя страница");
 
     private String title;
 
