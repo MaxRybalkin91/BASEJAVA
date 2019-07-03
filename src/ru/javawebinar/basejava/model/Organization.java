@@ -86,12 +86,12 @@ public class Organization implements Serializable {
             this.duties = duties;
         }
 
-        public LocalDate getStartDate() {
-            return start;
+        public String getStartDate() {
+            return start.toString();
         }
 
-        public LocalDate getEndDate() {
-            return end;
+        public String getEndDate() {
+            return end.toString();
         }
 
         public String getPosition() {

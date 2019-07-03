@@ -53,8 +53,8 @@ public class DataStreamSerializer implements StreamSerializer {
                                                 dos.writeUTF(organization.getLink().getName());
                                                 writeWithException(dos, organization.getPeriods(),
                                                         period -> {
-                                                            dos.writeUTF(period.getStartDate().toString());
-                                                            dos.writeUTF(period.getEndDate().toString());
+                                                            dos.writeUTF(period.getStartDate());
+                                                            dos.writeUTF(period.getEndDate());
                                                             dos.writeUTF(period.getPosition());
                                                             dos.writeUTF(period.getDuties());
                                                         });
