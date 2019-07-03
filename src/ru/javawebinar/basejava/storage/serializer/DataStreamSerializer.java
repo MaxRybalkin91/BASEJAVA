@@ -26,7 +26,7 @@ public class DataStreamSerializer implements StreamSerializer {
 
             writeWithException(dos, resume.getContacts().entrySet(), entry -> {
                 dos.writeUTF(entry.getKey().name());
-                dos.writeUTF(entry.getValue().toString());
+                dos.writeUTF(entry.getValue().getName());
             });
 
             writeWithException(dos, resume.getSections().entrySet(),
@@ -50,7 +50,7 @@ public class DataStreamSerializer implements StreamSerializer {
                                 case "EDUCATION":
                                     writeWithException(dos, ((OrganizationSection) abstractSection).getOrganizations(),
                                             organization -> {
-                                                dos.writeUTF(organization.getLink().toString());
+                                                dos.writeUTF(organization.getLink().getName());
                                                 writeWithException(dos, organization.getPeriods(),
                                                         period -> {
                                                             dos.writeUTF(period.getStartDate().toString());
