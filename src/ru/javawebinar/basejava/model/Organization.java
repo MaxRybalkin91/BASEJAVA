@@ -57,11 +57,6 @@ public class Organization implements Serializable {
         return Objects.hash(link, periods);
     }
 
-    @Override
-    public String toString() {
-        return link.toString();
-    }
-
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class Period implements Serializable {
         @XmlJavaTypeAdapter(LocalDateAdapter.class)
