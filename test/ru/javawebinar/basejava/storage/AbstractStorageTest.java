@@ -37,7 +37,7 @@ public abstract class AbstractStorageTest {
         RESUME_1.setContacts(ContactType.PHONE, "+1-234-567-89-0");
         RESUME_2.setContacts(ContactType.SKYPE, "Microsoft");
         RESUME_3.setContacts(ContactType.EMAIL, "abcd@yandex.ru");
-        RESUME_4.setContacts(ContactType.LINKEDIN, ContactType.LINKEDIN.getTitle(), "http://www.linkedin.com");
+        RESUME_4.setContacts(ContactType.LINKEDIN, "http://www.linkedin.com");
 
         RESUME_1.setSections(SectionType.OBJECTIVE, new TextSection("Objectives1"));
         RESUME_2.setSections(SectionType.PERSONAL, new TextSection("Personal2"));
@@ -52,7 +52,7 @@ public abstract class AbstractStorageTest {
         RESUME_1.setSections(SectionType.EXPERIENCE, new OrganizationSection(
                 new Organization(
                         new Link("COMPANY_1"),
-                        new Organization.Period(
+                        new Organization.Periods(
                                 LocalDate.now(),
                                 LocalDate.now(),
                                 "POSITION_1",
@@ -60,14 +60,14 @@ public abstract class AbstractStorageTest {
         RESUME_2.setSections(SectionType.EDUCATION, new OrganizationSection(
                 new Organization(
                         new Link("COMPANY_2"),
-                        new Organization.Period(
+                        new Organization.Periods(
                                 LocalDate.now(),
                                 LocalDate.now(),
                                 "POSITION_2"))));
         RESUME_3.setSections(SectionType.EXPERIENCE, new OrganizationSection(
                 new Organization(
                         new Link("COMPANY_3"),
-                        new Organization.Period(
+                        new Organization.Periods(
                                 LocalDate.now(),
                                 LocalDate.now(),
                                 "POSITION_3",
@@ -75,7 +75,7 @@ public abstract class AbstractStorageTest {
         RESUME_4.setSections(SectionType.EDUCATION, new OrganizationSection(
                 new Organization(
                         new Link("COMPANY_4"),
-                        new Organization.Period(
+                        new Organization.Periods(
                                 LocalDate.now(),
                                 LocalDate.now(),
                                 "POSITION_4"))));

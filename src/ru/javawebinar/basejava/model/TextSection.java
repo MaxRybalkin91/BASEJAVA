@@ -14,6 +14,7 @@ public class TextSection extends AbstractSection {
     }
 
     public TextSection(String value) {
+        Objects.requireNonNull(value, "Text value must be not null");
         this.text = value;
     }
 

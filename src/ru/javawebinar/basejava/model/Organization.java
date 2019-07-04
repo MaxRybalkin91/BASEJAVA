@@ -17,16 +17,18 @@ public class Organization implements Serializable {
     private static final long serialVersionUuid = 1L;
 
     private Link link;
-    private List<Period> periods;
+    private List<Periods> periods;
 
     public Organization() {
     }
 
-    public Organization(Link link, Period... periods) {
+    public Organization(Link link, Periods... periods) {
         this(link, Arrays.asList(periods));
     }
 
-    public Organization(Link link, List<Period> periods) {
+    public Organization(Link link, List<Periods> periods) {
+        Objects.requireNonNull(link, "Organization name must be not null");
+        Objects.requireNonNull(periods, "Organization name must be not null");
         this.link = link;
         this.periods = periods;
     }
@@ -35,11 +37,11 @@ public class Organization implements Serializable {
         return link;
     }
 
-    public List<Period> getPeriods() {
+    public List<Periods> getPeriods() {
         return new ArrayList<>(periods);
     }
 
-    public void addPeriod(Period period) {
+    public void addPeriod(Periods period) {
         periods.add(period);
     }
 
@@ -58,7 +60,7 @@ public class Organization implements Serializable {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
-    public static class Period implements Serializable {
+    public static class Periods implements Serializable {
         @XmlJavaTypeAdapter(LocalDateAdapter.class)
         private LocalDate start;
         @XmlJavaTypeAdapter(LocalDateAdapter.class)
@@ -67,14 +69,18 @@ public class Organization implements Serializable {
         private String position;
         private String duties;
 
-        public Period() {
+        public Periods() {
         }
 
-        public Period(LocalDate start, LocalDate end, String position) {
+        public Periods(LocalDate start, LocalDate end, String position) {
             this(start, end, position, "");
         }
 
-        public Period(LocalDate start, LocalDate end, String position, String duties) {
+        public Periods(LocalDate start, LocalDate end, String position, String duties) {
+            Objects.requireNonNull(start, "Date of start must be not null");
+            Objects.requireNonNull(end, "Date of end must be not null");
+            Objects.requireNonNull(position, "Position must be not null");
+            Objects.requireNonNull(duties, "Duties must be not null");
             this.start = start;
             this.end = end;
             this.position = position;
@@ -101,7 +107,7 @@ public class Organization implements Serializable {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-            Period period = (Period) o;
+            Periods period = (Periods) o;
             return Objects.equals(start, period.start) &&
                     Objects.equals(end, period.end) &&
                     Objects.equals(position, period.position) &&

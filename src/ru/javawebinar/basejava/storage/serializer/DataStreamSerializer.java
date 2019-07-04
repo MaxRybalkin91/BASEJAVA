@@ -4,8 +4,8 @@ import ru.javawebinar.basejava.model.*;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 
 public class DataStreamSerializer implements StreamSerializer {
@@ -26,14 +26,12 @@ public class DataStreamSerializer implements StreamSerializer {
 
             writeWithException(dos, resume.getContacts().entrySet(), entry -> {
                 dos.writeUTF(entry.getKey().name());
-                dos.writeUTF(entry.getValue().getName());
+                dos.writeUTF(entry.getValue());
             });
 
             writeWithException(dos, resume.getSections().entrySet(),
                     entry -> {
-                        SectionType section = entry.getKey();
-                        if (section != null) {
-                            AbstractSection abstractSection = entry.getValue();
+                        AbstractSection abstractSection = entry.getValue();
                             String sectionName = entry.getKey().name();
                             dos.writeUTF(sectionName);
                             switch (sectionName) {
@@ -61,7 +59,6 @@ public class DataStreamSerializer implements StreamSerializer {
                                             });
                                     break;
                             }
-                        }
                     });
 
         }
@@ -89,28 +86,29 @@ public class DataStreamSerializer implements StreamSerializer {
 
             readWithException(dis, () -> {
                 String sectionName = dis.readUTF();
+                SectionType sectionType = SectionType.valueOf(sectionName);
                 switch (sectionName) {
                     case "PERSONAL":
                     case "OBJECTIVE":
                         String body = dis.readUTF();
-                        resume.setSections(SectionType.valueOf(sectionName), new TextSection(body));
+                        resume.setSections(sectionType, new TextSection(body));
                         break;
 
                     case "ACHIEVEMENT":
                     case "QUALIFICATION":
-                        List<String> skillList = new LinkedList<>();
+                        List<String> skillList = new ArrayList<>();
 
                         readWithException(dis, () -> skillList.add(dis.readUTF()));
-                        resume.setSections(SectionType.valueOf(sectionName), new ListSection(skillList));
+                        resume.setSections(sectionType, new ListSection(skillList));
                         break;
                     case "EXPERIENCE":
                     case "EDUCATION":
-                        List<Organization> orgList = new LinkedList<>();
+                        List<Organization> orgList = new ArrayList<>();
 
                         readWithException(dis, () -> {
                             String link = dis.readUTF();
 
-                            List<Organization.Period> periods = new LinkedList<>();
+                            List<Organization.Periods> periods = new ArrayList<>();
 
                             readWithException(dis, () -> {
                                 String startDate = dis.readUTF();
@@ -118,7 +116,7 @@ public class DataStreamSerializer implements StreamSerializer {
                                 String title = dis.readUTF();
                                 String description = dis.readUTF();
 
-                                periods.add(new Organization.Period(
+                                periods.add(new Organization.Periods(
                                         LocalDate.parse(startDate),
                                         LocalDate.parse(endDate),
                                         title,
@@ -130,7 +128,7 @@ public class DataStreamSerializer implements StreamSerializer {
                             orgList.add(organization);
                         });
 
-                        resume.setSections(SectionType.valueOf(sectionName), new OrganizationSection(orgList));
+                        resume.setSections(sectionType, new OrganizationSection(orgList));
                         break;
                 }
             });

@@ -10,20 +10,27 @@ public class Link implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String name;
+    private String url;
 
     public Link() {
     }
 
-    public Link(String name, String url) {
-        this(name + "||" + url);
+    public Link(String name) {
+        this(name, "");
     }
 
-    public Link(String name) {
+    public Link(String name, String url) {
+        Objects.requireNonNull(name, "Link name must be not null");
         this.name = name;
+        this.url = url;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getUrl() {
+        return url;
     }
 
     @Override
@@ -31,11 +38,12 @@ public class Link implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Link link = (Link) o;
-        return Objects.equals(name, link.name);
+        return name.equals(link.name) &&
+                url.equals(link.url);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(name, url);
     }
 }
