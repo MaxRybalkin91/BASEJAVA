@@ -27,8 +27,8 @@ public class Organization implements Serializable {
     }
 
     public Organization(Link link, List<Stage> stages) {
-        Objects.requireNonNull(link, "Organization name must be not null");
-        Objects.requireNonNull(stages, "Organization name must be not null");
+        Objects.requireNonNull(link, "Organization link must be not null");
+        Objects.requireNonNull(stages, "Organization stages must be not null");
         this.link = link;
         this.stages = stages;
     }
