@@ -83,7 +83,7 @@ public class Organization implements Serializable {
             this.start = start;
             this.end = end;
             this.position = position;
-            this.duties = duties;
+            this.duties = Objects.isNull(duties) ? "" : duties;
         }
 
         public String getStartDate() {

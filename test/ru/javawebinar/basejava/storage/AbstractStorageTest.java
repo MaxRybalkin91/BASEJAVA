@@ -56,7 +56,7 @@ public abstract class AbstractStorageTest {
                                 LocalDate.now(),
                                 LocalDate.now(),
                                 "POSITION_1",
-                                "DUTIES_1"))));
+                                null))));
         RESUME_2.setSections(SectionType.EDUCATION, new OrganizationSection(
                 new Organization(
                         new Link("COMPANY_2", "URL_2"),
@@ -71,7 +71,7 @@ public abstract class AbstractStorageTest {
                                 LocalDate.now(),
                                 LocalDate.now(),
                                 "POSITION_3",
-                                "DUTIES_3"))));
+                                null))));
         RESUME_4.setSections(SectionType.EDUCATION, new OrganizationSection(
                 new Organization(
                         new Link("COMPANY_4", "URL_4"),
