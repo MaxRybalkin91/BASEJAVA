@@ -51,31 +51,31 @@ public abstract class AbstractStorageTest {
 
         RESUME_1.setSections(SectionType.EXPERIENCE, new OrganizationSection(
                 new Organization(
-                        new Link("COMPANY_1"),
-                        new Organization.Periods(
+                        new Link("COMPANY_1", "URL_1"),
+                        new Organization.Stage(
                                 LocalDate.now(),
                                 LocalDate.now(),
                                 "POSITION_1",
                                 "DUTIES_1"))));
         RESUME_2.setSections(SectionType.EDUCATION, new OrganizationSection(
                 new Organization(
-                        new Link("COMPANY_2"),
-                        new Organization.Periods(
+                        new Link("COMPANY_2", "URL_2"),
+                        new Organization.Stage(
                                 LocalDate.now(),
                                 LocalDate.now(),
                                 "POSITION_2"))));
         RESUME_3.setSections(SectionType.EXPERIENCE, new OrganizationSection(
                 new Organization(
-                        new Link("COMPANY_3"),
-                        new Organization.Periods(
+                        new Link("COMPANY_3", "URL_3"),
+                        new Organization.Stage(
                                 LocalDate.now(),
                                 LocalDate.now(),
                                 "POSITION_3",
                                 "DUTIES_3"))));
         RESUME_4.setSections(SectionType.EDUCATION, new OrganizationSection(
                 new Organization(
-                        new Link("COMPANY_4"),
-                        new Organization.Periods(
+                        new Link("COMPANY_4", "URL_4"),
+                        new Organization.Stage(
                                 LocalDate.now(),
                                 LocalDate.now(),
                                 "POSITION_4"))));

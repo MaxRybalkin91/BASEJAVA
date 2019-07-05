@@ -96,7 +96,7 @@ public class ResumeTestData {
         List<Organization> jobOrganizations = new ArrayList<>();
 
         Organization organization1 = new Organization(new Link("Java Online Projects"), new ArrayList<>());
-        organization1.addPeriod(new Organization.Periods(
+        organization1.addStage(new Organization.Stage(
                 DateUtil.of(2013, Month.of(10)),
                 LocalDate.now(),
                 "Автор проекта.",
@@ -104,7 +104,7 @@ public class ResumeTestData {
         jobOrganizations.add(organization1);
 
         Organization organization2 = new Organization(new Link("Wrike"), new ArrayList<>());
-        organization2.addPeriod(new Organization.Periods(
+        organization2.addStage(new Organization.Stage(
                 DateUtil.of(2014, Month.of(10)),
                 DateUtil.of(2016, Month.of(1)),
                 "Старший разработчик (backend).",
@@ -114,7 +114,7 @@ public class ResumeTestData {
         jobOrganizations.add(organization2);
 
         Organization organization3 = new Organization(new Link("RIT Center"), new ArrayList<>());
-        organization3.addPeriod(new Organization.Periods(
+        organization3.addStage(new Organization.Stage(
                 DateUtil.of(2012, Month.of(4)),
                 DateUtil.of(2014, Month.of(10)),
                 "Java архитектор.",
@@ -129,7 +129,7 @@ public class ResumeTestData {
         jobOrganizations.add(organization3);
 
         Organization organization4 = new Organization(new Link("Luxoft"), new ArrayList<>());
-        organization4.addPeriod(new Organization.Periods(
+        organization4.addStage(new Organization.Stage(
                 DateUtil.of(2010, Month.of(12)),
                 DateUtil.of(2012, Month.of(4)),
                 "Java архитектор.",
@@ -140,7 +140,7 @@ public class ResumeTestData {
         jobOrganizations.add(organization4);
 
         Organization organization5 = new Organization(new Link("Yota"), new ArrayList<>());
-        organization5.addPeriod(new Organization.Periods(
+        organization5.addStage(new Organization.Stage(
                 DateUtil.of(2008, Month.of(6)),
                 DateUtil.of(2010, Month.of(12)),
                 "Ведущий специалист.",
@@ -151,7 +151,7 @@ public class ResumeTestData {
         jobOrganizations.add(organization5);
 
         Organization organization6 = new Organization(new Link("Enkata"), new ArrayList<>());
-        organization6.addPeriod(new Organization.Periods(
+        organization6.addStage(new Organization.Stage(
                 DateUtil.of(2007, Month.of(3)),
                 DateUtil.of(2008, Month.of(6)),
                 "Разработчик ПО.",
@@ -160,7 +160,7 @@ public class ResumeTestData {
         jobOrganizations.add(organization6);
 
         Organization organization7 = new Organization(new Link("Siemens AG"), new ArrayList<>());
-        organization7.addPeriod(new Organization.Periods(
+        organization7.addStage(new Organization.Stage(
                 DateUtil.of(2005, Month.of(1)),
                 DateUtil.of(2007, Month.of(2)),
                 "Разработчик ПО.",
@@ -169,7 +169,7 @@ public class ResumeTestData {
         jobOrganizations.add(organization7);
 
         Organization organization8 = new Organization(new Link("Alcatel"), new ArrayList<>());
-        organization8.addPeriod(new Organization.Periods(
+        organization8.addStage(new Organization.Stage(
                 DateUtil.of(1997, Month.of(9)),
                 DateUtil.of(2005, Month.of(1)),
                 "Инженер по аппаратному и программному тестированию.",
@@ -184,7 +184,7 @@ public class ResumeTestData {
         List<Organization> educationOrganizations = new ArrayList<>();
 
         Organization organization1 = new Organization(new Link("Coursera"), new ArrayList<>());
-        organization1.addPeriod(new Organization.Periods(
+        organization1.addStage(new Organization.Stage(
                 DateUtil.of(2013, Month.of(3)),
                 DateUtil.of(2013, Month.of(5)),
                 "\"Functional Programming Principles in Scala\" by Martin Odersky",
@@ -192,7 +192,7 @@ public class ResumeTestData {
         educationOrganizations.add(organization1);
 
         Organization organization2 = new Organization(new Link("Luxoft"), new ArrayList<>());
-        organization2.addPeriod(new Organization.Periods(
+        organization2.addStage(new Organization.Stage(
                 DateUtil.of(2011, Month.of(3)),
                 DateUtil.of(2011, Month.of(4)),
                 "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"",
@@ -200,7 +200,7 @@ public class ResumeTestData {
         educationOrganizations.add(organization2);
 
         Organization organization3 = new Organization(new Link("Siemens AG"), new ArrayList<>());
-        organization3.addPeriod(new Organization.Periods(
+        organization3.addStage(new Organization.Stage(
                 DateUtil.of(2005, Month.of(1)),
                 DateUtil.of(2005, Month.of(4)),
                 "3 месяца обучения мобильным IN сетям (Берлин)",
@@ -208,7 +208,7 @@ public class ResumeTestData {
         educationOrganizations.add(organization3);
 
         Organization organization4 = new Organization(new Link("Alcatel"), new ArrayList<>());
-        organization4.addPeriod(new Organization.Periods(
+        organization4.addStage(new Organization.Stage(
                 DateUtil.of(1997, Month.of(9)),
                 DateUtil.of(1998, Month.of(3)),
                 "6 месяцев обучения цифровым телефонным сетям (Москва)",
@@ -217,12 +217,12 @@ public class ResumeTestData {
 
         Organization organization5 = new Organization(new Link("Санкт-Петербургский национальный исследовательский " +
                 "университет информационных технологий, механики и оптики"), new ArrayList<>());
-        organization5.addPeriod(new Organization.Periods(
+        organization5.addStage(new Organization.Stage(
                 DateUtil.of(1993, Month.of(9)),
                 DateUtil.of(1996, Month.of(7)),
                 "Аспирантура (программист С, С++)",
                 ""));
-        organization5.addPeriod(new Organization.Periods(
+        organization5.addStage(new Organization.Stage(
                 DateUtil.of(1987, Month.of(9)),
                 DateUtil.of(1993, Month.of(7)),
                 "Инженер (программист Fortran, C)",
@@ -230,7 +230,7 @@ public class ResumeTestData {
         educationOrganizations.add(organization5);
 
         Organization organization6 = new Organization(new Link("Заочная физико-техническая школа при МФТИ"), new ArrayList<>());
-        organization6.addPeriod(new Organization.Periods(
+        organization6.addStage(new Organization.Stage(
                 DateUtil.of(1984, Month.of(9)),
                 DateUtil.of(1987, Month.of(6)),
                 "Закончил с отличием",

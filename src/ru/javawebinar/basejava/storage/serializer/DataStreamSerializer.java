@@ -49,12 +49,13 @@ public class DataStreamSerializer implements StreamSerializer {
                                     writeWithException(dos, ((OrganizationSection) abstractSection).getOrganizations(),
                                             organization -> {
                                                 dos.writeUTF(organization.getLink().getName());
-                                                writeWithException(dos, organization.getPeriods(),
-                                                        period -> {
-                                                            dos.writeUTF(period.getStartDate());
-                                                            dos.writeUTF(period.getEndDate());
-                                                            dos.writeUTF(period.getPosition());
-                                                            dos.writeUTF(period.getDuties());
+                                                dos.writeUTF(organization.getLink().getUrl());
+                                                writeWithException(dos, organization.getstages(),
+                                                        stage -> {
+                                                            dos.writeUTF(stage.getStartDate());
+                                                            dos.writeUTF(stage.getEndDate());
+                                                            dos.writeUTF(stage.getPosition());
+                                                            dos.writeUTF(stage.getDuties());
                                                         });
                                             });
                                     break;
@@ -106,9 +107,10 @@ public class DataStreamSerializer implements StreamSerializer {
                         List<Organization> orgList = new ArrayList<>();
 
                         readWithException(dis, () -> {
-                            String link = dis.readUTF();
+                            String linkName = dis.readUTF();
+                            String linkUrl = dis.readUTF();
 
-                            List<Organization.Periods> periods = new ArrayList<>();
+                            List<Organization.Stage> stages = new ArrayList<>();
 
                             readWithException(dis, () -> {
                                 String startDate = dis.readUTF();
@@ -116,15 +118,15 @@ public class DataStreamSerializer implements StreamSerializer {
                                 String title = dis.readUTF();
                                 String description = dis.readUTF();
 
-                                periods.add(new Organization.Periods(
+                                stages.add(new Organization.Stage(
                                         LocalDate.parse(startDate),
                                         LocalDate.parse(endDate),
                                         title,
                                         description));
                             });
 
-                            Organization organization = new Organization((new Link(link)),
-                                    periods);
+                            Organization organization = new Organization((new Link(linkName, linkUrl)),
+                                    stages);
                             orgList.add(organization);
                         });
 
