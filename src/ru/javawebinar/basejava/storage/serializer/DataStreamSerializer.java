@@ -50,7 +50,7 @@ public class DataStreamSerializer implements StreamSerializer {
                                             organization -> {
                                                 dos.writeUTF(organization.getLink().getName());
                                                 dos.writeUTF(organization.getLink().getUrl());
-                                                writeWithException(dos, organization.getstages(),
+                                                writeWithException(dos, organization.getStages(),
                                                         stage -> {
                                                             dos.writeUTF(stage.getStartDate());
                                                             dos.writeUTF(stage.getEndDate());

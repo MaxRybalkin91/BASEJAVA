@@ -37,7 +37,7 @@ public class Organization implements Serializable {
         return link;
     }
 
-    public List<Stage> getstages() {
+    public List<Stage> getStages() {
         return new ArrayList<>(stages);
     }
 
