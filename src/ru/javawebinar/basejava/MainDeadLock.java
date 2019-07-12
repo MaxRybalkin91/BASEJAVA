@@ -4,7 +4,7 @@ public class MainDeadLock {
     private static final Object OBJECT_1 = new Object();
     private static final Object OBJECT_2 = new Object();
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         Thread thread1 = new Thread(() -> {
             synchronized (OBJECT_1) {
                 System.out.println("Waiting for OBJECT2 will be unlocked");
