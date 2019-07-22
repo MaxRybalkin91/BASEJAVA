@@ -43,13 +43,13 @@ public class MainStream {
     private static void deleteNumbers(Scanner scanner) {
         List<Integer> integers = new ArrayList<>();
 
-        System.out.println("Enter the numbers for the list (enter any letter to stop):");
+        System.out.println("Enter numbers for the list (enter any letter to stop):");
         while (scanner.hasNextInt()) {
             integers.add(scanner.nextInt());
         }
 
-        for (int n : oddOrEven(integers)) {
-            System.out.print(n + " ");
+        for (int num : oddOrEven(integers)) {
+            System.out.print(num + " ");
         }
     }
 
