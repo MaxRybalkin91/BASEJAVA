@@ -15,8 +15,8 @@ public class MainStream {
             do {
                 System.out.println("Enter " + (i + 1) + " number (required in the range of 1 to 9):");
                 number = scanner.nextInt();
-                array[i] = number;
             } while (number < 1 || number > 9);
+            array[i] = number;
         }
         System.out.print("There is number from the unique parts of your array:" + "\n" + minValue(array));
     }
