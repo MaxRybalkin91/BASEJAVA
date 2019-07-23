@@ -69,7 +69,7 @@ public class MainStream {
         System.out.println("Your list without " + s + " numbers :");
 
         return integers.stream()
-                .filter(number == 0 ? p -> p % 2 != 0 : p -> p % 2 == 0)
+                .filter(p -> p % 2 != number)
                 .collect(Collectors.toList());
     }
 }
