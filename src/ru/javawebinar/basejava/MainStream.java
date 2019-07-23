@@ -48,7 +48,6 @@ public class MainStream {
             integers.add(scanner.nextInt());
         }
 
-
         for (int num : oddOrEven(integers)) {
             System.out.print(num + " ");
         }
@@ -61,14 +60,11 @@ public class MainStream {
     }
 
     private static List<Integer> oddOrEven(List<Integer> integers) {
-        int sum = integers.stream()
-                .reduce(0, Integer::sum);
-        String s = (sum % 2) == 0 ? "even" : "odd";
-
-        System.out.println("Sum of your numbers is " + s + ". Now deleting all " + s + " numbers");
-        System.out.println("Your list without " + s + " numbers :");
-
         return integers.stream()
-                .filter(sum == 0 ? p -> p % 2 != 0 : p -> p % 2 == 0).collect(Collectors.toList());
+                .reduce(0, Integer::sum) == 0 ?
+                integers.stream()
+                        .filter(p -> p % 2 == 0).collect(Collectors.toList()) :
+                integers.stream()
+                        .filter(p -> p % 2 != 0).collect(Collectors.toList());
     }
 }
