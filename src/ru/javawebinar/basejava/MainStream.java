@@ -61,14 +61,14 @@ public class MainStream {
     }
 
     private static List<Integer> oddOrEven(List<Integer> integers) {
-        int sum = integers.stream()
-                .reduce(0, Integer::sum);
-        String s = (sum % 2) == 0 ? "even" : "odd";
+        int number = (integers.stream()
+                .reduce(0, Integer::sum)) % 2;
+        String s = number == 0 ? "even" : "odd";
 
         System.out.println("Sum of your numbers is " + s + ". Now deleting all " + s + " numbers");
         System.out.println("Your list without " + s + " numbers :");
 
         return integers.stream()
-                .filter(sum == 0 ? p -> p % 2 != 0 : p -> p % 2 == 0).collect(Collectors.toList());
+                .filter(number == 0 ? p -> p % 2 != 0 : p -> p % 2 == 0).collect(Collectors.toList());
     }
 }
