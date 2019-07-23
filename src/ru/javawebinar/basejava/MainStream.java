@@ -63,10 +63,10 @@ public class MainStream {
     private static List<Integer> oddOrEven(List<Integer> integers) {
         return integers.stream()
                 .reduce(0, Integer::sum) == 0 ?
-                filter(integers, p -> p % 2 == 0) : filter(integers, p -> p % 2 != 0);
+                doFilter(integers, p -> p % 2 == 0) : doFilter(integers, p -> p % 2 != 0);
     }
 
-    private static List<Integer> filter (List<Integer> integers, Predicate<Integer> predicate) {
+    private static List<Integer> doFilter(List<Integer> integers, Predicate<Integer> predicate) {
         return integers.stream().filter(predicate).collect(Collectors.toList());
     }
 }
