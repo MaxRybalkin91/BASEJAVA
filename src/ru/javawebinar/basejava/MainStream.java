@@ -3,6 +3,7 @@ package ru.javawebinar.basejava;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -26,10 +27,10 @@ public class MainStream {
     }
 
     private static void deleteDuplicatesFromArray(Scanner scanner) {
+        int[] array = new int[scanner.nextInt()];
         int number;
 
         System.out.println("Enter the desired array size:");
-        int[] array = new int[scanner.nextInt()];
         for (int i = 0; i < array.length; i++) {
             do {
                 System.out.println("Enter " + (i + 1) + " number (required in the range of 1 to 9):");
@@ -62,9 +63,10 @@ public class MainStream {
     private static List<Integer> oddOrEven(List<Integer> integers) {
         return integers.stream()
                 .reduce(0, Integer::sum) == 0 ?
-                integers.stream()
-                        .filter(p -> p % 2 == 0).collect(Collectors.toList()) :
-                integers.stream()
-                        .filter(p -> p % 2 != 0).collect(Collectors.toList());
+                filter(integers, p -> p % 2 == 0) : filter(integers, p -> p % 2 != 0);
+    }
+
+    private static List<Integer> filter (List<Integer> integers, Predicate<Integer> predicate) {
+        return integers.stream().filter(predicate).collect(Collectors.toList());
     }
 }
