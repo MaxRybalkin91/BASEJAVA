@@ -1,6 +1,5 @@
 package ru.javawebinar.basejava.storage;
 
-import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
@@ -49,9 +48,6 @@ public class SqlStorage implements Storage {
         try (Connection conn = connectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement("insert into resume(uuid, full_name) values (?,?)")) {
             ps.setString(1, resume.getUuid());
-            if (ps.executeQuery().next()) {
-                throw new ExistStorageException(resume.getUuid());
-            }
             ps.setString(2, resume.getFullName());
             ps.execute();
         } catch (SQLException e) {
@@ -79,9 +75,6 @@ public class SqlStorage implements Storage {
         try (Connection conn = connectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement("delete from resume where uuid = ?")) {
             ps.setString(1, uuid);
-            if (!ps.executeQuery().next()) {
-                throw new NotExistStorageException(uuid);
-            }
             ps.execute();
         } catch (SQLException e) {
             throw new StorageException(e);

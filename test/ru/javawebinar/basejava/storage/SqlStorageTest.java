@@ -1,4 +1,10 @@
 package ru.javawebinar.basejava.storage;
 
-public class SqlStorageTest {
+import ru.javawebinar.basejava.Config;
+
+public class SqlStorageTest extends AbstractArrayStorageTest {
+
+    public SqlStorageTest() {
+        super(new SqlStorage(Config.get().getDbUrl(), Config.get().getDbUser(), Config.get().getDbPassword()));
+    }
 }
