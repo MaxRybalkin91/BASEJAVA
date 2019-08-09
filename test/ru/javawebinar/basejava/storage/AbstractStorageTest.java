@@ -53,6 +53,7 @@ public abstract class AbstractStorageTest {
         RESUME_3.setSections(SectionType.ACHIEVEMENT, new ListSection("Achievment3"));
         RESUME_4.setSections(SectionType.QUALIFICATION, new ListSection("Qualification4"));
 
+        /*
         RESUME_1.setSections(SectionType.EXPERIENCE, new OrganizationSection(
                 new Organization(
                         new Link("COMPANY_1", "URL_1"),
@@ -83,6 +84,7 @@ public abstract class AbstractStorageTest {
                                 LocalDate.now(),
                                 LocalDate.now(),
                                 "POSITION_4"))));
+                                */
     }
 
     AbstractStorageTest(Storage storage) {
