@@ -38,6 +38,7 @@ public abstract class AbstractStorageTest {
         RESUME_3 = new Resume(UUID_3, NAME_3);
         RESUME_4 = new Resume(UUID_4, NAME_4);
 
+        /*
         RESUME_1.setContacts(ContactType.PHONE, "+1-234-567-89-0");
         RESUME_2.setContacts(ContactType.SKYPE, "Microsoft");
         RESUME_3.setContacts(ContactType.EMAIL, "abcd@yandex.ru");
@@ -53,7 +54,6 @@ public abstract class AbstractStorageTest {
         RESUME_3.setSections(SectionType.ACHIEVEMENT, new ListSection("Achievment3"));
         RESUME_4.setSections(SectionType.QUALIFICATION, new ListSection("Qualification4"));
 
-        /*
         RESUME_1.setSections(SectionType.EXPERIENCE, new OrganizationSection(
                 new Organization(
                         new Link("COMPANY_1", "URL_1"),
@@ -84,7 +84,7 @@ public abstract class AbstractStorageTest {
                                 LocalDate.now(),
                                 LocalDate.now(),
                                 "POSITION_4"))));
-                                */
+        */
     }
 
     AbstractStorageTest(Storage storage) {
