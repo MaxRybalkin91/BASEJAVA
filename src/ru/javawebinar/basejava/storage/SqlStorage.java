@@ -1,5 +1,6 @@
 package ru.javawebinar.basejava.storage;
 
+import org.postgresql.util.PSQLException;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.exception.StorageException;
@@ -33,10 +34,12 @@ public class SqlStorage implements Storage {
         try (Connection conn = connectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement("UPDATE resume SET full_name = ?" +
                      "WHERE uuid = ?")) {
+            String uuid = resume.getUuid();
             ps.setString(1, resume.getFullName());
-            ps.setString(2, resume.getUuid());
-            if (!ps.execute()) {
-                throw new NotExistStorageException(resume.getUuid());
+            ps.setString(2, uuid);
+            int count = ps.executeUpdate();
+            if (count == 0) {
+                throw new NotExistStorageException(uuid);
             }
         } catch (SQLException e) {
             throw new StorageException(e);
@@ -45,11 +48,14 @@ public class SqlStorage implements Storage {
 
     @Override
     public void save(Resume resume) {
+        String uuid = resume.getUuid();
         try (Connection conn = connectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement("INSERT INTO resume (uuid, full_name) VALUES (?,?)")) {
-            ps.setString(1, resume.getUuid());
+            ps.setString(1, uuid);
             ps.setString(2, resume.getFullName());
             ps.execute();
+        } catch (PSQLException e) {
+            throw new ExistStorageException(uuid);
         } catch (SQLException e) {
             throw new StorageException(e);
         }
@@ -87,12 +93,12 @@ public class SqlStorage implements Storage {
     @Override
     public List<Resume> getSortedStorage() {
         try (Connection conn = connectionFactory.getConnection();
-             PreparedStatement ps = conn.prepareStatement("SELECT * FROM resume ORDER BY uuid")) {
+             PreparedStatement ps = conn.prepareStatement("SELECT * FROM resume ORDER BY full_name, uuid")) {
             List<Resume> storage = new ArrayList<>();
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                String uuid = rs.getNString("uuid");
-                String fullName = rs.getNString("full_name");
+                String uuid = rs.getString("uuid");
+                String fullName = rs.getString("full_name");
                 storage.add(new Resume(uuid, fullName));
             }
             return storage;
