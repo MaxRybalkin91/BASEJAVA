@@ -37,8 +37,7 @@ public class SqlStorage implements Storage {
             String uuid = resume.getUuid();
             ps.setString(1, resume.getFullName());
             ps.setString(2, uuid);
-            int count = ps.executeUpdate();
-            if (count == 0) {
+            if (ps.executeUpdate() == 0) {
                 throw new NotExistStorageException(uuid);
             }
         } catch (SQLException e) {
