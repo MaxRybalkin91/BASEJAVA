@@ -54,11 +54,12 @@ public class SqlStorage implements Storage {
             ps.setString(2, resume.getFullName());
             ps.execute();
         } catch (PSQLException e) {
-            throw new ExistStorageException(uuid);
+            if(e.getSQLState().equals("23505")) {
+                throw new ExistStorageException(uuid);
+            }
         } catch (SQLException e) {
             throw new StorageException(e);
         }
-
     }
 
     @Override
@@ -81,7 +82,7 @@ public class SqlStorage implements Storage {
         try (Connection conn = connectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement("DELETE FROM resume WHERE uuid = ?")) {
             ps.setString(1, uuid);
-            if (!ps.execute()) {
+            if (ps.executeUpdate() == 0) {
                 throw new NotExistStorageException(uuid);
             }
         } catch (SQLException e) {
