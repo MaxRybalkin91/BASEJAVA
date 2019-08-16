@@ -17,7 +17,7 @@ public class SqlStorage implements Storage {
 
     private SqlHelper sqlHelper;
 
-    public SqlStorage(String dbUrl, String dbUser, String dbPassword) {
+    SqlStorage(String dbUrl, String dbUser, String dbPassword) {
         ConnectionFactory connectionFactory = () -> DriverManager.getConnection(dbUrl, dbUser, dbPassword);
         sqlHelper = new SqlHelper(connectionFactory);
     }
