@@ -5,10 +5,10 @@ import org.junit.Test;
 import ru.javawebinar.basejava.Config;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
-import ru.javawebinar.basejava.model.*;
+import ru.javawebinar.basejava.model.ContactType;
+import ru.javawebinar.basejava.model.Resume;
 
 import java.io.File;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,12 +38,12 @@ public abstract class AbstractStorageTest {
         RESUME_3 = new Resume(UUID_3, NAME_3);
         RESUME_4 = new Resume(UUID_4, NAME_4);
 
-        /*
         RESUME_1.setContacts(ContactType.PHONE, "+1-234-567-89-0");
         RESUME_2.setContacts(ContactType.SKYPE, "Microsoft");
         RESUME_3.setContacts(ContactType.EMAIL, "abcd@yandex.ru");
         RESUME_4.setContacts(ContactType.LINKEDIN, "http://www.linkedin.com");
 
+        /*
         RESUME_1.setSections(SectionType.OBJECTIVE, new TextSection("Objectives1"));
         RESUME_2.setSections(SectionType.PERSONAL, new TextSection("Personal2"));
         RESUME_3.setSections(SectionType.OBJECTIVE, new TextSection("Objectives3"));
