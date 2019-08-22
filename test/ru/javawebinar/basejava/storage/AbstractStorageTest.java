@@ -39,8 +39,23 @@ public abstract class AbstractStorageTest {
         RESUME_4 = new Resume(UUID_4, NAME_4);
 
         RESUME_1.setContacts(ContactType.PHONE, "+1-234-567-89-0");
+        RESUME_1.setContacts(ContactType.SKYPE, "Microsoft");
+        RESUME_1.setContacts(ContactType.EMAIL, "abcd@yandex.ru");
+        RESUME_1.setContacts(ContactType.LINKEDIN, "http://www.linkedin.com");
+
+        RESUME_2.setContacts(ContactType.PHONE, "+1-234-567-89-0");
         RESUME_2.setContacts(ContactType.SKYPE, "Microsoft");
+        RESUME_2.setContacts(ContactType.EMAIL, "abcd@yandex.ru");
+        RESUME_2.setContacts(ContactType.LINKEDIN, "http://www.linkedin.com");
+
+        RESUME_3.setContacts(ContactType.PHONE, "+1-234-567-89-0");
+        RESUME_3.setContacts(ContactType.SKYPE, "Microsoft");
         RESUME_3.setContacts(ContactType.EMAIL, "abcd@yandex.ru");
+        RESUME_3.setContacts(ContactType.LINKEDIN, "http://www.linkedin.com");
+
+        RESUME_4.setContacts(ContactType.PHONE, "+1-234-567-89-0");
+        RESUME_4.setContacts(ContactType.SKYPE, "Microsoft");
+        RESUME_4.setContacts(ContactType.EMAIL, "abcd@yandex.ru");
         RESUME_4.setContacts(ContactType.LINKEDIN, "http://www.linkedin.com");
 
         /*
