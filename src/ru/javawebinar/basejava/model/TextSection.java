@@ -37,6 +37,6 @@ public class TextSection extends AbstractSection {
 
     @Override
     public String toString() {
-        return text + "\n";
+        return text;
     }
 }

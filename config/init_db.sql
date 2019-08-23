@@ -14,11 +14,6 @@ CREATE TABLE contact
 CREATE UNIQUE INDEX contact_uuid_type_index
     ON contact (resume_uuid, type);
 
-
-/*
-Next code is my preparing for adding "Organizations" and other sections
-
-
 CREATE TABLE text_section
 (
     id          SERIAL,
@@ -42,4 +37,3 @@ CREATE TABLE organization_section
 );
 CREATE UNIQUE INDEX organization_section_uuid_type_index
     ON organization_section (resume_uuid, name);
- */
