@@ -35,8 +35,8 @@ public class SqlStorage implements Storage {
                 }
             }
             deleteContacts(conn, resume);
-            saveContacts(conn, resume);
             deleteSections(conn, resume);
+            saveContacts(conn, resume);
             saveSections(conn, resume);
             return null;
         });
@@ -134,8 +134,8 @@ public class SqlStorage implements Storage {
         for (Map.Entry<SectionType, AbstractSection> e : resume.getSections().entrySet()) {
             SectionType sectionType = e.getKey();
             switch (sectionType) {
-                case OBJECTIVE:
                 case PERSONAL:
+                case OBJECTIVE:
                     saveTextSections(conn, resume, sectionType, e.getValue().toString());
             }
         }
@@ -151,27 +151,19 @@ public class SqlStorage implements Storage {
     }
 
     private void deleteContacts(Connection conn, Resume resume) throws SQLException {
-        try (PreparedStatement ps = conn.prepareStatement("DELETE FROM contact WHERE resume_uuid=?")) {
+        try (PreparedStatement ps = conn.prepareStatement("DELETE FROM contact WHERE resume_uuid = ?")) {
             ps.setString(1, resume.getUuid());
             ps.execute();
         }
     }
 
     private void deleteSections(Connection conn, Resume resume) throws SQLException {
-        for (Map.Entry<SectionType, AbstractSection> e : resume.getSections().entrySet()) {
-            SectionType sectionType = e.getKey();
-            String uuid = resume.getUuid();
-            switch (sectionType) {
-                case OBJECTIVE:
-                case PERSONAL:
-                    deleteSection("DELETE FROM text_section WHERE resume_uuid = ?", conn, uuid);
-            }
-        }
+        deleteTextSections(conn, resume);
     }
 
-    private void deleteSection(String sqlCommand, Connection conn, String uuid) throws SQLException {
-        try (PreparedStatement ps = conn.prepareStatement(sqlCommand)) {
-            ps.setString(1, uuid);
+    private void deleteTextSections(Connection conn, Resume resume) throws SQLException {
+        try (PreparedStatement ps = conn.prepareStatement("DELETE FROM text_section WHERE resume_uuid = ?")) {
+            ps.setString(1, resume.getUuid());
             ps.execute();
         }
     }
@@ -187,14 +179,7 @@ public class SqlStorage implements Storage {
     }
 
     private void getSections(Connection conn, Resume resume) throws SQLException {
-        for (Map.Entry<SectionType, AbstractSection> e : resume.getSections().entrySet()) {
-            SectionType sectionType = e.getKey();
-            switch (sectionType) {
-                case OBJECTIVE:
-                case PERSONAL:
-                    getTextSections(conn, resume);
-            }
-        }
+        getTextSections(conn, resume);
     }
 
     private void getTextSections(Connection conn, Resume resume) throws SQLException {
