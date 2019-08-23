@@ -62,10 +62,13 @@ public abstract class AbstractStorageTest {
 
         RESUME_1.setSections(SectionType.OBJECTIVE, new TextSection("Objectives1"));
         RESUME_1.setSections(SectionType.PERSONAL, new TextSection("Personal1"));
+
         RESUME_2.setSections(SectionType.OBJECTIVE, new TextSection("Objectives2"));
         RESUME_2.setSections(SectionType.PERSONAL, new TextSection("Personal2"));
+
         RESUME_3.setSections(SectionType.OBJECTIVE, new TextSection("Objectives3"));
         RESUME_3.setSections(SectionType.PERSONAL, new TextSection("Personal3"));
+
         RESUME_4.setSections(SectionType.OBJECTIVE, new TextSection("Objectives4"));
         RESUME_4.setSections(SectionType.PERSONAL, new TextSection("Personal4"));
 

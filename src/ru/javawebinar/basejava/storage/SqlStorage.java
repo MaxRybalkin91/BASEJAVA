@@ -69,9 +69,9 @@ public class SqlStorage implements Storage {
                     throw new NotExistStorageException(uuid);
                 }
                 resume = new Resume(uuid, rs.getString("full_name"));
-                getContacts(conn, resume);
-                getSections(conn, resume);
             }
+            getContacts(conn, resume);
+            getSections(conn, resume);
             return resume;
         });
     }
