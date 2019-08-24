@@ -7,8 +7,6 @@ import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.ContactType;
 import ru.javawebinar.basejava.model.Resume;
-import ru.javawebinar.basejava.model.SectionType;
-import ru.javawebinar.basejava.model.TextSection;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -60,6 +58,7 @@ public abstract class AbstractStorageTest {
         RESUME_4.setContacts(ContactType.EMAIL, "abcd@yandex.ru");
         RESUME_4.setContacts(ContactType.LINKEDIN, "http://www.linkedin.com");
 
+        /*
         RESUME_1.setSections(SectionType.OBJECTIVE, new TextSection("Objectives1"));
         RESUME_1.setSections(SectionType.PERSONAL, new TextSection("Personal1"));
 
@@ -72,7 +71,6 @@ public abstract class AbstractStorageTest {
         RESUME_4.setSections(SectionType.OBJECTIVE, new TextSection("Objectives4"));
         RESUME_4.setSections(SectionType.PERSONAL, new TextSection("Personal4"));
 
-        /*
         RESUME_1.setSections(SectionType.ACHIEVEMENT, new ListSection("Achievment1"));
         RESUME_2.setSections(SectionType.QUALIFICATION, new ListSection("Qualification2"));
         RESUME_3.setSections(SectionType.ACHIEVEMENT, new ListSection("Achievment3"));
