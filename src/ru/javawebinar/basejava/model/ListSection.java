@@ -48,6 +48,6 @@ public class ListSection extends AbstractSection {
         for (String a : values) {
             s.append(a).append("\n");
         }
-        return s.toString();
+        return s.substring(0, s.length() - 1);
     }
 }
