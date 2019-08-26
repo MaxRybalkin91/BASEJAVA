@@ -69,17 +69,17 @@ public abstract class AbstractStorageTest {
         RESUME_4.setSections(SectionType.OBJECTIVE, new TextSection("Objectives4"));
         RESUME_4.setSections(SectionType.PERSONAL, new TextSection("Personal4"));
 
-        RESUME_1.setSections(SectionType.ACHIEVEMENT, new ListSection("Achievement1", "Achievement2", "Achievement3"));
-        RESUME_1.setSections(SectionType.QUALIFICATION, new ListSection("Qualification1", "Qualification2", "Qualification3"));
+        RESUME_1.setSections(SectionType.ACHIEVEMENT, new ListSection("Achievement1", "Achievement1", "Achievement1"));
+        RESUME_1.setSections(SectionType.QUALIFICATION, new ListSection("Qualification2", "Qualification2", "Qualification2"));
 
-        RESUME_2.setSections(SectionType.ACHIEVEMENT, new ListSection("Achievement1", "Achievement2", "Achievement3"));
-        RESUME_2.setSections(SectionType.QUALIFICATION, new ListSection("Qualification1", "Qualification2", "Qualification3"));
+        RESUME_2.setSections(SectionType.ACHIEVEMENT, new ListSection("Achievement2", "Achievement2", "Achievement2"));
+        RESUME_2.setSections(SectionType.QUALIFICATION, new ListSection("Qualification2", "Qualification2", "Qualification2"));
 
-        RESUME_3.setSections(SectionType.ACHIEVEMENT, new ListSection("Achievement1", "Achievement2", "Achievement3"));
-        RESUME_3.setSections(SectionType.QUALIFICATION, new ListSection("Qualification1", "Qualification2", "Qualification3"));
+        RESUME_3.setSections(SectionType.ACHIEVEMENT, new ListSection("Achievement3", "Achievement3", "Achievement3"));
+        RESUME_3.setSections(SectionType.QUALIFICATION, new ListSection("Qualification3", "Qualification3", "Qualification3"));
 
-        RESUME_4.setSections(SectionType.ACHIEVEMENT, new ListSection("Achievement1", "Achievement2", "Achievement3"));
-        RESUME_4.setSections(SectionType.QUALIFICATION, new ListSection("Qualification1", "Qualification2", "Qualification3"));
+        RESUME_4.setSections(SectionType.ACHIEVEMENT, new ListSection("Achievement4", "Achievement4", "Achievement4"));
+        RESUME_4.setSections(SectionType.QUALIFICATION, new ListSection("Qualification4", "Qualification4", "Qualification4"));
 
         /*
         RESUME_1.setSections(SectionType.EXPERIENCE, new OrganizationSection(
