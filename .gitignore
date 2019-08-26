@@ -4,4 +4,5 @@ out
 log
 /home/maksim/basejava/storage
 lesson
+lib/postgresql-42.2.6.jar
 
