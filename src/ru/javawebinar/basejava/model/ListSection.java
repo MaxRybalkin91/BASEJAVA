@@ -33,8 +33,8 @@ public class ListSection extends AbstractSection {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ListSection listType = (ListSection) o;
-        return Objects.equals(values, listType.values);
+        ListSection that = (ListSection) o;
+        return values.equals(that.values);
     }
 
     @Override
@@ -48,6 +48,6 @@ public class ListSection extends AbstractSection {
         for (String a : values) {
             s.append(a).append("\n");
         }
-        return s.substring(0, s.length() - 1);
+        return s.toString();
     }
 }

@@ -6,10 +6,7 @@ import ru.javawebinar.basejava.sql.ConnectionFactory;
 import ru.javawebinar.basejava.sql.SqlHelper;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SqlStorage implements Storage {
 
@@ -205,11 +202,12 @@ public class SqlStorage implements Storage {
         switch (sectionType) {
             case OBJECTIVE:
             case PERSONAL:
-                resume.setSections(SectionType.valueOf(rs.getString("type")), new TextSection(rs.getString("value")));
+                resume.setSections(sectionType, new TextSection(rs.getString("value")));
                 break;
             case QUALIFICATION:
             case ACHIEVEMENT:
-                resume.setSections(SectionType.valueOf(rs.getString("type")), new ListSection(rs.getString("value")));
+                String[] values = rs.getString("value").split("\n");
+                resume.setSections(sectionType, new ListSection(Arrays.asList(values)));
                 break;
         }
     }

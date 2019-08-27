@@ -26,8 +26,8 @@ public class TextSection extends AbstractSection {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TextSection textType = (TextSection) o;
-        return text.equals(textType.text);
+        TextSection that = (TextSection) o;
+        return text.equals(that.text);
     }
 
     @Override

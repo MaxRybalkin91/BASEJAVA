@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractStorageTest {
-    protected static final File STORAGE_DIR = Config.get().getStorageDir();
+    static final File STORAGE_DIR = Config.get().getStorageDir();
 
     protected Storage storage;
 
@@ -70,7 +70,7 @@ public abstract class AbstractStorageTest {
         RESUME_4.setSections(SectionType.PERSONAL, new TextSection("Personal4"));
 
         RESUME_1.setSections(SectionType.ACHIEVEMENT, new ListSection("Achievement1", "Achievement1", "Achievement1"));
-        RESUME_1.setSections(SectionType.QUALIFICATION, new ListSection("Qualification2", "Qualification2", "Qualification2"));
+        RESUME_1.setSections(SectionType.QUALIFICATION, new ListSection("Qualification1", "Qualification1", "Qualification1"));
 
         RESUME_2.setSections(SectionType.ACHIEVEMENT, new ListSection("Achievement2", "Achievement2", "Achievement2"));
         RESUME_2.setSections(SectionType.QUALIFICATION, new ListSection("Qualification2", "Qualification2", "Qualification2"));
