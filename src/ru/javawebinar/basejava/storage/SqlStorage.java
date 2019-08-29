@@ -12,7 +12,7 @@ public class SqlStorage implements Storage {
 
     private SqlHelper sqlHelper;
 
-    SqlStorage(String dbUrl, String dbUser, String dbPassword) {
+    public SqlStorage(String dbUrl, String dbUser, String dbPassword) {
         ConnectionFactory connectionFactory = () -> DriverManager.getConnection(dbUrl, dbUser, dbPassword);
         sqlHelper = new SqlHelper(connectionFactory);
     }
