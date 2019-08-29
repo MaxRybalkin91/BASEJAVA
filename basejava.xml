@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="basejava" default="all">
+
+
+    <property file="basejava.properties"/>
+    <!-- Uncomment the following property if no tests compilation is needed -->
+    <!--
+    <property name="skip.tests" value="true"/>
+     -->
+
+    <!-- Compiler options -->
+
+    <property name="compiler.debug" value="on"/>
+    <property name="compiler.generate.no.warnings" value="off"/>
+    <property name="compiler.args" value=""/>
+    <property name="compiler.max.memory" value="700m"/>
+    <patternset id="ignored.files">
+        <exclude name="**/*.hprof/**"/>
+        <exclude name="**/*.pyc/**"/>
+        <exclude name="**/*.pyo/**"/>
+        <exclude name="**/*.rbc/**"/>
+        <exclude name="**/*.yarb/**"/>
+        <exclude name="**/*~/**"/>
+        <exclude name="**/.DS_Store/**"/>
+        <exclude name="**/.git/**"/>
+        <exclude name="**/.hg/**"/>
+        <exclude name="**/.svn/**"/>
+        <exclude name="**/CVS/**"/>
+        <exclude name="**/__pycache__/**"/>
+        <exclude name="**/_svn/**"/>
+        <exclude name="**/vssver.scc/**"/>
+        <exclude name="**/vssver2.scc/**"/>
+    </patternset>
+    <patternset id="library.patterns">
+        <include name="*.ear"/>
+        <include name="*.egg"/>
+        <include name="*.jar"/>
+        <include name="*.swc"/>
+        <include name="*.ane"/>
+        <include name="*.war"/>
+        <include name="*.zip"/>
+        <include name="*.klib"/>
+    </patternset>
+    <patternset id="compiler.resources">
+        <exclude name="**/?*.java"/>
+        <exclude name="**/?*.form"/>
+        <exclude name="**/?*.class"/>
+        <exclude name="**/?*.groovy"/>
+        <exclude name="**/?*.scala"/>
+        <exclude name="**/?*.flex"/>
+        <exclude name="**/?*.kt"/>
+        <exclude name="**/?*.clj"/>
+        <exclude name="**/?*.aj"/>
+    </patternset>
+
+    <!-- JDK definitions -->
+
+    <property name="jdk.bin.1.8" value="${jdk.home.1.8}/bin"/>
+    <path id="jdk.classpath.1.8">
+        <fileset dir="${jdk.home.1.8}">
+            <include name="jre/lib/charsets.jar"/>
+            <include name="jre/lib/deploy.jar"/>
+            <include name="jre/lib/ext/cldrdata.jar"/>
+            <include name="jre/lib/ext/dnsns.jar"/>
+            <include name="jre/lib/ext/jaccess.jar"/>
+            <include name="jre/lib/ext/jfxrt.jar"/>
+            <include name="jre/lib/ext/localedata.jar"/>
+            <include name="jre/lib/ext/nashorn.jar"/>
+            <include name="jre/lib/ext/sunec.jar"/>
+            <include name="jre/lib/ext/sunjce_provider.jar"/>
+            <include name="jre/lib/ext/sunpkcs11.jar"/>
+            <include name="jre/lib/ext/zipfs.jar"/>
+            <include name="jre/lib/javaws.jar"/>
+            <include name="jre/lib/jce.jar"/>
+            <include name="jre/lib/jfr.jar"/>
+            <include name="jre/lib/jfxswt.jar"/>
+            <include name="jre/lib/jsse.jar"/>
+            <include name="jre/lib/management-agent.jar"/>
+            <include name="jre/lib/plugin.jar"/>
+            <include name="jre/lib/resources.jar"/>
+            <include name="jre/lib/rt.jar"/>
+            <include name="lib/ant-javafx.jar"/>
+            <include name="lib/dt.jar"/>
+            <include name="lib/javafx-mx.jar"/>
+            <include name="lib/jconsole.jar"/>
+            <include name="lib/packager.jar"/>
+            <include name="lib/sa-jdi.jar"/>
+            <include name="lib/tools.jar"/>
+        </fileset>
+    </path>
+
+    <property name="project.jdk.home" value="${jdk.home.1.8}"/>
+    <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
+    <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
+
+
+    <!-- Project Libraries -->
+
+    <path id="library.com.google.code.gson:gson:2.8.5.classpath">
+        <pathelement location="${path.variable.maven_repository}/com/google/code/gson/gson/2.8.5/gson-2.8.5.jar"/>
+    </path>
+
+    <path id="library.javaee-api-6.0.classpath">
+        <pathelement location="${basedir}/lib/javaee-api-6.0.jar"/>
+        <pathelement location="${basedir}/lib/javaee-web-api-6.0.jar"/>
+        <pathelement location="${basedir}/lib/javax.servlet-api-4.0.1.jar"/>
+        <pathelement location="${basedir}/lib/javax.servlet.jar"/>
+        <pathelement location="${basedir}/lib/javax.servlet.jsp.jar"/>
+        <pathelement location="${basedir}/lib/javax.servlet.jsp.jstl.jar"/>
+    </path>
+
+    <path id="library.postgresql-42.2.6.classpath">
+        <pathelement location="${basedir}/lib/postgresql-42.2.6.jar"/>
+    </path>
+
+
+    <!-- Application Server Libraries -->
+    <!-- Register Custom Compiler Taskdefs -->
+    <property name="javac2.home" value="${idea.home}/lib"/>
+    <path id="javac2.classpath">
+        <fileset dir="${javac2.home}">
+            <include name="javac2.jar"/>
+            <include name="jdom.jar"/>
+            <include name="asm-all*.jar"/>
+            <include name="forms-*.jar"/>
+        </fileset>
+    </path>
+    <target name="register.custom.compilers">
+        <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+        <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions"
+                 classpathref="javac2.classpath"/>
+    </target>
+
+    <!-- Modules -->
+
+    <import file="${basedir}/module_basejava.xml"/>
+
+    <target name="init" description="Build initialization">
+        <!-- Perform any build initialization in this target -->
+    </target>
+
+    <target name="clean" depends="clean.module.basejava, clean.artifact.resumes" description="cleanup all"/>
+
+    <target name="build.modules" depends="init, clean, compile.module.basejava" description="build all modules"/>
+
+    <target name="init.artifacts">
+        <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+        <property name="artifact.output.resumes" value="${basedir}/out/artifacts/resumes"/>
+        <mkdir dir="${artifacts.temp.dir}"/>
+    </target>
+
+    <target name="clean.artifact.resumes" description="clean resumes artifact output">
+        <delete dir="${artifact.output.resumes}"/>
+    </target>
+
+    <target name="artifact.resumes" depends="init.artifacts, compile.module.basejava"
+            description="Build &#39;resumes&#39; artifact">
+        <mkdir dir="${artifact.output.resumes}"/>
+        <copy todir="${artifact.output.resumes}">
+            <fileset dir="${basedir}/web"/>
+        </copy>
+        <mkdir dir="${artifact.output.resumes}/WEB-INF"/>
+        <copy file="${basedir}/web/WEB-INF/web.xml" tofile="${artifact.output.resumes}/WEB-INF/web.xml"/>
+        <mkdir dir="${artifact.output.resumes}/WEB-INF"/>
+        <mkdir dir="${artifact.output.resumes}/WEB-INF/classes"/>
+        <copy todir="${artifact.output.resumes}/WEB-INF/classes">
+            <fileset dir="${basejava.output.dir}"/>
+        </copy>
+        <mkdir dir="${artifact.output.resumes}/WEB-INF/lib"/>
+        <copy file="${basedir}/lib/postgresql-42.2.6.jar"
+              tofile="${artifact.output.resumes}/WEB-INF/lib/postgresql-42.2.6.jar"/>
+        <copy file="${path.variable.maven_repository}/com/google/code/gson/gson/2.8.5/gson-2.8.5.jar"
+              tofile="${artifact.output.resumes}/WEB-INF/lib/gson-2.8.5.jar"/>
+    </target>
+
+    <target name="build.all.artifacts" depends="artifact.resumes" description="Build all artifacts">
+
+        <!-- Delete temporary files -->
+        <delete dir="${artifacts.temp.dir}"/>
+    </target>
+
+    <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>

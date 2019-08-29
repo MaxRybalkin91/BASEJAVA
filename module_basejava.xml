@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_basejava" default="compile.module.basejava">
+    <dirname property="module.basejava.basedir" file="${ant.file.module_basejava}"/>
+
+    <property name="module.jdk.home.basejava" value="${jdk.home.1.8}"/>
+    <property name="module.jdk.bin.basejava" value="${jdk.bin.1.8}"/>
+    <property name="module.jdk.classpath.basejava" value="jdk.classpath.1.8"/>
+
+    <property name="compiler.args.basejava" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+
+    <property name="basejava.output.dir" value="${module.basejava.basedir}/out/production/BASEJAVA"/>
+    <property name="basejava.testoutput.dir" value="${module.basejava.basedir}/out/test/BASEJAVA"/>
+
+    <path id="basejava.module.bootclasspath">
+        <!-- Paths to be included in compilation bootclasspath -->
+    </path>
+
+    <path id="basejava.module.production.classpath">
+        <path refid="${module.jdk.classpath.basejava}"/>
+        <path refid="library.com.google.code.gson:gson:2.8.5.classpath"/>
+        <path refid="library.postgresql-42.2.6.classpath"/>
+        <pathelement location="${basedir}/lib/javaee-api-6.0.jar"/>
+        <pathelement location="${basedir}/lib/javaee-web-api-6.0.jar"/>
+        <pathelement location="${basedir}/lib/javax.servlet.jar"/>
+        <path refid="library.javaee-api-6.0.classpath"/>
+    </path>
+
+    <path id="basejava.runtime.production.module.classpath">
+        <pathelement location="${basejava.output.dir}"/>
+        <path refid="library.com.google.code.gson:gson:2.8.5.classpath"/>
+        <path refid="library.postgresql-42.2.6.classpath"/>
+        <path refid="library.javaee-api-6.0.classpath"/>
+    </path>
+
+    <path id="basejava.module.classpath">
+        <path refid="${module.jdk.classpath.basejava}"/>
+        <pathelement location="${basejava.output.dir}"/>
+        <path refid="library.com.google.code.gson:gson:2.8.5.classpath"/>
+        <pathelement location="${path.variable.maven_repository}/junit/junit/4.12/junit-4.12.jar"/>
+        <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
+        <path refid="library.postgresql-42.2.6.classpath"/>
+        <pathelement location="${basedir}/lib/javaee-api-6.0.jar"/>
+        <pathelement location="${basedir}/lib/javaee-web-api-6.0.jar"/>
+        <pathelement location="${basedir}/lib/javax.servlet.jar"/>
+        <path refid="library.javaee-api-6.0.classpath"/>
+    </path>
+
+    <path id="basejava.runtime.module.classpath">
+        <pathelement location="${basejava.testoutput.dir}"/>
+        <pathelement location="${basejava.output.dir}"/>
+        <path refid="library.com.google.code.gson:gson:2.8.5.classpath"/>
+        <pathelement location="${path.variable.maven_repository}/junit/junit/4.12/junit-4.12.jar"/>
+        <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
+        <path refid="library.postgresql-42.2.6.classpath"/>
+        <pathelement location="${basedir}/lib/javaee-api-6.0.jar"/>
+        <pathelement location="${basedir}/lib/javaee-web-api-6.0.jar"/>
+        <pathelement location="${basedir}/lib/javax.servlet.jar"/>
+        <path refid="library.javaee-api-6.0.classpath"/>
+    </path>
+
+
+    <patternset id="excluded.from.module.basejava">
+        <patternset refid="ignored.files"/>
+    </patternset>
+
+    <patternset id="excluded.from.compilation.basejava">
+        <patternset refid="excluded.from.module.basejava"/>
+    </patternset>
+
+    <path id="basejava.module.sourcepath">
+        <dirset dir="${module.basejava.basedir}">
+            <include name="src"/>
+            <include name="config"/>
+        </dirset>
+    </path>
+
+    <path id="basejava.module.test.sourcepath">
+        <dirset dir="${module.basejava.basedir}">
+            <include name="test"/>
+        </dirset>
+    </path>
+
+
+    <target name="compile.module.basejava" depends="compile.module.basejava.production,compile.module.basejava.tests"
+            description="Compile module BASEJAVA"/>
+
+    <target name="compile.module.basejava.production" depends="register.custom.compilers"
+            description="Compile module BASEJAVA; production classes">
+        <mkdir dir="${basejava.output.dir}"/>
+        <javac2 destdir="${basejava.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}"
+                memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.basejava}/javac">
+            <compilerarg line="${compiler.args.basejava}"/>
+            <bootclasspath refid="basejava.module.bootclasspath"/>
+            <classpath refid="basejava.module.production.classpath"/>
+            <src refid="basejava.module.sourcepath"/>
+            <patternset refid="excluded.from.compilation.basejava"/>
+        </javac2>
+
+        <copy todir="${basejava.output.dir}">
+            <fileset dir="${module.basejava.basedir}/src">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+            <fileset dir="${module.basejava.basedir}/config">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="compile.module.basejava.tests" depends="register.custom.compilers,compile.module.basejava.production"
+            description="compile module BASEJAVA; test classes" unless="skip.tests">
+        <mkdir dir="${basejava.testoutput.dir}"/>
+        <javac2 destdir="${basejava.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}"
+                memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.basejava}/javac">
+            <compilerarg line="${compiler.args.basejava}"/>
+            <bootclasspath refid="basejava.module.bootclasspath"/>
+            <classpath refid="basejava.module.classpath"/>
+            <src refid="basejava.module.test.sourcepath"/>
+            <patternset refid="excluded.from.compilation.basejava"/>
+        </javac2>
+
+        <copy todir="${basejava.testoutput.dir}">
+            <fileset dir="${module.basejava.basedir}/test">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="clean.module.basejava" description="cleanup module">
+        <delete dir="${basejava.output.dir}"/>
+        <delete dir="${basejava.testoutput.dir}"/>
+    </target>
+</project>
