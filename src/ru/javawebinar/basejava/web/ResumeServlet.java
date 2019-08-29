@@ -38,6 +38,7 @@ public class ResumeServlet extends HttpServlet {
 
         writer.println("<table>\n" +
                 "<tbody>\n" +
+                "<table border=\"1\">\n" +
                 "<tr>\n" +
                 "<th>UUID</th>\n" +
                 "<th>Full Name</th>\n" +
