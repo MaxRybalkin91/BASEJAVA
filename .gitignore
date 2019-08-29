@@ -2,8 +2,6 @@
 out
 *.iml
 log
-/home/maksim/basejava/storage
-/home/maksim/basejava/lib
+*/basejava/storage
+*/basejava/lib
 lesson
-lib/postgresql-42.2.6.jar
-
