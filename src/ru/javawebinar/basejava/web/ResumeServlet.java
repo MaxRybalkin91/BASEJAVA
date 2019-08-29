@@ -17,7 +17,9 @@ public class ResumeServlet extends HttpServlet {
 
     @Override
     public void init() {
-        sqlStorage = new SqlStorage(Config.get().getDbUrl(), Config.get().getDbUser(), Config.get().getDbPassword());
+        sqlStorage = new SqlStorage(Config.get().getDbUrl(),
+                Config.get().getDbUser(),
+                Config.get().getDbPassword());
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
