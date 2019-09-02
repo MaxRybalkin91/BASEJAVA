@@ -1,7 +1,6 @@
 package ru.javawebinar.basejava.web;
 
 import ru.javawebinar.basejava.Config;
-import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.storage.SqlStorage;
 
 import javax.servlet.ServletException;
@@ -9,8 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 
 public class ResumeServlet extends HttpServlet {
     private SqlStorage sqlStorage;
@@ -27,11 +24,11 @@ public class ResumeServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        printResume(response);
+        request.setAttribute("resumes", sqlStorage.getSortedStorage());
+        request.getRequestDispatcher("/WEB-INF/jsp/list.jsp").forward(request, response);
     }
 
+    /*
     private void printResume(HttpServletResponse response) throws IOException {
         List<Resume> list = sqlStorage.getSortedStorage();
         PrintWriter writer = response.getWriter();
@@ -54,4 +51,5 @@ public class ResumeServlet extends HttpServlet {
         writer.println("</tbody\n" +
                 "</table>");
     }
+     */
 }
