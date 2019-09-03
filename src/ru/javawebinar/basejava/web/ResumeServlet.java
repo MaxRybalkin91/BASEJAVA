@@ -23,7 +23,7 @@ public class ResumeServlet extends HttpServlet {
 
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         request.setAttribute("resumes", sqlStorage.getSortedStorage());
         request.getRequestDispatcher("/WEB-INF/jsp/list.jsp").forward(request, response);
     }
