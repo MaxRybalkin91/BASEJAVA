@@ -34,6 +34,14 @@ public class Resume implements Comparable<Resume>, Serializable {
         this.fullName = fullName;
     }
 
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
     public void setContacts(ContactType contactType, String name) {
         contacts.put(contactType, name);
     }
@@ -52,6 +60,10 @@ public class Resume implements Comparable<Resume>, Serializable {
 
     public String getContact(ContactType contactType) {
         return contacts.get(contactType);
+    }
+
+    public String getSection(SectionType sectionType) {
+        return sections.get(sectionType).toString();
     }
 
     public EnumMap<ContactType, String> getContacts() {

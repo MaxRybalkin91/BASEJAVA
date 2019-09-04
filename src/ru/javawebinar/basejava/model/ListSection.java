@@ -44,10 +44,6 @@ public class ListSection extends AbstractSection {
 
     @Override
     public String toString() {
-        StringBuilder s = new StringBuilder();
-        for (String a : values) {
-            s.append(a).append("\n");
-        }
-        return s.toString();
+        return String.join("\n", values);
     }
 }
