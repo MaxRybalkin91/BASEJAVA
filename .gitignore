@@ -5,3 +5,6 @@ log
 /storage/
 lesson
 /lib/
+basejava.properties
+basejava.xml
+module_basejava.xml

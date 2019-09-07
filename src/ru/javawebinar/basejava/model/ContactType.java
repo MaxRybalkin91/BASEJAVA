@@ -5,9 +5,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public enum ContactType {
+    HOME_TOWN("Город"),
     PHONE("Тел."),
-    MOBILE("Мобильный"),
-    HOME_PHONE("Домашний тел."),
     SKYPE("Skype") {
         @Override
         public String toHtml0(String value) {
@@ -55,7 +54,7 @@ public enum ContactType {
         return title;
     }
 
-    public static String toLink(String href, String title) {
+    public String toLink(String href, String title) {
         return "<a href='" + href + "'>" + title + "</a>";
     }
 

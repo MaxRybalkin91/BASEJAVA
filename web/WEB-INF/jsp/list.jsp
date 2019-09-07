@@ -11,6 +11,12 @@
 <body>
 <jsp:include page="fragments/header.jsp"/>
 <section>
+    <form>
+        <button name="action" type="submit" value="add">Создать резюме</button>
+        <button name="action" type="submit" value="submitClear">Удалить все резюме</button>
+    </form>
+
+
     <table border="1" cellpadding="8" cellspacing="0">
         <tr>
             <th>Имя</th>
@@ -22,10 +28,14 @@
             <jsp:useBean id="resume" type="ru.javawebinar.basejava.model.Resume"/>
             <tr>
                 <td><a href="resume?uuid=${resume.uuid}&action=view">${resume.fullName}</a></td>
-                <td><%=ContactType.EMAIL.toHtml(resume.getContact(ContactType.EMAIL))%>
+                <td>
+                    <% String mail = resume.getContact(ContactType.EMAIL); %>
+                    <c:if test="<%=mail != null && mail.trim().length() != 0%>">
+                        <%=ContactType.EMAIL.toHtml(mail)%>
+                    </c:if>
                 </td>
                 <td><a href="resume?uuid=${resume.uuid}&action=edit"><img src="img/pencil.png"></a></td>
-                <td><a href="resume?uuid=${resume.uuid}&action=delete"><img src="img/delete.png"></a></td>
+                <td><a href="resume?uuid=${resume.uuid}&action=submitDelete"><img src="img/delete.png"></a></td>
             </tr>
         </c:forEach>
     </table>
