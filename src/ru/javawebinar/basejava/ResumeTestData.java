@@ -247,7 +247,7 @@ public class ResumeTestData {
 
         System.out.println();
 
-        for (Map.Entry<SectionType, AbstractSection> entry : resume.getSections().entrySet()) {
+        for (Map.Entry<SectionType, Section> entry : resume.getSections().entrySet()) {
             System.out.println(entry.getKey().getTitle());
             System.out.println(entry.getValue());
         }

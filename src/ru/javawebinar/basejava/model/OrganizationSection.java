@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class OrganizationSection extends AbstractSection {
+public class OrganizationSection extends Section {
     private static final long serialVersionUuid = 1L;
 
     private List<Organization> organizations;
@@ -44,9 +44,10 @@ public class OrganizationSection extends AbstractSection {
 
     @Override
     public String toString() {
+        StringBuilder sb = new StringBuilder();
         for (Organization org : organizations) {
-            System.out.println(org.toString());
+            sb.append(org.getLink()).append(org.getStages().toString());
         }
-        return "";
+        return sb.toString();
     }
 }

@@ -31,22 +31,22 @@ public class DataStreamSerializer implements StreamSerializer {
 
             writeWithException(dos, resume.getSections().entrySet(),
                     entry -> {
-                        AbstractSection abstractSection = entry.getValue();
+                        Section section = entry.getValue();
                             String sectionName = entry.getKey().name();
                             dos.writeUTF(sectionName);
                             switch (sectionName) {
                                 case "PERSONAL":
                                 case "OBJECTIVE":
-                                    dos.writeUTF(((TextSection) abstractSection).getText());
+                                    dos.writeUTF(((TextSection) section).getText());
                                     break;
                                 case "ACHIEVEMENT":
                                 case "QUALIFICATION":
-                                    writeWithException(dos, ((ListSection) abstractSection).getValues(),
+                                    writeWithException(dos, ((ListSection) section).getValues(),
                                             dos::writeUTF);
                                     break;
                                 case "EXPERIENCE":
                                 case "EDUCATION":
-                                    writeWithException(dos, ((OrganizationSection) abstractSection).getOrganizations(),
+                                    writeWithException(dos, ((OrganizationSection) section).getOrganizations(),
                                             organization -> {
                                                 dos.writeUTF(organization.getLink().getName());
                                                 dos.writeUTF(organization.getLink().getUrl());

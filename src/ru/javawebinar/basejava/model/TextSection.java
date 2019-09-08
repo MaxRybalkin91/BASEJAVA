@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class TextSection extends AbstractSection {
+public class TextSection extends Section {
     private static final long serialVersionUuid = 1L;
 
     private String text;
