@@ -1,7 +1,6 @@
 <%@ page import="ru.javawebinar.basejava.model.ContactType" %>
-<%@ page import="ru.javawebinar.basejava.model.ListSection" %>
+<%@ page import="ru.javawebinar.basejava.model.Section" %>
 <%@ page import="ru.javawebinar.basejava.model.SectionType" %>
-<%@ page import="ru.javawebinar.basejava.model.TextSection" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -33,30 +32,18 @@
 
         <c:forEach items="${SectionType.values()}" var="sectionType">
             <jsp:useBean id="sectionType" type="ru.javawebinar.basejava.model.SectionType"/>
+            <h3>${sectionType.title}</h3>
+            <% String name = sectionType.name();
+                Section section = resume.getSection(sectionType);
+                String body = section != null ? section.toString() : null;
+            %>
+
             <c:choose>
-                <%-- TextSection --%>
-                <c:when test="${sectionType.equals(SectionType.PERSONAL) || sectionType.equals(SectionType.OBJECTIVE)}">
+                <%-- TextSection / ListSection --%>
+                <c:when test="${sectionType.equals(SectionType.PERSONAL) || sectionType.equals(SectionType.OBJECTIVE)
+                || sectionType.equals(SectionType.ACHIEVEMENT) || sectionType.equals(SectionType.QUALIFICATION)}">
                     <dd>
-                        <% TextSection section = (TextSection) resume.getSection(sectionType); %>
-                        <% String body = section != null ? section.getText() : null; %>
-                        <h3><%=sectionType.getTitle()%>
-                        </h3>
-                        <textarea rows="4" cols="150" name="<%=sectionType.name()%>"><c:if
-                                test="<%=body!=null%>"><%=body%>
-                        </c:if></textarea>
-                    </dd>
-                </c:when>
-                <%-- ListSection --%>
-                <c:when test="${sectionType.equals(SectionType.ACHIEVEMENT) || sectionType.equals(SectionType.QUALIFICATION)}">
-                    <dd>
-                        <% ListSection section = (ListSection) resume.getSection(sectionType); %>
-                        <% String values = section != null ? section.toString().trim() : null; %>
-                        <h3>
-                            <%=sectionType.getTitle()%>
-                        </h3>
-                        <textarea rows="4" cols="150" name="<%=sectionType.name()%>"><c:if
-                                test="<%=values!=null%>"><%=values%>
-                        </c:if></textarea>
+                        <textarea rows="4" cols="150" name="<%=name%>"><c:if test="<%=body!=null%>"><%=body%></c:if></textarea>
                     </dd>
                 </c:when>
             </c:choose>

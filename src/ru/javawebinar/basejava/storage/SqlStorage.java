@@ -85,14 +85,14 @@ public class SqlStorage implements Storage {
     @Override
     public void save(Resume r) {
         sqlHelper.transactionalExecute(conn -> {
-            try (PreparedStatement ps = conn.prepareStatement("INSERT INTO resume (uuid, full_name) VALUES (?,?)")) {
-                ps.setString(1, r.getUuid());
-                ps.setString(2, r.getFullName());
-                ps.execute();
-            }
-            insertContacts(conn, r);
-            insertSections(conn, r);
-            return null;
+                    try (PreparedStatement ps = conn.prepareStatement("INSERT INTO resume (uuid, full_name) VALUES (?,?)")) {
+                        ps.setString(1, r.getUuid());
+                        ps.setString(2, r.getFullName());
+                        ps.execute();
+                    }
+                    insertContacts(conn, r);
+                    insertSections(conn, r);
+                    return null;
                 }
         );
     }
@@ -154,8 +154,11 @@ public class SqlStorage implements Storage {
             for (Map.Entry<ContactType, String> e : r.getContacts().entrySet()) {
                 ps.setString(1, r.getUuid());
                 ps.setString(2, e.getKey().name());
-                ps.setString(3, e.getValue());
-                ps.addBatch();
+                String value = e.getValue();
+                ps.setString(3, value);
+                if (isNotNull(value)) {
+                    ps.addBatch();
+                }
             }
             ps.executeBatch();
         }
@@ -166,9 +169,11 @@ public class SqlStorage implements Storage {
             for (Map.Entry<SectionType, Section> e : r.getSections().entrySet()) {
                 ps.setString(1, r.getUuid());
                 ps.setString(2, e.getKey().name());
-                Section section = e.getValue();
-                ps.setString(3, JsonParser.write(section, Section.class));
-                ps.addBatch();
+                String section = JsonParser.write(e.getValue(), Section.class);
+                ps.setString(3, section);
+                if (isNotNull(section)) {
+                    ps.addBatch();
+                }
             }
             ps.executeBatch();
         }
@@ -202,5 +207,9 @@ public class SqlStorage implements Storage {
             SectionType type = SectionType.valueOf(rs.getString("type"));
             r.setSections(type, JsonParser.read(value, Section.class));
         }
+    }
+
+    private boolean isNotNull(String value) {
+        return value != null && !value.equals("");
     }
 }

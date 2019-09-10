@@ -8,6 +8,7 @@ import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.*;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,82 +38,8 @@ public abstract class AbstractStorageTest {
         RESUME_3 = new Resume(UUID_3, NAME_3);
         RESUME_4 = new Resume(UUID_4, NAME_4);
 
-        RESUME_1.setContacts(ContactType.PHONE, "+1-234-567-89-0");
-        RESUME_1.setContacts(ContactType.SKYPE, "Microsoft");
-        RESUME_1.setContacts(ContactType.EMAIL, "abcd@yandex.ru");
-        RESUME_1.setContacts(ContactType.LINKEDIN, "http://www.linkedin.com");
-
-        RESUME_2.setContacts(ContactType.PHONE, "+1-234-567-89-0");
-        RESUME_2.setContacts(ContactType.SKYPE, "Microsoft");
-        RESUME_2.setContacts(ContactType.EMAIL, "abcd@yandex.ru");
-        RESUME_2.setContacts(ContactType.LINKEDIN, "http://www.linkedin.com");
-
-        RESUME_3.setContacts(ContactType.PHONE, "+1-234-567-89-0");
-        RESUME_3.setContacts(ContactType.SKYPE, "Microsoft");
-        RESUME_3.setContacts(ContactType.EMAIL, "abcd@yandex.ru");
-        RESUME_3.setContacts(ContactType.LINKEDIN, "http://www.linkedin.com");
-
-        RESUME_4.setContacts(ContactType.PHONE, "+1-234-567-89-0");
-        RESUME_4.setContacts(ContactType.SKYPE, "Microsoft");
-        RESUME_4.setContacts(ContactType.EMAIL, "abcd@yandex.ru");
-        RESUME_4.setContacts(ContactType.LINKEDIN, "http://www.linkedin.com");
-
-        RESUME_1.setSections(SectionType.OBJECTIVE, new TextSection("Objectives1"));
-        RESUME_1.setSections(SectionType.PERSONAL, new TextSection("Personal1"));
-
-        RESUME_2.setSections(SectionType.OBJECTIVE, new TextSection("Objectives2"));
-        RESUME_2.setSections(SectionType.PERSONAL, new TextSection("Personal2"));
-
-        RESUME_3.setSections(SectionType.OBJECTIVE, new TextSection("Objectives3"));
-        RESUME_3.setSections(SectionType.PERSONAL, new TextSection("Personal3"));
-
-        RESUME_4.setSections(SectionType.OBJECTIVE, new TextSection("Objectives4"));
-        RESUME_4.setSections(SectionType.PERSONAL, new TextSection("Personal4"));
-
-        RESUME_1.setSections(SectionType.ACHIEVEMENT, new ListSection("Achievement1", "Achievement1", "Achievement1"));
-        RESUME_1.setSections(SectionType.QUALIFICATION, new ListSection("Qualification1", "Qualification1", "Qualification1"));
-
-        RESUME_2.setSections(SectionType.ACHIEVEMENT, new ListSection("Achievement2", "Achievement2", "Achievement2"));
-        RESUME_2.setSections(SectionType.QUALIFICATION, new ListSection("Qualification2", "Qualification2", "Qualification2"));
-
-        RESUME_3.setSections(SectionType.ACHIEVEMENT, new ListSection("Achievement3", "Achievement3", "Achievement3"));
-        RESUME_3.setSections(SectionType.QUALIFICATION, new ListSection("Qualification3", "Qualification3", "Qualification3"));
-
-        RESUME_4.setSections(SectionType.ACHIEVEMENT, new ListSection("Achievement4", "Achievement4", "Achievement4"));
-        RESUME_4.setSections(SectionType.QUALIFICATION, new ListSection("Qualification4", "Qualification4", "Qualification4"));
-
-        /*
-        RESUME_1.setSections(SectionType.EXPERIENCE, new OrganizationSection(
-                new Organization(
-                        new Link("COMPANY_1", "URL_1"),
-                        new Organization.Stage(
-                                LocalDate.now(),
-                                LocalDate.now(),
-                                "POSITION_1",
-                                null))));
-        RESUME_2.setSections(SectionType.EDUCATION, new OrganizationSection(
-                new Organization(
-                        new Link("COMPANY_2", "URL_2"),
-                        new Organization.Stage(
-                                LocalDate.now(),
-                                LocalDate.now(),
-                                "POSITION_2"))));
-        RESUME_3.setSections(SectionType.EXPERIENCE, new OrganizationSection(
-                new Organization(
-                        new Link("COMPANY_3", "URL_3"),
-                        new Organization.Stage(
-                                LocalDate.now(),
-                                LocalDate.now(),
-                                "POSITION_3",
-                                null))));
-        RESUME_4.setSections(SectionType.EDUCATION, new OrganizationSection(
-                new Organization(
-                        new Link("COMPANY_4", "URL_4"),
-                        new Organization.Stage(
-                                LocalDate.now(),
-                                LocalDate.now(),
-                                "POSITION_4"))));
-        */
+        setContacts(RESUME_1, RESUME_2, RESUME_3, RESUME_4);
+        setSections(RESUME_1, RESUME_2, RESUME_3, RESUME_4);
     }
 
     AbstractStorageTest(Storage storage) {
@@ -200,5 +127,46 @@ public abstract class AbstractStorageTest {
 
     private void assertGet(Resume resume) {
         assertEquals(resume, storage.get(resume.getUuid()));
+    }
+
+    private static void setContacts(Resume... resumes) {
+        for (Resume resume : resumes) {
+            resume.setContacts(ContactType.PHONE, "+1-234-567-89-0");
+            resume.setContacts(ContactType.SKYPE, "Microsoft");
+            resume.setContacts(ContactType.EMAIL, "abcd@yandex.ru");
+            resume.setContacts(ContactType.LINKEDIN, "http://www.linkedin.com");
+        }
+    }
+
+    private static void setSections(Resume... resumes) {
+        for (Resume resume : resumes) {
+            resume.setSections(SectionType.OBJECTIVE, new TextSection("Objectives"));
+            resume.setSections(SectionType.PERSONAL, new TextSection("Personal"));
+
+            resume.setSections(SectionType.ACHIEVEMENT, new ListSection("Achievement1", "Achievement2", "Achievement3"));
+            resume.setSections(SectionType.QUALIFICATION, new ListSection("Qualification1", "Qualification2", "Qualification3"));
+
+            resume.setSections(SectionType.EXPERIENCE, new OrganizationSection(
+                    new Organization(
+                            new Link("COMPANY_1", "URL_1"),
+                            new Organization.Stage(
+                                    LocalDate.now(),
+                                    LocalDate.now(),
+                                    "POSITION_1",
+                                    "DUTIES_1"),
+                            new Organization.Stage(
+                                    LocalDate.now(),
+                                    LocalDate.now(),
+                                    "POSITION_2",
+                                    "DUTIES_2"))));
+
+            resume.setSections(SectionType.EDUCATION, new OrganizationSection(
+                    new Organization(
+                            new Link("UNIVERSITY_1", "URL_1"),
+                            new Organization.Stage(
+                                    LocalDate.now(),
+                                    LocalDate.now(),
+                                    "STUDENT_1"))));
+        }
     }
 }
