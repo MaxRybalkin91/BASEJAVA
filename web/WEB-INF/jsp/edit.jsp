@@ -1,5 +1,4 @@
 <%@ page import="ru.javawebinar.basejava.model.ContactType" %>
-<%@ page import="ru.javawebinar.basejava.model.Section" %>
 <%@ page import="ru.javawebinar.basejava.model.SectionType" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -33,17 +32,16 @@
         <c:forEach items="${SectionType.values()}" var="sectionType">
             <jsp:useBean id="sectionType" type="ru.javawebinar.basejava.model.SectionType"/>
             <h3>${sectionType.title}</h3>
-            <% String name = sectionType.name();
-                Section section = resume.getSection(sectionType);
-                String body = section != null ? section.toString() : null;
-            %>
+            <c:set var = "name" value="${sectionType.name()}"/>
+            <c:set var = "body" value="${resume.getSection(sectionType).toString()}"/>
+            <c:set var = "textarea"><c:if test="${not empty body}">${body}</c:if></c:set>
 
             <c:choose>
                 <%-- TextSection / ListSection --%>
                 <c:when test="${sectionType.equals(SectionType.PERSONAL) || sectionType.equals(SectionType.OBJECTIVE)
                 || sectionType.equals(SectionType.ACHIEVEMENT) || sectionType.equals(SectionType.QUALIFICATION)}">
                     <dd>
-                        <textarea rows="4" cols="150" name="<%=name%>"><c:if test="<%=body!=null%>"><%=body%></c:if></textarea>
+                        <textarea rows="4" cols="150" name="${name}">${textarea}</textarea>
                     </dd>
                 </c:when>
             </c:choose>
