@@ -3,6 +3,7 @@
 <%@ page import="ru.javawebinar.basejava.model.OrganizationSection" %>
 <%@ page import="ru.javawebinar.basejava.model.SectionType" %>
 <%@ page import="ru.javawebinar.basejava.model.TextSection" %>
+<%@ page import="ru.javawebinar.basejava.util.DateUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
@@ -63,11 +64,11 @@
                         </c:choose>
                         <c:forEach var="Stage" items="<%=organization.getStages()%>">
                             <jsp:useBean id="Stage" type="ru.javawebinar.basejava.model.Organization.Stage"/>
-                            <p>
-                                <%=Stage.getStartDate() + " - " + Stage.getEndDate()%> <br/>
+                            <ul>
+                                ${Stage.start.format(DateUtil.FORMATTER)} - ${Stage.end.format(DateUtil.FORMATTER)} <br/>
                                 <b>${Stage.position}</b> <br/>
                                     ${Stage.duties}<br/>
-                            </p>
+                            </ul>
                         </c:forEach>
                     </c:forEach>
                 </c:when>

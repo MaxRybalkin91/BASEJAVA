@@ -86,6 +86,30 @@ public class Organization implements Serializable {
             this.duties = Objects.isNull(duties) ? "" : duties;
         }
 
+        public LocalDate getStart() {
+            return start;
+        }
+
+        public void setStart(LocalDate start) {
+            this.start = start;
+        }
+
+        public LocalDate getEnd() {
+            return end;
+        }
+
+        public void setEnd(LocalDate end) {
+            this.end = end;
+        }
+
+        public void setPosition(String position) {
+            this.position = position;
+        }
+
+        public void setDuties(String duties) {
+            this.duties = duties;
+        }
+
         public String getStartDate() {
             return start.toString();
         }
