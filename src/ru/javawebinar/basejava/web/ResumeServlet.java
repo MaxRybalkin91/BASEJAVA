@@ -66,7 +66,7 @@ public class ResumeServlet extends HttpServlet {
                                 String[] startDates = request.getParameterValues(prefix + "_start");
                                 String[] endDates = request.getParameterValues(prefix + "_end");
                                 String[] positions = request.getParameterValues(prefix + "_position");
-                                String[] duties = request.getParameterValues(prefix + "_dutie");
+                                String[] duties = request.getParameterValues(prefix + "_duty");
 
                                 for (int k = 0; k < positions.length; k++) {
                                     if (!isEmpty(positions[k], startDates[k], endDates[k])) {
@@ -79,49 +79,15 @@ public class ResumeServlet extends HttpServlet {
                                     }
                                 }
 
-                                String newStartDate = request.getParameter(prefix + "_NEW_start");
-                                String newEndDate = request.getParameter(prefix + "_NEW_end");
-                                String newTitle = request.getParameter(prefix + "_NEW_position");
-                                String newDescription = request.getParameter(prefix + "_NEW_dutie");
-                                if (!isEmpty(newStartDate, newEndDate, newTitle)) {
-                                    Organization.Stage period = new Organization.Stage(DateUtil.toDate(newStartDate),
-                                            DateUtil.toDate(newEndDate), newTitle);
-                                    if (!isEmpty(newDescription)) {
-                                        period.setPosition(newDescription);
-                                    }
-                                    stages.add(period);
-                                }
-
                                 String[] urls = request.getParameterValues(prefix + "_url");
-                                Link link = new Link(values[i]);
-                                if (!isEmpty(urls[i])) {
-                                    link.setUrl(urls[i]);
-                                }
-                                orgList.add(new Organization(link, stages));
+                                orgList.add(new Organization(setLink(values[i], urls[i]), setNewStage(request, prefix, stages)));
                             }
                         }
                     }
 
                     String newName = request.getParameter(st.name() + "_NEW_name");
                     String newUrl = request.getParameter(st.name() + "_NEW_url");
-                    String newStartDate = request.getParameter(st.name() + "_NEW_start");
-                    String newEndDate = request.getParameter(st.name() + "_NEW_end");
-                    String newTitle = request.getParameter(st.name() + "_NEW_position");
-                    String newDescription = request.getParameter(st.name() + "_NEW_dutie");
-                    if (!isEmpty(newName)) {
-                        Link link = new Link(newName);
-                        if (!isEmpty(newUrl)) {
-                            link.setUrl(newUrl);
-                        }
-                        if (!isEmpty(newStartDate, newEndDate, newTitle)) {
-                            Organization.Stage period = new Organization.Stage(DateUtil.toDate(newStartDate),
-                                    DateUtil.toDate(newEndDate), newTitle);
-                            if (!isEmpty(newDescription)) {
-                                period.setPosition(newDescription);
-                            }
-                            orgList.add(new Organization(link, period));
-                        }
-                    }
+                    orgList.add(new Organization(setLink(newName, newUrl), setNewStage(request, st.name(), new ArrayList<>())));
 
                     resume.setSections(st, new OrganizationSection(orgList));
             }
@@ -172,6 +138,33 @@ public class ResumeServlet extends HttpServlet {
         }
         request.setAttribute("resume", resume);
         request.getRequestDispatcher(page).forward(request, response);
+    }
+
+    private List<Organization.Stage> setNewStage(HttpServletRequest request, String prefix, List<Organization.Stage> list) {
+        String newStartDate = request.getParameter(prefix + "_NEW_start");
+        String newEndDate = request.getParameter(prefix + "_NEW_end");
+        String newPosition = request.getParameter(prefix + "_NEW_position");
+        String newDuty = request.getParameter(prefix + "_NEW_duty");
+
+        if (!isEmpty(newStartDate, newEndDate, newPosition)) {
+            Organization.Stage stage = new Organization.Stage(DateUtil.toDate(newStartDate),
+                    DateUtil.toDate(newEndDate), newPosition);
+            if (!isEmpty(newDuty)) {
+                stage.setPosition(newDuty);
+            }
+            list.add(stage);
+        }
+
+        return list;
+    }
+
+    private Link setLink(String name, String url) {
+        Link link = new Link(name);
+        if (!isEmpty(url)) {
+            link.setUrl(url);
+        }
+
+        return link;
     }
 
     private boolean isEmpty(String... values) {

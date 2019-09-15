@@ -116,16 +116,16 @@
                             </dl>
 
                             <c:set var="duties">
-                                <c:set var="dutieName">name="${orgName}_dutie"</c:set>
+                                <c:set var="dutyName">name="${orgName}_duty"</c:set>
                                 <c:choose>
                                     <c:when test="${sectionType.equals(SectionType.EXPERIENCE)}">
                                         <dt>Описание:</dt>
-                                        <dd><textarea rows="4" cols="150" ${dutieName}>${stage.duties}</textarea>
+                                        <dd><textarea rows="4" cols="150" ${dutyName}>${stage.duties}</textarea>
                                         </dd>
                                     </c:when>
                                     <c:otherwise>
                                         <dt>Уровень подготовки:</dt>
-                                        <input type="text" size="50" ${dutieName} value="${stage.duties}">
+                                        <input type="text" size="50" ${dutyName} value="${stage.duties}">
                                     </c:otherwise>
                                 </c:choose>
                             </c:set>
@@ -165,16 +165,16 @@
                             </dl>
 
                             <c:set var="newDuties">
-                                <c:set var="newDutie">name="${orgName}_NEW_dutie"</c:set>
+                                <c:set var="newDuty">name="${orgName}_NEW_duty"</c:set>
                                 <c:choose>
                                     <c:when test="${sectionType.equals(SectionType.EXPERIENCE)}">
                                         <dt>Описание:</dt>
-                                        <dd><textarea rows="4" cols="150" ${newDutie}></textarea>
+                                        <dd><textarea rows="4" cols="150" ${newDuty}></textarea>
                                         </dd>
                                     </c:when>
                                     <c:otherwise>
                                         <dt>Уровень подготовки:</dt>
-                                        <input type="text" size="50" ${newDutie}>
+                                        <input type="text" size="50" ${newDuty}>
                                     </c:otherwise>
                                 </c:choose>
                             </c:set>
@@ -187,16 +187,8 @@
                     <br>
 
                     <%-- Add new organization --%>
-                    <c:set var="orgType">
-                        <c:choose>
-                            <c:when test="${sectionType.equals(SectionType.EXPERIENCE)}">
-                                место работы
-                            </c:when>
-                            <c:otherwise>
-                                образовательное учреждение
-                            </c:otherwise>
-                        </c:choose>
-                    </c:set>
+                    <c:set var="orgType"
+                           value='<%=sectionType.equals(SectionType.EXPERIENCE) ? "место работы" : "образовательное учреждение"%>'/>
 
                     <h4>Добавить ${orgType}:</h4>
                     <dl>
